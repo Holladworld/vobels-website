@@ -1,0 +1,546 @@
+---
+// Complete Business Services Cost Calculator - All services included
+---
+
+<div class="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm" id="calculator-container">
+  <div class="text-center mb-6">
+    <h3 class="text-2xl font-bold text-black">Business Services Cost Calculator</h3>
+    <p class="text-sm text-zinc-500 mt-1">Estimate costs for registration, IP, global access, and compliance services</p>
+  </div>
+
+  <div class="space-y-5">
+    <!-- Service Category Selection -->
+    <div>
+      <label class="block text-sm font-bold text-black mb-2">Service Category</label>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <button type="button" data-category="registration" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all bg-black text-white border-black text-sm">Registration</button>
+        <button type="button" data-category="trademark" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Trademark</button>
+        <button type="button" data-category="copyright" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Copyright</button>
+        <button type="button" data-category="patent" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Patent</button>
+        <button type="button" data-category="nafdac" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">NAFDAC</button>
+        <button type="button" data-category="global" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Global Access</button>
+        <button type="button" data-category="foreign" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Foreign Reg</button>
+      </div>
+    </div>
+
+    <!-- REGISTRATION SECTION -->
+    <div id="registration-section" class="space-y-5">
+      <div>
+        <label class="block text-sm font-bold text-black mb-2">Business Type</label>
+        <div class="grid grid-cols-2 gap-3">
+          <button type="button" data-type="ltd" class="type-btn py-3 px-4 rounded-xl border-2 font-medium transition-all bg-black text-white border-black">Private Limited (LTD)</button>
+          <button type="button" data-type="business-name" class="type-btn py-3 px-4 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black">Business Name</button>
+          <button type="button" data-type="ngo" class="type-btn py-3 px-4 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black">NGO / Foundation</button>
+          <button type="button" data-type="plc" class="type-btn py-3 px-4 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black">Public Limited (PLC)</button>
+        </div>
+      </div>
+
+      <div id="share-capital-group" class="hidden">
+        <label class="block text-sm font-bold text-black mb-2">Share Capital (₦)</label>
+        <div class="flex gap-3">
+          <input type="number" id="share-capital" value="1000000" class="flex-1 px-4 py-3 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-black">
+          <button id="calculate-btn" class="px-6 py-3 bg-black text-white rounded-xl font-medium hover:bg-zinc-800 transition-all">Calculate</button>
+        </div>
+        <p class="text-xs text-zinc-400 mt-2">Minimum ₦1,000,000. Additional ₦25,000 per extra million</p>
+      </div>
+
+      <div id="taxpromax-group" class="hidden">
+        <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+          <input type="checkbox" id="include-taxpromax" class="w-4 h-4">
+          <div>
+            <span class="font-medium">Include TaxPromax Activation</span>
+            <p class="text-xs text-zinc-500">+₦25,000 - Get TIN Certificate + NRS TIN onboarding</p>
+          </div>
+        </label>
+      </div>
+    </div>
+
+    <!-- TRADEMARK SECTION -->
+    <div id="trademark-section" class="hidden space-y-5">
+      <div>
+        <label class="block text-sm font-bold text-black mb-2">Trademark Option</label>
+        <div class="space-y-2">
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="trademark-option" value="basic" class="w-4 h-4" checked>
+            <div>
+              <span class="font-medium">Trademark Registration</span>
+              <p class="text-xs text-zinc-500">₦70,000 - Search Report, Application, Acceptance Letter</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="trademark-option" value="premium" class="w-4 h-4">
+            <div>
+              <span class="font-medium">Trademark Registration + Certificate</span>
+              <p class="text-xs text-zinc-500">₦150,000 - Includes Certificate of Trademark</p>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- COPYRIGHT SECTION -->
+    <div id="copyright-section" class="hidden space-y-5">
+      <div>
+        <label class="block text-sm font-bold text-black mb-2">Copyright Option</label>
+        <div class="space-y-2">
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="copyright-option" value="basic" class="w-4 h-4" checked>
+            <div>
+              <span class="font-medium">Copyright Protection</span>
+              <p class="text-xs text-zinc-500">₦50,000 - One paper base, Search Report, Grant Notification</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="copyright-option" value="premium" class="w-4 h-4">
+            <div>
+              <span class="font-medium">Copyright Protection (Premium)</span>
+              <p class="text-xs text-zinc-500">₦150,000 - Includes Certified True Copy of Certificate</p>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- PATENT SECTION -->
+    <div id="patent-section" class="hidden space-y-5">
+      <div>
+        <label class="block text-sm font-bold text-black mb-2">Patent Registration</label>
+        <div class="space-y-2">
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="patent-option" value="local" class="w-4 h-4" checked>
+            <div>
+              <span class="font-medium">Local Patent Registration</span>
+              <p class="text-xs text-zinc-500">₦250,000 - Nigeria only, one invention/claim</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="patent-option" value="international" class="w-4 h-4">
+            <div>
+              <span class="font-medium">International Patent (PCT)</span>
+              <p class="text-xs text-zinc-500">$2,000 USD - International protection, PCT filing</p>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- NAFDAC SECTION -->
+    <div id="nafdac-section" class="hidden space-y-5">
+      <div>
+        <label class="block text-sm font-bold text-black mb-2">NAFDAC Product Category</label>
+        <select id="nafdac-category" class="w-full p-3 border border-zinc-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-black">
+          <option value="micro">Micro-Scale Food - ₦95,000</option>
+          <option value="small">Small Scale Food - ₦150,000</option>
+          <option value="large">Large Scale Food - ₦250,000</option>
+          <option value="drugs">Drugs & Pharmaceuticals - ₦300,000</option>
+          <option value="cosmetics-small">Cosmetics Small Scale - ₦120,000</option>
+          <option value="cosmetics-large">Cosmetics Large Scale - ₦200,000</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- GLOBAL ACCESS SECTION (DUNS, US, UK) -->
+    <div id="global-section" class="hidden space-y-5">
+      <div>
+        <label class="block text-sm font-bold text-black mb-2">Global Access Service</label>
+        <div class="space-y-2">
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="global-option" value="duns" class="w-4 h-4" checked>
+            <div>
+              <span class="font-medium">DUNS Number Registration</span>
+              <p class="text-xs text-zinc-500">$50 USD - Official D&B registration, 3-5 days</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="global-option" value="us-wyoming" class="w-4 h-4">
+            <div>
+              <span class="font-medium">US LLC - Wyoming (Best for Non-Residents)</span>
+              <p class="text-xs text-zinc-500">$720 USD - No state tax, strong privacy</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="global-option" value="us-delaware" class="w-4 h-4">
+            <div>
+              <span class="font-medium">US LLC - Delaware (For Startups)</span>
+              <p class="text-xs text-zinc-500">$750 USD - Investor-friendly, VC preferred</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="global-option" value="us-newmexico" class="w-4 h-4">
+            <div>
+              <span class="font-medium">US LLC - New Mexico (Cheapest)</span>
+              <p class="text-xs text-zinc-500">$650 USD - Lowest cost, no annual fees</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="global-option" value="uk" class="w-4 h-4">
+            <div>
+              <span class="font-medium">UK Company Registration (Ltd)</span>
+              <p class="text-xs text-zinc-500">$500 USD - Companies House, £100 filing fee</p>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOREIGN COMPANY REGISTRATION IN NIGERIA SECTION -->
+    <div id="foreign-section" class="hidden space-y-5">
+      <div>
+        <label class="block text-sm font-bold text-black mb-2">Foreign Company Registration Package</label>
+        <div class="space-y-2">
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="foreign-option" value="standard" class="w-4 h-4" checked>
+            <div>
+              <span class="font-medium">Standard Package</span>
+              <p class="text-xs text-zinc-500">$350 USD - CAC registration, Business Permit, TIN</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="foreign-option" value="expat" class="w-4 h-4">
+            <div>
+              <span class="font-medium">Expatriate Support Package</span>
+              <p class="text-xs text-zinc-500">$550 USD - Includes Expatriate Quota + CERPAC guidance</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="foreign-option" value="rep-office" class="w-4 h-4">
+            <div>
+              <span class="font-medium">Representative Office</span>
+              <p class="text-xs text-zinc-500">$250 USD - Liaison office, no share capital</p>
+            </div>
+          </label>
+          <label class="flex items-center gap-3 p-3 border border-zinc-200 rounded-xl cursor-pointer hover:border-black transition-all">
+            <input type="radio" name="foreign-option" value="permit-only" class="w-4 h-4">
+            <div>
+              <span class="font-medium">Business Permit Only</span>
+              <p class="text-xs text-zinc-500">$150 USD - For existing local structure</p>
+            </div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Results Section -->
+    <div id="results" class="hidden mt-4 p-5 bg-zinc-50 rounded-xl border border-zinc-200">
+      <h4 class="font-bold text-black mb-3">Vobels Complete Package Price</h4>
+      <div class="space-y-2 text-sm">
+        <div class="flex justify-between">
+          <span class="text-zinc-600">Government/Official Fee:</span>
+          <span class="font-medium" id="gov-fee">₦0</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-zinc-600">Vobels Service Fee:</span>
+          <span class="font-medium text-green-700" id="vobels-fee">₦0</span>
+        </div>
+        <div class="flex justify-between pt-2 border-t-2 border-black">
+          <span class="font-bold text-black text-base">Total (All Inclusive):</span>
+          <span class="font-bold text-black text-lg" id="total">₦0</span>
+        </div>
+        <p class="text-[10px] text-zinc-400 text-center mt-2" id="price-note">* Includes filing, documentation, and support</p>
+      </div>
+      
+      <!-- Lead Capture -->
+      <div id="lead-capture" class="mt-5 pt-4 border-t border-zinc-200">
+        <p class="text-sm font-medium text-black mb-2">Get this breakdown as PDF + Free Consultation</p>
+        <div class="flex gap-2">
+          <input type="email" id="lead-email" placeholder="Your email address" class="flex-1 px-3 py-2 border border-zinc-200 rounded-lg text-sm">
+          <button id="submit-lead" class="px-4 py-2 bg-black text-white rounded-lg text-sm font-medium hover:bg-zinc-800">Send</button>
+        </div>
+        <p class="text-[10px] text-zinc-400 mt-2">No spam. Unsubscribe anytime.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (function() {
+    let currentCategory = 'registration';
+    let currentType = 'ltd';
+    let currentShareCapital = 1000000;
+    let includeTaxPromax = false;
+    
+    // Pricing data
+    const registrationPrices = {
+      'business-name': { base: 35000, taxpromax: 60000, govFee: 30000, vobelsFee: 5000 },
+      'ltd': { base: 45000, taxpromax: 70000, perMillion: 25000, govBase: 35000, govPerMillion: 25000, vobelsFee: 10000 },
+      'plc': { base: 105000, perMillion: 40000, govBase: 68000, govPerMillion: 25000, vobelsFee: 37000, noTaxpromax: true },
+      'ngo': { base: 150000, taxpromax: 200000, govFee: 135000, vobelsFee: 15000 }
+    };
+    
+    const trademarkPrices = {
+      basic: { total: 70000, govFee: 45000, vobelsFee: 25000 },
+      premium: { total: 150000, govFee: 45000, vobelsFee: 105000 }
+    };
+    
+    const copyrightPrices = {
+      basic: { total: 50000, govFee: 35000, vobelsFee: 15000 },
+      premium: { total: 150000, govFee: 35000, vobelsFee: 115000 }
+    };
+    
+    const patentPrices = {
+      local: { total: 250000, govFee: 200000, vobelsFee: 50000, currency: 'NGN' },
+      international: { total: 2000, govFee: 1500, vobelsFee: 500, currency: 'USD' }
+    };
+    
+    const nafdacPrices = {
+      micro: { total: 95000, govFee: 75000, vobelsFee: 20000 },
+      small: { total: 150000, govFee: 120000, vobelsFee: 30000 },
+      large: { total: 250000, govFee: 200000, vobelsFee: 50000 },
+      drugs: { total: 300000, govFee: 250000, vobelsFee: 50000 },
+      'cosmetics-small': { total: 120000, govFee: 95000, vobelsFee: 25000 },
+      'cosmetics-large': { total: 200000, govFee: 160000, vobelsFee: 40000 }
+    };
+    
+    const globalPrices = {
+      duns: { total: 50, govFee: 35, vobelsFee: 15, currency: 'USD' },
+      'us-wyoming': { total: 720, govFee: 120, vobelsFee: 600, currency: 'USD' },
+      'us-delaware': { total: 750, govFee: 110, vobelsFee: 640, currency: 'USD' },
+      'us-newmexico': { total: 650, govFee: 50, vobelsFee: 600, currency: 'USD' },
+      uk: { total: 500, govFee: 130, vobelsFee: 370, currency: 'USD' }
+    };
+    
+    const foreignPrices = {
+      standard: { total: 350, govFee: 100, vobelsFee: 250, currency: 'USD' },
+      expat: { total: 550, govFee: 150, vobelsFee: 400, currency: 'USD' },
+      'rep-office': { total: 250, govFee: 80, vobelsFee: 170, currency: 'USD' },
+      'permit-only': { total: 150, govFee: 50, vobelsFee: 100, currency: 'USD' }
+    };
+    
+    function formatNaira(amount) {
+      return '₦' + amount.toLocaleString();
+    }
+    
+    function formatUSD(amount) {
+      return '$' + amount.toLocaleString();
+    }
+    
+    function updateUI() {
+      let govFee = 0;
+      let vobelsFee = 0;
+      let total = 0;
+      let currency = 'NGN';
+      let priceNote = "";
+      
+      if (currentCategory === 'registration') {
+        if (currentType === 'ltd') {
+          const additionalMillions = Math.max(0, Math.floor((currentShareCapital - 1000000) / 1000000));
+          const additionalCost = additionalMillions * registrationPrices.ltd.perMillion;
+          if (includeTaxPromax) {
+            total = registrationPrices.ltd.taxpromax + additionalCost;
+          } else {
+            total = registrationPrices.ltd.base + additionalCost;
+          }
+          govFee = registrationPrices.ltd.govBase + (additionalMillions * registrationPrices.ltd.govPerMillion);
+          vobelsFee = total - govFee;
+          priceNote = "Includes MEMART, Status Report, Certificate";
+        } 
+        else if (currentType === 'plc') {
+          const additionalMillions = Math.max(0, Math.floor((currentShareCapital - 1000000) / 1000000));
+          const additionalCost = additionalMillions * registrationPrices.plc.perMillion;
+          total = registrationPrices.plc.base + additionalCost;
+          govFee = registrationPrices.plc.govBase + (additionalMillions * registrationPrices.plc.govPerMillion);
+          vobelsFee = total - govFee;
+          priceNote = "Includes MEMART, Status Report, Certificate";
+        }
+        else if (currentType === 'business-name') {
+          total = includeTaxPromax ? registrationPrices['business-name'].taxpromax : registrationPrices['business-name'].base;
+          govFee = registrationPrices['business-name'].govFee;
+          vobelsFee = registrationPrices['business-name'].vobelsFee;
+          priceNote = "Includes Certificate of Incorporation, Status Report";
+        }
+        else if (currentType === 'ngo') {
+          total = includeTaxPromax ? registrationPrices.ngo.taxpromax : registrationPrices.ngo.base;
+          govFee = registrationPrices.ngo.govFee;
+          vobelsFee = registrationPrices.ngo.vobelsFee;
+          priceNote = "Includes Constitution, Status Report, Newspaper Publication";
+        }
+      }
+      else if (currentCategory === 'trademark') {
+        const option = document.querySelector('input[name="trademark-option"]:checked')?.value || 'basic';
+        total = trademarkPrices[option].total;
+        govFee = trademarkPrices[option].govFee;
+        vobelsFee = trademarkPrices[option].vobelsFee;
+        priceNote = option === 'basic' ? "Search Report, Application, Acceptance Letter" : "Includes Certificate of Trademark";
+      }
+      else if (currentCategory === 'copyright') {
+        const option = document.querySelector('input[name="copyright-option"]:checked')?.value || 'basic';
+        total = copyrightPrices[option].total;
+        govFee = copyrightPrices[option].govFee;
+        vobelsFee = copyrightPrices[option].vobelsFee;
+        priceNote = option === 'basic' ? "One paper base, Search Report, Grant Notification" : "Includes Certified True Copy of Certificate";
+      }
+      else if (currentCategory === 'patent') {
+        const option = document.querySelector('input[name="patent-option"]:checked')?.value || 'local';
+        total = patentPrices[option].total;
+        govFee = patentPrices[option].govFee;
+        vobelsFee = patentPrices[option].vobelsFee;
+        currency = patentPrices[option].currency;
+        priceNote = option === 'local' ? "Nigeria only, one invention/claim" : "International PCT filing protection";
+      }
+      else if (currentCategory === 'nafdac') {
+        const category = document.getElementById('nafdac-category')?.value || 'micro';
+        total = nafdacPrices[category].total;
+        govFee = nafdacPrices[category].govFee;
+        vobelsFee = nafdacPrices[category].vobelsFee;
+        priceNote = "NAFDAC registration fee varies by product category";
+      }
+      else if (currentCategory === 'global') {
+        const option = document.querySelector('input[name="global-option"]:checked')?.value || 'duns';
+        total = globalPrices[option].total;
+        govFee = globalPrices[option].govFee;
+        vobelsFee = globalPrices[option].vobelsFee;
+        currency = globalPrices[option].currency;
+        const names = { duns: "DUNS", 'us-wyoming': "Wyoming LLC", 'us-delaware': "Delaware LLC", 'us-newmexico': "New Mexico LLC", uk: "UK Ltd" };
+        priceNote = `${names[option]} registration - ${currency === 'USD' ? 'USD' : 'NGN'} pricing`;
+      }
+      else if (currentCategory === 'foreign') {
+        const option = document.querySelector('input[name="foreign-option"]:checked')?.value || 'standard';
+        total = foreignPrices[option].total;
+        govFee = foreignPrices[option].govFee;
+        vobelsFee = foreignPrices[option].vobelsFee;
+        currency = foreignPrices[option].currency;
+        const names = { standard: "Standard Registration", expat: "Expat Support", 'rep-office': "Rep Office", 'permit-only': "Permit Only" };
+        priceNote = `${names[option]} - Complete foreign company registration in Nigeria`;
+      }
+      
+      // Display results with proper currency formatting
+      document.getElementById('gov-fee').innerHTML = currency === 'USD' ? formatUSD(govFee) : formatNaira(govFee);
+      document.getElementById('vobels-fee').innerHTML = currency === 'USD' ? formatUSD(vobelsFee) : formatNaira(vobelsFee);
+      document.getElementById('total').innerHTML = currency === 'USD' ? formatUSD(total) : formatNaira(total);
+      document.getElementById('price-note').innerText = priceNote;
+      document.getElementById('results').classList.remove('hidden');
+    }
+    
+    // Category switching
+    const catBtns = document.querySelectorAll('.cat-btn');
+    const sections = {
+      registration: document.getElementById('registration-section'),
+      trademark: document.getElementById('trademark-section'),
+      copyright: document.getElementById('copyright-section'),
+      patent: document.getElementById('patent-section'),
+      nafdac: document.getElementById('nafdac-section'),
+      global: document.getElementById('global-section'),
+      foreign: document.getElementById('foreign-section')
+    };
+    
+    catBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        catBtns.forEach(b => {
+          b.classList.remove('bg-black', 'text-white', 'border-black');
+          b.classList.add('border-zinc-200');
+        });
+        btn.classList.add('bg-black', 'text-white', 'border-black');
+        
+        currentCategory = btn.getAttribute('data-category');
+        
+        Object.values(sections).forEach(section => {
+          if (section) section.classList.add('hidden');
+        });
+        
+        if (sections[currentCategory]) {
+          sections[currentCategory].classList.remove('hidden');
+        }
+        
+        updateUI();
+      });
+    });
+    
+    // Registration type buttons
+    const typeBtns = document.querySelectorAll('.type-btn');
+    typeBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        typeBtns.forEach(b => {
+          b.classList.remove('bg-black', 'text-white', 'border-black');
+          b.classList.add('border-zinc-200');
+        });
+        btn.classList.add('bg-black', 'text-white', 'border-black');
+        currentType = btn.getAttribute('data-type');
+        
+        const shareCapitalGroup = document.getElementById('share-capital-group');
+        const taxpromaxGroup = document.getElementById('taxpromax-group');
+        
+        if (currentType === 'ltd' || currentType === 'plc') {
+          shareCapitalGroup.classList.remove('hidden');
+        } else {
+          shareCapitalGroup.classList.add('hidden');
+        }
+        
+        if (currentType !== 'plc') {
+          taxpromaxGroup.classList.remove('hidden');
+        } else {
+          taxpromaxGroup.classList.add('hidden');
+          includeTaxPromax = false;
+          document.getElementById('include-taxpromax').checked = false;
+        }
+        
+        updateUI();
+      });
+    });
+    
+    // Share capital calculation
+    const calculateBtn = document.getElementById('calculate-btn');
+    const shareCapitalInput = document.getElementById('share-capital');
+    if (calculateBtn) {
+      calculateBtn.addEventListener('click', () => {
+        let value = parseInt(shareCapitalInput.value);
+        if (isNaN(value)) value = 1000000;
+        if (value < 1000000) value = 1000000;
+        currentShareCapital = value;
+        shareCapitalInput.value = value;
+        updateUI();
+      });
+    }
+    
+    // TaxPromax checkbox
+    const taxpromaxCheckbox = document.getElementById('include-taxpromax');
+    if (taxpromaxCheckbox) {
+      taxpromaxCheckbox.addEventListener('change', () => {
+        includeTaxPromax = taxpromaxCheckbox.checked;
+        updateUI();
+      });
+    }
+    
+    // NAFDAC dropdown
+    const nafdacSelect = document.getElementById('nafdac-category');
+    if (nafdacSelect) {
+      nafdacSelect.addEventListener('change', () => updateUI());
+    }
+    
+    // Radio button groups
+    const trademarkRadios = document.querySelectorAll('input[name="trademark-option"]');
+    trademarkRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
+    
+    const copyrightRadios = document.querySelectorAll('input[name="copyright-option"]');
+    copyrightRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
+    
+    const patentRadios = document.querySelectorAll('input[name="patent-option"]');
+    patentRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
+    
+    const globalRadios = document.querySelectorAll('input[name="global-option"]');
+    globalRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
+    
+    const foreignRadios = document.querySelectorAll('input[name="foreign-option"]');
+    foreignRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
+    
+    // Lead capture
+    const submitLead = document.getElementById('submit-lead');
+    if (submitLead) {
+      submitLead.addEventListener('click', () => {
+        const email = document.getElementById('lead-email').value;
+        if (email && email.includes('@')) {
+          fetch('/api/capture-lead', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email, service: currentCategory, source: 'calculator' })
+          });
+          alert('Thank you! We\'ll send you the breakdown shortly.');
+          document.getElementById('lead-email').value = '';
+        } else {
+          alert('Please enter a valid email address');
+        }
+      });
+    }
+    
+    updateUI();
+  })();
+</script>

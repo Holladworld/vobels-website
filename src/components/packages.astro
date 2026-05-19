@@ -1,0 +1,149 @@
+---
+const packages = [
+  {
+    name: "Startup Launch",
+    description: "For new businesses needing a rock-solid foundation.",
+    features: [
+      "Business Structure & CAC",
+      "Brand Identity & Guidelines",
+      "Professional Website",
+      "Compliance Setup",
+    ],
+    button: "Start Building",
+    buttonLink: "/contact",
+    featured: false,
+  },
+  {
+    name: "Growth Accelerator",
+    description: "For existing businesses ready to professionalize and scale.",
+    features: [
+      "Brand Repositioning",
+      "Marketing & Ads Strategy",
+      "Financial Systems (BizOS)",
+      "Operational Process Review",
+    ],
+    button: "Scale Now",
+    buttonLink: "/contact",
+    featured: true,
+  },
+  {
+    name: "DUNS Number & Global Access",
+    description: "For Nigerian businesses expanding to global markets.",
+    features: [
+      "DUNS Number Registration ($40)",
+      "US Business Registration",
+      "UK Business Registration",
+      "Global Compliance Advisory",
+    ],
+    button: "Go Global",
+    buttonLink: "/pillars/global",
+    featured: false,
+    type: "global",
+  },
+  {
+    name: "Foreign Company Registration in Nigeria",
+    description: "For international companies entering the Nigerian market.",
+    features: [
+      "CAC Foreign Company Registration",
+      "Business Permit & Approvals",
+      "Expatriate Quota & CERPAC Support",
+      "Local Compliance & Tax Registration",
+    ],
+    button: "Register in Nigeria",
+    buttonLink: "/pillars/foreign-registration",
+    featured: false,
+    type: "foreign",
+    isNew: true,
+  },
+  {
+    name: "Enterprise Support",
+    description: "Serious management for established companies.",
+    features: [
+      "Ongoing Strategy Advisory",
+      "Financial & Compliance Monitoring",
+      "Dedicated Support Team",
+      "Expansion Roadmap",
+    ],
+    button: "Contact Executive Team",
+    buttonLink: "/contact",
+    featured: false,
+  },
+  {
+    name: "Agent Academy",
+    description: "Learn to register CAC, NAFDAC, and Trademarks professionally.",
+    features: [
+      "Name Search Mastery",
+      "Agent Account Setup",
+      "Step-by-Step Portals",
+      "Private WhatsApp Group",
+    ],
+    button: "Become an Agent",
+    buttonLink: "/academy/become-an-agent",
+    featured: false,
+  },
+];
+---
+
+<div class="mt-32">
+  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
+    Integrated Solutions
+  </h2>
+  <p class="text-lg mt-4 text-slate-600 text-center max-w-3xl mx-auto">
+    We don't sell tasks. We deliver results through structured, high-impact packages designed for your business stage.
+  </p>
+</div>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
+  {
+    packages.map((item) => (
+      <div class={`flex flex-col p-8 rounded-2xl border relative ${item.featured ? 'border-black shadow-xl scale-105 md:scale-105' : 'border-slate-200 shadow-sm'} transition-all hover:shadow-md ${item.type === 'global' ? 'border-blue-200 bg-blue-50/20' : ''} ${item.type === 'foreign' ? 'border-emerald-200 bg-emerald-50/20' : ''}`}>
+        {item.isNew && (
+          <div class="absolute -top-3 left-4 bg-emerald-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+            New Service
+          </div>
+        )}
+        {item.type === 'global' && (
+          <div class="absolute -top-3 left-4 bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+            Global Access
+          </div>
+        )}
+        <h3 class="font-bold text-2xl">{item.name}</h3>
+        <p class="text-slate-500 mt-2 text-sm leading-relaxed">{item.description}</p>
+        
+        <ul class="mt-8 space-y-3 flex-1">
+          {item.features.map((feature) => (
+            <li class="flex items-center gap-2 text-slate-700">
+              <span class="text-black text-xs">●</span>
+              {feature}
+            </li>
+          ))}
+        </ul>
+        
+        <a 
+          href={item.buttonLink} 
+          class={`mt-8 block text-center py-3 rounded-lg font-semibold transition-all ${item.featured ? 'bg-black text-white hover:bg-slate-800' : item.type === 'global' ? 'bg-blue-600 text-white hover:bg-blue-700' : item.type === 'foreign' ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'bg-slate-100 text-black hover:bg-slate-200'}`}
+        >
+          {item.button}
+        </a>
+      </div>
+    ))
+  }
+</div>
+
+<!-- Dual offering note -->
+<div class="mt-12 grid md:grid-cols-2 gap-6">
+  <div class="text-center p-5 bg-blue-50 rounded-2xl border border-blue-200">
+    <h3 class="font-bold text-black mb-2">Nigerian Business Going Global?</h3>
+    <p class="text-slate-600 text-sm mb-3">Get your DUNS Number & register abroad</p>
+    <a href="/pillars/global" class="text-blue-700 font-semibold text-sm underline underline-offset-4">
+      Explore Global Access →
+    </a>
+  </div>
+  <div class="text-center p-5 bg-emerald-50 rounded-2xl border border-emerald-200">
+    <h3 class="font-bold text-black mb-2">International Agency Entering Nigeria?</h3>
+    <p class="text-slate-600 text-sm mb-3">We handle your company registration locally</p>
+    <a href="/pillars/foreign-registration" class="text-emerald-700 font-semibold text-sm underline underline-offset-4">
+      Register in Nigeria →
+    </a>
+  </div>
+</div>

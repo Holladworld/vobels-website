@@ -1,0 +1,175 @@
+---
+// Mobile-friendly dark theme slider with Unsplash images
+const slides = [
+  {
+    title: "Business Formation Experts",
+    description: "Registered 500+ businesses with CAC",
+    stat: "50+",
+    statLabel: "Businesses",
+    bgImage: "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=800&h=400&fit=crop"
+  },
+  {
+    title: "Global Business Access",
+    description: "DUNS numbers & international registration",
+    stat: "07+",
+    statLabel: "Countries",
+    bgImage: "https://images.unsplash.com/photo-1526481280693-3bfa7568e0f3?w=800&h=400&fit=crop"
+  },
+  {
+    title: "Digital Transformation",
+    description: "Custom websites & business systems",
+    stat: "100%",
+    statLabel: "Success",
+    bgImage: "https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=400&fit=crop"
+  },
+  {
+    title: "Trusted by Leaders",
+    description: "From startups to enterprises",
+    stat: "50+",
+    statLabel: "Clients",
+    bgImage: "https://images.unsplash.com/photo-1557426272-fc759fdf7a8d?w=800&h=400&fit=crop"
+  }
+];
+---
+
+<div class="relative overflow-hidden rounded-xl my-8 mx-4 md:mx-0" id="slider-container">
+  <!-- Slides Container -->
+  <div class="relative h-56 md:h-40" id="slides-container">
+    {slides.map((slide, index) => (
+      <div 
+        id={`slide-${index}`}
+        class={`absolute inset-0 rounded-xl flex flex-col justify-center transition-opacity duration-500 ${index === 0 ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}
+        style={`background-image: linear-gradient(to right, rgba(0,0,0,0.85), rgba(0,0,0,0.7)), url('${slide.bgImage}'); background-size: cover; background-position: center;`}
+      >
+        <div class="px-4 md:px-6">
+          {/* Mobile layout: Stacked vertically */}
+          <div class="text-center">
+            {/* Stat - Large on mobile */}
+            <div class="mb-2">
+              <div class="text-3xl md:text-4xl font-black text-white">
+                {slide.stat}
+              </div>
+              <div class="text-[10px] md:text-xs uppercase tracking-wider text-zinc-300">
+                {slide.statLabel}
+              </div>
+            </div>
+            
+            {/* Title and description */}
+            <div>
+              <h3 class="text-base md:text-lg font-bold text-white mb-1">{slide.title}</h3>
+              <p class="text-xs md:text-sm text-zinc-200 max-w-md mx-auto">{slide.description}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+  
+  {/* Navigation Dots - Touch friendly */}
+  <div class="absolute bottom-2 left-0 right-0 flex justify-center gap-3 md:gap-2" id="dots-container">
+    {slides.map((_, index) => (
+      <button 
+        data-index={index}
+        class={`dot h-2 rounded-full transition-all duration-300 touch-manipulation ${index === 0 ? 'bg-white w-6' : 'bg-white/40 w-2'}`}
+        aria-label={`Go to slide ${index + 1}`}
+      >
+      </button>
+    ))}
+  </div>
+  
+  {/* Prev/Next Buttons - Larger touch targets on mobile */}
+  <button id="prev-btn" class="absolute left-1 md:left-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 rounded-full p-2 md:p-1.5 transition-all touch-manipulation" aria-label="Previous slide">
+    <svg class="w-5 h-5 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+    </svg>
+  </button>
+  
+  <button id="next-btn" class="absolute right-1 md:right-2 top-1/2 -translate-y-1/2 bg-black/40 hover:bg-black/60 rounded-full p-2 md:p-1.5 transition-all touch-manipulation" aria-label="Next slide">
+    <svg class="w-5 h-5 md:w-4 md:h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+    </svg>
+  </button>
+</div>
+
+<script is:inline>
+  (function() {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('[id^="slide-"]');
+    const dots = document.querySelectorAll('.dot');
+    const prevBtn = document.getElementById('prev-btn');
+    const nextBtn = document.getElementById('next-btn');
+    let autoInterval;
+    let touchStartX = 0;
+    let touchEndX = 0;
+    
+    function showSlide(index) {
+      if (index < 0) index = slides.length - 1;
+      if (index >= slides.length) index = 0;
+      
+      slides.forEach((slide, i) => {
+        if (i === index) {
+          slide.classList.remove('opacity-0', 'pointer-events-none');
+          slide.classList.add('opacity-100');
+        } else {
+          slide.classList.remove('opacity-100');
+          slide.classList.add('opacity-0', 'pointer-events-none');
+        }
+      });
+      
+      dots.forEach((dot, i) => {
+        if (i === index) {
+          dot.classList.remove('w-2', 'bg-white/40');
+          dot.classList.add('w-6', 'bg-white');
+        } else {
+          dot.classList.remove('w-6', 'bg-white');
+          dot.classList.add('w-2', 'bg-white/40');
+        }
+      });
+      
+      currentSlide = index;
+    }
+    
+    function nextSlide() { showSlide(currentSlide + 1); resetAutoPlay(); }
+    function prevSlide() { showSlide(currentSlide - 1); resetAutoPlay(); }
+    function startAutoPlay() { autoInterval = setInterval(nextSlide, 5000); }
+    function resetAutoPlay() { clearInterval(autoInterval); startAutoPlay(); }
+    
+    // Touch events for mobile swipe
+    function handleTouchStart(e) {
+      touchStartX = e.touches[0].clientX;
+    }
+    
+    function handleTouchEnd(e) {
+      touchEndX = e.changedTouches[0].clientX;
+      const diff = touchStartX - touchEndX;
+      if (Math.abs(diff) > 50) {
+        if (diff > 0) {
+          nextSlide();
+        } else {
+          prevSlide();
+        }
+      }
+    }
+    
+    if (prevBtn) prevBtn.addEventListener('click', prevSlide);
+    if (nextBtn) nextBtn.addEventListener('click', nextSlide);
+    
+    // Add touch swipe for mobile
+    const container = document.getElementById('slider-container');
+    if (container) {
+      container.addEventListener('touchstart', handleTouchStart);
+      container.addEventListener('touchend', handleTouchEnd);
+      container.addEventListener('mouseenter', () => clearInterval(autoInterval));
+      container.addEventListener('mouseleave', startAutoPlay);
+    }
+    
+    dots.forEach(dot => {
+      dot.addEventListener('click', () => {
+        showSlide(parseInt(dot.getAttribute('data-index')));
+        resetAutoPlay();
+      });
+    });
+    
+    startAutoPlay();
+  })();
+</script>

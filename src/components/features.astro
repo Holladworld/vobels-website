@@ -1,0 +1,76 @@
+---
+import { Icon } from "astro-icon/components";
+
+const features = [
+  {
+    title: "Business Formation & Structure",
+    description: "Idea validation, business structure advisory, CAC registration, and regulatory compliance.",
+    icon: "bx:bxs-briefcase",
+    path: "/pillars/formation" 
+  },
+  {
+    title: "Business Design & Identity",
+    description: "Brand naming, positioning, logo identity, and business model design. Where ideas become real.",
+    icon: "bx:bxs-paint",
+    path: "/pillars/identity" 
+  },
+  {
+    title: "Operations & Management",
+    description: "Business plans, financial statements, process setup, and ongoing management support.",
+    icon: "bx:bxs-component",
+    path: "/pillars/operations"
+  },
+  {
+    title: "Digital Presence & Tech",
+    description: "Custom websites, business apps, internal tools, and CRM systems built for scale.",
+    icon: "bx:bxs-layer",
+    path: "/pillars/technology"
+  },
+  {
+    title: "Growth & Expansion",
+    description: "Marketing strategy, ads, and market entry support where real revenue scaling happens.",
+    icon: "bx:bxs-rocket",
+    path: "/pillars/expansion"
+  },
+    {
+    title: "Global Business Access",
+    description: "DUNS Number registration, international business setup, and global platform access.",
+    icon: "bx:bxs-network-chart",
+    path: "/pillars/global" 
+  },
+  {
+    title: "Vobels Venture Studio",
+    description: "Selective end-to-end partnership and equity-based growth for high-potential ventures.",
+    icon: "bx:bxs-star",
+    path: "/contact" 
+  },
+];
+---
+
+<div class="mt-24">
+  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
+    The Core Pillars of Enablement
+  </h2>
+  <p class="text-lg mt-4 text-slate-600 text-center max-w-3xl mx-auto">
+    We don't sell tasks; we provide the structured ecosystem required to move 
+    from a raw concept to a market-leading institution.
+  </p>
+</div>
+
+<div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-16">
+  {
+    features.map((item) => (
+      /* Wrap the whole card in a link to the Pillar page */
+      <a href={item.path} class="group flex gap-4 items-start hover:bg-zinc-50 p-4 rounded-xl transition-all">
+        <div class="mt-1 bg-black rounded-full p-2 w-8 h-8 shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform">
+          <Icon class="text-white w-5 h-5" name={item.icon} />
+        </div>
+        <div>
+          <h3 class="font-semibold text-lg group-hover:text-black">{item.title}</h3>
+          <p class="text-slate-500 mt-2 leading-relaxed">{item.description}</p>
+          <span class="text-xs font-bold uppercase tracking-widest mt-4 block text-zinc-400 group-hover:text-black transition-colors">Learn More →</span>
+        </div>
+      </a>
+    ))
+  }
+</div>
