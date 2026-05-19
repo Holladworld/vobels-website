@@ -1,0 +1,198 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import { Picture } from "astro:assets";
+// Using the Gold/Foundational Hero image
+import formationHero from "@/assets/pillars-image/hero-formation.png"; 
+
+const registrations = [
+  { group: "CAC & Legal", items: ["Limited Liability Company", "Business Name", "NGO Registration", "Incorporated Trustee"] },
+  { group: "Intellectual Property", items: ["Trademark Registration", "Patent Filing", "Copyright Protection"] },
+  { group: "Compliance & Licenses", items: ["Tax Clearance Certificate", "SCUML Registration", "NAFDAC", "Export Licence (NEPC)"] }
+];
+---
+
+<Layout title="Business Formation & Structure | Vobels">
+  <Container>
+    <div class="mt-16 grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal-content">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-400">Pillar 01</span>
+        <h1 class="text-5xl font-bold mt-4 mb-6 tracking-tight">Business Formation & Structure</h1>
+        <p class="text-xl text-zinc-600 font-light leading-relaxed mb-8">
+          The difference between a hustle and an institution is the foundation. 
+          Vobels ensures your idea is validated, registered, and structurally sound from Day 1.
+        </p>
+        
+        <div class="space-y-6">
+          <div class="border-l-2 border-black pl-6">
+            <h3 class="font-bold text-lg">Legal & Regulatory</h3>
+            <p class="text-zinc-500">From CAC registration to IP protection, we secure your ownership and right to operate.</p>
+          </div>
+          <div class="border-l-2 border-zinc-200 pl-6">
+            <h3 class="font-bold text-lg">Compliance Advisory</h3>
+            <p class="text-zinc-500">Navigating NAFDAC, SCUML, and Export licenses to make your business market-ready.</p>
+          </div>
+        </div>
+
+        <div class="mt-12">
+          <a href="#register" class="bg-black text-white px-10 py-4 rounded-full uppercase tracking-widest text-xs font-bold hover:bg-zinc-800 transition-all">
+            Start Your Business Formation
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal-content">
+        <Picture src={formationHero} alt="Vobels Formation Pillar" class="rounded-3xl shadow-2xl" />
+      </div>
+    </div>
+
+    <div class="mt-32">
+      <h2 class="text-3xl font-bold text-center mb-16">Regulatory & Compliance Coverage</h2>
+      <div class="grid md:grid-cols-3 gap-10">
+        {registrations.map((cat) => (
+          <div class="bg-zinc-50 p-8 rounded-2xl border border-zinc-100">
+            <h3 class="font-bold text-xl mb-4 border-b pb-2 border-zinc-200 uppercase tracking-tighter">{cat.group}</h3>
+            <ul class="space-y-3">
+              {cat.items.map(item => (
+                <li class="flex items-start gap-2 text-zinc-600">
+                  <span class="text-black mt-1 font-bold text-xs">✓</span> {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div id="register" class="mt-32 max-w-4xl mx-auto bg-white border border-zinc-200 p-8 md:p-16 rounded-[2.5rem] shadow-2xl mb-20">
+      <div id="register" class="mt-32 max-w-4xl mx-auto bg-white border border-zinc-200 p-8 md:p-16 rounded-[2.5rem] shadow-2xl mb-20">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold uppercase tracking-tighter">Registration Portal</h2>
+        <p class="text-zinc-500 mt-2">Select your track to begin the verification process.</p>
+      </div>
+
+      <form id="vobelsIntake" action="https://formspree.io/f/YOUR_ID" method="POST" class="space-y-8">
+        
+        <div class="p-6 bg-zinc-50 rounded-2xl border border-zinc-100">
+          <label class="block text-xs font-bold uppercase tracking-widest mb-4 text-black text-center">What is the objective?</label>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-4" id="typeSelector">
+            <button type="button" data-value="cac" class="type-btn border-2 border-zinc-200 p-4 rounded-xl text-left hover:border-black transition-all bg-white font-semibold">
+              CAC Registration <span class="block text-[10px] font-normal text-zinc-400">LTD, NGO, BN</span>
+            </button>
+            <button type="button" data-value="trademark" class="type-btn border-2 border-zinc-200 p-4 rounded-xl text-left hover:border-black transition-all bg-white font-semibold">
+              IP Registration <span class="block text-[10px] font-normal text-zinc-400">Trademark/Patent</span>
+            </button>
+            <button type="button" data-value="compliance" class="type-btn border-2 border-zinc-200 p-4 rounded-xl text-left hover:border-black transition-all bg-white font-semibold">
+              Compliance Regulatory <span class="block text-[10px] font-normal text-zinc-400">NAFDAC, SCUML, Export</span>
+            </button>
+          </div>
+          <input type="hidden" name="registration_type" id="selectedType" required />
+        </div>
+
+        <div id="dynamicContent" class="hidden space-y-6">
+          
+          <div id="cacFields" class="hidden space-y-6 animate-in fade-in duration-500">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-xs font-bold uppercase mb-2 text-zinc-400">Proposed Business Name</label>
+                <input type="text" name="cac_name_search" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" placeholder="Primary choice" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase mb-2 text-zinc-400">Category</label>
+                <select name="cac_category" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border text-sm">
+                  <option>Limited Liability (LTD)</option>
+                  <option>Business Name (Enterprise)</option>
+                  <option>NGO / Foundation</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div id="tmFields" class="hidden space-y-6 animate-in fade-in duration-500">
+            <div>
+              <label class="block text-xs font-bold uppercase mb-2 text-zinc-400">Brand Name/Mark to Protect</label>
+              <input type="text" name="tm_name" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" placeholder="e.g. VOBELS" />
+            </div>
+          </div>
+
+          <div id="complianceFields" class="hidden space-y-6 animate-in fade-in duration-500">
+            <div class="grid md:grid-cols-2 gap-6">
+              <div>
+                <label class="block text-xs font-bold uppercase mb-2 text-zinc-400">Existing RC Number</label>
+                <input type="text" name="rc_number" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" placeholder="RC-000000" />
+              </div>
+              <div>
+                <label class="block text-xs font-bold uppercase mb-2 text-zinc-400">Required License</label>
+                <select name="license_type" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border text-sm">
+                  <option>Export Licence (NEPC)</option>
+                  <option>SCUML Certificate</option>
+                  <option>NAFDAC Registration</option>
+                  <option>Tax Clearance (TCC)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-6 pt-6 border-t border-zinc-100">
+            <div>
+              <label class="block text-xs font-bold uppercase mb-2 text-zinc-400">Your Full Name</label>
+              <input type="text" name="client_name" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+            </div>
+            <div>
+              <label class="block text-xs font-bold uppercase mb-2 text-zinc-400">WhatsApp (For Search Results)</label>
+              <input type="tel" name="whatsapp" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" placeholder="+234..." />
+            </div>
+          </div>
+
+          <button type="submit" class="w-full bg-black text-white font-bold py-5 rounded-full uppercase tracking-widest text-xs hover:bg-zinc-800 transition-all">
+            Initiate Technical Search
+          </button>
+        </div>
+      </form>
+
+       <div class="mt-6 pt-6 border-t border-zinc-100 text-center">
+        <a href="/business-pricing#formation" class="text-sm text-zinc-500 hover:text-black underline underline-offset-4 inline-flex items-center gap-1">
+            → Need only specific services? View individual pricing
+        </a>
+    </div>
+
+    <script is:inline>
+      const btns = document.querySelectorAll('.type-btn');
+      const typeInput = document.getElementById('selectedType');
+      const dynamicDiv = document.getElementById('dynamicContent');
+      const fields = {
+        cac: document.getElementById('cacFields'),
+        trademark: document.getElementById('tmFields'),
+        compliance: document.getElementById('complianceFields')
+      };
+
+      btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Clear Active States
+          btns.forEach(b => b.classList.remove('border-black', 'bg-black', 'text-white'));
+          btns.forEach(b => b.classList.add('bg-white', 'text-black', 'border-zinc-200'));
+          Object.values(fields).forEach(f => f.classList.add('hidden'));
+
+          // Set Selection
+          const val = btn.getAttribute('data-value');
+          typeInput.value = val;
+          
+          // Highlight Button
+          btn.classList.remove('bg-white', 'text-black', 'border-zinc-200');
+          btn.classList.add('bg-black', 'text-white', 'border-black');
+
+          // Show Fields
+          dynamicDiv.classList.remove('hidden');
+          fields[val].classList.remove('hidden');
+        });
+      });
+    </script>
+
+    <div class="py-24 border-t border-zinc-100 text-center">
+      <h2 class="text-2xl font-bold mb-6 uppercase tracking-widest">The Outcome</h2>
+      <p class="text-zinc-500 max-w-3xl mx-auto italic text-xl font-light leading-relaxed">
+        "A fully registered, properly structured business foundation that is ready to attract investment, protect its assets, and operate with total legal compliance."
+      </p>
+    </div>
+  </Container>
+</Layout>
