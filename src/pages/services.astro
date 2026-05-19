@@ -1,0 +1,203 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+
+const serviceCategories = [
+  {
+    id: "formation",
+    title: "Business Formation & Structure",
+    description: "Register your business properly with CAC, get licensed, and protect your intellectual property.",
+    image: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&h=500&fit=crop",
+    imageAlt: "Business formation documents and certificates",
+    features: [
+      "CAC Registration (Business Name & LTD)",
+      "NGO/Foundation Registration",
+      "Trademark & Patent Filing",
+      "NAFDAC & SCUML Certification",
+      "Tax Clearance Certificate (TCC)"
+    ],
+    ctaLink: "/service/formation",
+    ctaText: "Start Your Registration"
+  },
+  {
+    id: "identity",
+    title: "Business Design & Identity",
+    description: "Build a brand that stands out, communicates value, and attracts your ideal clients.",
+    image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?w=800&h=500&fit=crop",
+    imageAlt: "Brand design and identity materials",
+    features: [
+      "Brand Identity Package",
+      "Logo Design & Guidelines",
+      "Corporate Collateral Design",
+      "Brand Positioning Strategy",
+      "Visual Identity System"
+    ],
+    ctaLink: "/service/identity",
+    ctaText: "Build Your Brand"
+  },
+  {
+    id: "operations",
+    title: "Operations & Management",
+    description: "Streamline your business with custom systems and automated workflows.",
+    image: "https://images.unsplash.com/photo-1551434678-e076c2236a9a?w=800&h=500&fit=crop",
+    imageAlt: "Business operations and management dashboard",
+    features: [
+      "BizOS Setup",
+      "Workflow Automation",
+      "Financial Systems",
+      "Operations Audit",
+      "Process Optimization"
+    ],
+    ctaLink: "/service/operations",
+    ctaText: "Optimize Operations"
+  },
+  {
+    id: "technology",
+    title: "Digital Presence & Technology",
+    description: "Get a professional website or custom web application built for your business.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&h=500&fit=crop",
+    imageAlt: "Digital technology and coding workspace",
+    features: [
+      "Professional Website",
+      "Custom Web Applications",
+      "API Integration",
+      "System Architecture Audit",
+      "Business Software Solutions"
+    ],
+    ctaLink: "/service/technology",
+    ctaText: "Build Your Digital Presence"
+  },
+  {
+    id: "expansion",
+    title: "Growth & Expansion",
+    description: "Scale your business with strategic marketing and market entry solutions.",
+    image: "https://images.unsplash.com/photo-1552581234-26160f608093?w=800&h=500&fit=crop",
+    imageAlt: "Business growth chart and strategy meeting",
+    features: [
+      "Content Strategy Setup",
+      "Paid Ads Management",
+      "Market Entry Strategy",
+      "Lead Generation Systems",
+      "Sales Funnel Optimization"
+    ],
+    ctaLink: "/service/expansion",
+    ctaText: "Scale Your Business"
+  },
+  {
+    id: "global",
+    title: "Global Business Access",
+    description: "Expand internationally with DUNS numbers and foreign business registration.",
+    image: "https://images.unsplash.com/photo-1526498460520-4c246339dccb?w=800&h=500&fit=crop",
+    imageAlt: "Global business and world map",
+    features: [
+      "DUNS Number Registration",
+      "US Business Registration",
+      "UK Business Registration",
+      "Global Compliance Advisory",
+      "International Banking Guidance"
+    ],
+    ctaLink: "/service/global",
+    ctaText: "Go Global"
+  },
+  {
+    id: "foreign",
+    title: "Foreign Company Registration in Nigeria",
+    description: "International companies entering Nigeria? We handle all local registration and compliance.",
+    image: "https://images.unsplash.com/photo-1529243856184-fd5465488984?w=800&h=500&fit=crop",
+    imageAlt: "International business and Nigeria flag",
+    features: [
+      "CAC Foreign Company Registration",
+      "Business Permit & Approvals",
+      "Expatriate Quota & CERPAC",
+      "Local Compliance & Tax",
+      "Legal Advisory Support"
+    ],
+    ctaLink: "/service/foreign-registration",
+    ctaText: "Register in Nigeria",
+    isNew: true
+  }
+];
+---
+
+<Layout title="Our Services | Vobels Limited">
+  <Container>
+    <!-- Hero Section -->
+    <div class="mt-16 text-center max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-black text-black tracking-tighter">
+        Our Services
+      </h1>
+      <p class="text-xl text-zinc-600 mt-4 leading-relaxed">
+        We provide end-to-end business solutions from formation to global expansion.
+        Choose the service that fits your business stage.
+      </p>
+    </div>
+
+    <!-- Services List -->
+    <div class="mt-16 space-y-20">
+      {serviceCategories.map((service, index) => (
+        <div id={service.id} class="scroll-mt-24">
+          <div class={`grid md:grid-cols-2 gap-10 items-center ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
+            <!-- Image -->
+            <div class="rounded-2xl overflow-hidden shadow-xl">
+              <img 
+                src={service.image} 
+                alt={service.imageAlt}
+                class="w-full h-64 md:h-80 object-cover hover:scale-105 transition-transform duration-500"
+                loading="lazy"
+              />
+            </div>
+            
+            <!-- Content -->
+            <div>
+              {service.isNew && (
+                <span class="inline-block bg-emerald-600 text-white text-xs font-bold px-3 py-1 rounded-full mb-4">
+                  New Service
+                </span>
+              )}
+              <h2 class="text-2xl md:text-3xl font-bold text-black mb-4">
+                {service.title}
+              </h2>
+              <p class="text-zinc-600 leading-relaxed mb-6">
+                {service.description}
+              </p>
+              
+              <ul class="space-y-2 mb-8">
+                {service.features.map((feature) => (
+                  <li class="flex items-center gap-2 text-sm text-zinc-600">
+                    <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                    </svg>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
+              
+              <a 
+                href={service.ctaLink}
+                class="inline-block bg-black text-white px-6 py-3 rounded-lg font-semibold hover:bg-zinc-800 transition-all"
+              >
+                {service.ctaText} →
+              </a>
+            </div>
+          </div>
+          
+          <!-- Divider between services -->
+          {index < serviceCategories.length - 1 && (
+            <div class="border-t border-zinc-100 mt-16"></div>
+          )}
+        </div>
+      ))}
+    </div>
+
+    <!-- CTA Section -->
+    <div class="mt-20 mb-20 bg-gradient-to-r from-black to-zinc-800 rounded-2xl p-10 text-center text-white">
+      <h2 class="text-2xl md:text-3xl font-bold mb-4">Not sure which service you need?</h2>
+      <p class="text-zinc-300 mb-6 max-w-2xl mx-auto">
+        Our team can assess your business needs and recommend the right solution.
+      </p>
+      <a href="/contact" class="inline-block bg-white text-black px-8 py-3 rounded-lg font-semibold hover:bg-zinc-100 transition-all">
+        Contact Our Team →
+      </a>
+    </div>
+  </Container>
+</Layout>

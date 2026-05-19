@@ -1,0 +1,379 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import { Picture } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import foreignHero from "@/assets/service-image/foreign-hero.png";
+
+
+const packages = [
+  {
+    name: "Foreign Company Registration",
+    price: "$350 USD",
+    priceNaira: "₦560,000",
+    usdAmount: 350,
+    description: "Complete registration of your foreign company in Nigeria.",
+    features: [
+      "Name Search & Reservation",
+      "CAC Foreign Company Registration",
+      "Business Permit Application",
+      "Tax Identification Number (TIN)",
+      "Certificate of Incorporation",
+      "MEMART Preparation",
+      "Status Report",
+      "Documentation Review",
+      "Email & WhatsApp Support"
+    ],
+    id: "FOREIGN_REG",
+    category: "foreign"
+  },
+  {
+    name: "Foreign Company Registration + Expatriate Support",
+    price: "$550 USD",
+    priceNaira: "₦880,000",
+    usdAmount: 550,
+    description: "Full registration with immigration support for foreign staff.",
+    features: [
+      "Everything in Standard Package",
+      "Expatriate Quota Processing",
+      "CERPAC (Residence Card) Guidance",
+      "Immigration Advisory",
+      "Priority Processing"
+    ],
+    id: "FOREIGN_REG_EXPAT",
+    category: "foreign",
+    popular: true
+  },
+  {
+    name: "Representative Office Registration",
+    price: "$250 USD",
+    priceNaira: "₦400,000",
+    usdAmount: 250,
+    description: "For foreign companies establishing a liaison office in Nigeria.",
+    features: [
+      "Liaison Office Registration",
+      "No minimum share capital required",
+      "Annual reporting support",
+      "Staff hiring guidance"
+    ],
+    id: "REP_OFFICE",
+    category: "foreign"
+  },
+  {
+    name: "Business Permit Only",
+    price: "$150 USD",
+    priceNaira: "₦240,000",
+    usdAmount: 150,
+    description: "For foreign companies that already have local structure.",
+    features: [
+      "Business Permit Application",
+      "Expatriate Quota guidance",
+      "Compliance documentation"
+    ],
+    id: "BIZ_PERMIT",
+    category: "foreign"
+  },
+  {
+    name: "Full Business Setup Package",
+    price: "Custom Quote",
+    priceNaira: "Custom",
+    usdAmount: null,
+    description: "Complete end-to-end setup for foreign investors.",
+    features: [
+      "Company Registration",
+      "Business Permit & Approvals",
+      "Expatriate Quota Processing",
+      "CERPAC (Residence Card)",
+      "Bank Account Setup",
+      "Tax Registration & Compliance",
+      "Legal Advisory",
+      "Ongoing Compliance Management"
+    ],
+    id: "FULL_PACKAGE",
+    category: "foreign",
+    isCustom: true
+  }
+];
+---
+
+<Layout title="Foreign Business Registration in Nigeria | Vobels">
+  <Container>
+    <div class="mt-16 grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal-content">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-400">New Service</span>
+        <h1 class="text-5xl font-bold mt-4 mb-6 tracking-tight text-black">
+          Register Your Foreign Business in Nigeria
+        </h1>
+        <p class="text-xl text-zinc-600 font-light leading-relaxed mb-8">
+          We help international companies establish legal presence in Nigeria. 
+          From CAC registration to business permits and compliance.
+        </p>
+        
+        <div class="grid gap-8">
+          <div class="flex gap-4">
+            <div class="flex-none w-1 h-12 bg-black"></div>
+            <div>
+              <h3 class="font-bold text-lg uppercase tracking-tight">Full Legal Registration</h3>
+              <p class="text-zinc-500">CAC foreign company registration, business permit, and all necessary approvals.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-none w-1 h-12 bg-zinc-200"></div>
+            <div>
+              <h3 class="font-bold text-lg uppercase tracking-tight">Expatriate Support</h3>
+              <p class="text-zinc-500">Expatriate quota, CERPAC, and immigration guidance for foreign staff.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-none w-1 h-12 bg-zinc-200"></div>
+            <div>
+              <h3 class="font-bold text-lg uppercase tracking-tight">Local Compliance</h3>
+              <p class="text-zinc-500">Tax registration, local bank account, and ongoing compliance management.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12">
+          <a href="#foreign-portal" class="bg-black text-white px-10 py-4 rounded-full uppercase tracking-widest text-xs font-bold hover:bg-zinc-800 transition-all">
+            Register Your Company
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal-content">
+        <Picture 
+          src={foreignHero} 
+          alt="Foreign Business Registration in Nigeria" 
+          class="rounded-3xl shadow-2xl border border-zinc-100" 
+        />
+      </div>
+    </div>
+
+    {/* Transparent Cost Breakdown */}
+    <div class="mt-12 p-6 bg-blue-50 rounded-2xl border border-blue-200">
+      <h3 class="font-bold text-black mb-3 text-center">What You're Paying For</h3>
+      <div class="grid md:grid-cols-2 gap-4 text-sm">
+        <div class="flex justify-between border-b border-blue-200 pb-2">
+          <span>CAC Official Registration Fee:</span>
+          <span class="font-bold">$53 USD</span>
+        </div>
+        <div class="flex justify-between border-b border-blue-200 pb-2">
+          <span>Document Preparation & Processing:</span>
+          <span class="font-bold">$50 USD</span>
+        </div>
+        <div class="flex justify-between border-b border-blue-200 pb-2">
+          <span>Legal & Compliance Advisory:</span>
+          <span class="font-bold">$100 USD</span>
+        </div>
+        <div class="flex justify-between border-b border-blue-200 pb-2">
+          <span>Vobels Agency & Handling Fee:</span>
+          <span class="font-bold">$100 USD</span>
+        </div>
+        <div class="flex justify-between border-b border-blue-200 pb-2">
+          <span>Miscellaneous (Stamp Duty, etc):</span>
+          <span class="font-bold">$47 USD</span>
+        </div>
+        <div class="flex justify-between pt-2 font-bold text-black">
+          <span>Total Investment:</span>
+          <span>$350 USD</span>
+        </div>
+      </div>
+      <p class="text-xs text-zinc-500 mt-3 text-center">
+        * Government fees are paid directly or included as shown. No hidden charges.
+      </p>
+    </div>
+
+    {/* Why Register Section */}
+    <div class="mt-20 bg-gradient-to-r from-emerald-900 to-black rounded-3xl p-8 md:p-12 text-white">
+      <h2 class="text-2xl md:text-3xl font-bold text-center mb-8">Why Register Your Foreign Company in Nigeria?</h2>
+      <div class="grid md:grid-cols-4 gap-6">
+        <div class="text-center">
+          <div class="text-3xl font-black mb-2">200M+</div>
+          <div class="text-sm opacity-80">Market Size</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-black mb-2">1st</div>
+          <div class="text-sm opacity-80">Largest Economy in Africa</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-black mb-2">Growing</div>
+          <div class="text-sm opacity-80">Tech & Investment Hub</div>
+        </div>
+        <div class="text-center">
+          <div class="text-3xl font-black mb-2">Legal</div>
+          <div class="text-sm opacity-80">Operate Legally & Securely</div>
+        </div>
+      </div>
+    </div>
+
+    {/* Pricing Packages */}
+    <div class="mt-20">
+      <h2 class="text-3xl font-bold text-center mb-4">Registration Packages</h2>
+      <p class="text-zinc-500 text-center mb-12 max-w-2xl mx-auto">
+        Choose the package that fits your business needs. All packages include professional support and guidance.
+      </p>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {packages.filter(p => !p.isCustom).map((pkg) => (
+          <div class={`border rounded-2xl p-6 hover:shadow-xl transition-all bg-white ${pkg.popular ? 'border-emerald-500 shadow-lg' : 'border-zinc-200'}`}>
+            {pkg.popular && (
+              <div class="inline-block px-3 py-1 bg-emerald-600 text-white text-[10px] font-bold rounded-full mb-4">
+                Most Popular
+              </div>
+            )}
+            <h3 class="text-xl font-bold text-black mb-2">{pkg.name}</h3>
+            <p class="text-2xl font-black text-black mb-2">{pkg.price}</p>
+            <p class="text-zinc-500 text-sm mb-4">{pkg.description}</p>
+            <ul class="space-y-2 mb-6">
+              {pkg.features.map((feature) => (
+                <li class="flex items-start gap-2 text-sm text-zinc-600">
+                  <span class="text-green-600 font-bold">✓</span> 
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+            <a 
+              href={`/service-payment?service=${pkg.id}&amount=${pkg.usdAmount}&currency=USD&name=${encodeURIComponent(pkg.name)}`}
+              class="block text-center bg-black text-white py-3 rounded-lg font-medium hover:bg-zinc-800 transition-all"
+            >
+              Register Now → ({pkg.price})
+            </a>
+          </div>
+        ))}
+        
+        {packages.filter(p => p.isCustom).map((pkg) => (
+          <div class="border-2 border-black rounded-2xl p-6 hover:shadow-xl transition-all bg-white">
+            <div class="inline-block px-3 py-1 bg-black text-white text-[10px] font-bold rounded-full mb-4">
+              Recommended
+            </div>
+            <h3 class="text-xl font-bold text-black mb-2">{pkg.name}</h3>
+            <p class="text-2xl font-black text-black mb-2">{pkg.price}</p>
+            <p class="text-zinc-500 text-sm mb-4">{pkg.description}</p>
+            <ul class="space-y-2 mb-6">
+              {pkg.features.map((feature) => (
+                <li class="flex items-start gap-2 text-sm text-zinc-600">
+                  <span class="text-green-600 font-bold">✓</span> 
+                  <span>{feature}</span>
+                </li>
+              ))}
+            </ul>
+            <a href="/contact" class="block text-center bg-black text-white py-3 rounded-lg font-medium hover:bg-zinc-800 transition-all">
+              Request Quote →
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    {/* Required Documents */}
+    <div class="mt-20 bg-zinc-50 rounded-3xl p-8 md:p-12">
+      <h2 class="text-2xl font-bold text-center mb-8">Documents Required for Registration</h2>
+      <div class="grid md:grid-cols-2 gap-8">
+        <div>
+          <h3 class="font-bold text-black mb-4">From the Foreign Company:</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">📄</span> Certificate of Incorporation (from home country)
+            </li>
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">📄</span> Memorandum & Articles of Association
+            </li>
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">📄</span> Board Resolution to Register in Nigeria
+            </li>
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">📄</span> Audited Financial Statements (if available)
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="font-bold text-black mb-4">Additional Requirements:</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">👔</span> Proposed Nigerian Director (if applicable)
+            </li>
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">🏢</span> Registered Office Address in Nigeria
+            </li>
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">📞</span> Local Contact Person Details
+            </li>
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">⏱️</span> Timeline: 4-6 weeks for complete registration
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    {/* Lead Form */}
+    <div id="foreign-portal" class="mt-20 max-w-4xl mx-auto bg-white border border-zinc-200 p-8 md:p-16 rounded-[2.5rem] shadow-xl mb-20">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold uppercase tracking-tighter">Foreign Company Registration Inquiry</h2>
+        <p class="text-zinc-500 mt-2">Tell us about your international business and we will guide you through the process.</p>
+      </div>
+
+      <form action="https://formspree.io/f/YOUR_ID" method="POST" class="space-y-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">Company Name</label>
+            <input type="text" name="company_name" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">Home Country</label>
+            <input type="text" name="home_country" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" placeholder="e.g., USA, UK, China" />
+          </div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">Full Name (Contact Person)</label>
+            <input type="text" name="name" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">Email Address</label>
+            <input type="email" name="email" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+          </div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">WhatsApp Number</label>
+            <input type="tel" name="whatsapp" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">Package Interest</label>
+            <select name="package" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border">
+              <option>Foreign Company Registration ($350 USD)</option>
+              <option>Foreign Company Registration + Expatriate Support ($550 USD)</option>
+              <option>Representative Office ($250 USD)</option>
+              <option>Business Permit Only ($150 USD)</option>
+              <option>Full Business Setup Package</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase mb-2">Brief Description of Business Activities in Nigeria</label>
+          <textarea name="business_activities" rows="4" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" placeholder="What will your company do in Nigeria?"></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-black text-white font-bold py-5 rounded-full uppercase tracking-widest text-sm hover:bg-zinc-800 transition-all">
+          Submit Inquiry →
+        </button>
+      </form>
+    </div>
+
+    {/* CTA */}
+    <div class="mt-20 mb-20 text-center bg-black text-white rounded-3xl p-12">
+      <h2 class="text-3xl font-bold mb-4">Ready to Establish Your Business in Nigeria?</h2>
+      <p class="text-zinc-300 mb-8 max-w-2xl mx-auto">
+        Let us handle the registration process while you focus on growing your business.
+        We provide end-to-end support for foreign companies entering the Nigerian market.
+      </p>
+      <a href="/contact" class="inline-block bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-zinc-100 transition-all">
+        Talk to Our Team →
+      </a>
+    </div>
+  </Container>
+</Layout>

@@ -1,0 +1,332 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import { Picture } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import globalHero from "@/assets/service-image/hero-global.png";
+
+const services = [
+  {
+    name: "DUNS Number Registration",
+    price: "$50 USD (≈ ₦80,000)",
+    description: "Get your unique 9-digit DUNS identifier for global business recognition.",
+    features: [
+      "Official D&B registration",
+      "3-5 business days processing",
+      "Global platform access (Apple, Amazon)",
+      "International credibility"
+    ],
+    id: "DUNS",
+    usdAmount: 50,
+    category: "duns"
+  },
+  {
+    name: "US Business Registration",
+    price: "$299 USD (≈ ₦480,000)",
+    description: "Register your business in the United States as a non-resident.",
+    features: [
+      "LLC or C-Corp registration",
+      "EIN (Tax ID) included",
+      "US mailing address",
+      "Bank account guidance"
+    ],
+    id: "US_BIZ",
+    usdAmount: 299,
+    category: "international"
+  },
+  {
+    name: "UK Business Registration",
+    price: "$250 USD (≈ ₦400,000)",
+    description: "Register your company at Companies House in the UK.",
+    features: [
+      "Limited company registration",
+      "UK bank account guidance",
+      "Registered office address",
+      "Tax registration support"
+    ],
+    id: "UK_BIZ",
+    usdAmount: 250,
+    category: "international"
+  },
+  {
+    name: "Global Compliance Package",
+    price: "Custom Quote",
+    description: "Complete international business setup and compliance management.",
+    features: [
+      "Multi-country registration",
+      "Global tax compliance",
+      "International banking setup",
+      "Ongoing legal support"
+    ],
+    id: "GLOBAL_COMPLIANCE",
+    category: "business",
+    isCustom: true
+  }
+];
+---
+
+<Layout title="Global Business Access | Vobels">
+  <Container>
+    <div class="mt-16 grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal-content">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-400">Pillar 06</span>
+        <h1 class="text-5xl font-bold mt-4 mb-6 tracking-tight text-black">Global Business Access</h1>
+        <p class="text-xl text-zinc-600 font-light leading-relaxed mb-8">
+          Get your DUNS Number, register your business abroad, and access global markets 
+          without the stress or inflated fees.
+        </p>
+        
+        <div class="grid gap-8">
+          <div class="flex gap-4">
+            <div class="flex-none w-1 h-12 bg-black"></div>
+            <div>
+              <h3 class="font-bold text-lg uppercase tracking-tight">DUNS Number Registration</h3>
+              <p class="text-zinc-500">Official D&B registration for global platform access and credibility.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-none w-1 h-12 bg-zinc-200"></div>
+            <div>
+              <h3 class="font-bold text-lg uppercase tracking-tight">International Business Setup</h3>
+              <p class="text-zinc-500">Register your company in the US, UK, or other global markets.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12">
+          <a href="#global-portal" class="bg-black text-white px-10 py-4 rounded-full uppercase tracking-widest text-xs font-bold hover:bg-zinc-800 transition-all">
+            Start Global Expansion
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal-content">
+        <Picture 
+          src={globalHero} 
+          alt="Vobels Global Business Access" 
+          class="rounded-3xl shadow-2xl border border-zinc-100" 
+        />
+      </div>
+    </div>
+
+    <!-- DUNS Section -->
+    <div class="mt-20 bg-gradient-to-r from-blue-50 to-white rounded-3xl p-8 md:p-12 border border-blue-100">
+      <div class="grid md:grid-cols-2 gap-12 items-center">
+        <div>
+          <div class="inline-block px-4 py-1 bg-blue-600 text-white text-xs font-bold rounded-full mb-4">
+            Most Requested
+          </div>
+          <h2 class="text-3xl font-bold text-black mb-4">Get Your DUNS Number</h2>
+          <p class="text-zinc-600 mb-6">
+            A DUNS Number is a unique 9-digit identifier issued by Dun & Bradstreet, 
+            required by global platforms like Apple, Amazon, and international organizations.
+          </p>
+          
+          <div class="space-y-3 mb-6">
+            <div class="flex items-center gap-2 text-sm">
+              <span class="text-green-600 font-bold">✓</span> Apple Developer Account Registration
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <span class="text-green-600 font-bold">✓</span> Amazon Seller Account
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <span class="text-green-600 font-bold">✓</span> International Grants & Tenders
+            </div>
+            <div class="flex items-center gap-2 text-sm">
+              <span class="text-green-600 font-bold">✓</span> Global Business Credibility
+            </div>
+          </div>
+          
+          <div class="bg-white p-4 rounded-xl mb-6">
+            <div class="flex justify-between items-center mb-2">
+              <span class="font-bold text-black">Investment:</span>
+              <span class="text-2xl font-black text-black">$50 USD</span>
+            </div>
+            <p class="text-xs text-zinc-500">≈ ₦80,000 (at current exchange rate)</p>
+          </div>
+          
+          <!-- ✅ UPDATED: USD link with currency parameter -->
+          <a href="/service-payment?service=DUNS&amount=50&currency=USD&name=DUNS%20Number%20Registration" 
+             class="inline-block w-full text-center bg-black text-white py-4 rounded-xl font-bold hover:bg-zinc-800 transition-all">
+            Get Your DUNS Number → ($50 USD)
+          </a>
+        </div>
+        
+        <div class="bg-white p-6 rounded-2xl border border-zinc-200">
+          <h3 class="font-bold text-black mb-4">What You Need to Apply:</h3>
+          <ul class="space-y-3">
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">📄</span> CAC Certificate (Registered business in Nigeria)
+            </li>
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">📍</span> Verifiable Business Address
+            </li>
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">📞</span> Active Phone Number
+            </li>
+            <li class="flex items-start gap-2 text-sm">
+              <span class="text-black">✉️</span> Working Email Address
+            </li>
+          </ul>
+          <div class="mt-6 p-3 bg-blue-50 rounded-lg">
+            <p class="text-xs text-blue-800">
+              <span class="font-bold">⏱️ Timeline:</span> 3-5 business days after submission
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- International Business Registration -->
+    <div class="mt-20">
+      <h2 class="text-3xl font-bold text-center mb-12">Register Your Business Abroad</h2>
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {services.filter(s => !s.isCustom && s.id !== "DUNS").map((service) => (
+          <div class="border border-zinc-200 rounded-2xl p-6 hover:shadow-xl transition-all bg-white">
+            <h3 class="text-xl font-bold text-black mb-2">{service.name}</h3>
+            <p class="text-2xl font-black text-black mb-4">{service.price}</p>
+            <p class="text-zinc-600 text-sm mb-4">{service.description}</p>
+            <ul class="space-y-2 mb-6">
+              {service.features.map((feature) => (
+                <li class="flex items-center gap-2 text-sm text-zinc-600">
+                  <span class="text-green-600">✓</span> {feature}
+                </li>
+              ))}
+            </ul>
+            <!-- ✅ UPDATED: USD link with currency parameter -->
+            <a 
+              href={`/service-payment?service=${service.id}&amount=${service.usdAmount}&currency=USD&name=${encodeURIComponent(service.name)}`}
+              class="block text-center bg-black text-white py-3 rounded-lg font-medium hover:bg-zinc-800 transition-all"
+            >
+              Register Now → (${service.usdAmount} USD)
+            </a>
+          </div>
+        ))}
+        
+        {services.filter(s => s.isCustom).map((service) => (
+          <div class="border-2 border-black rounded-2xl p-6 hover:shadow-xl transition-all bg-white">
+            <div class="inline-block px-3 py-1 bg-black text-white text-[10px] font-bold rounded-full mb-4">
+              Recommended
+            </div>
+            <h3 class="text-xl font-bold text-black mb-2">{service.name}</h3>
+            <p class="text-2xl font-black text-black mb-4">{service.price}</p>
+            <p class="text-zinc-600 text-sm mb-4">{service.description}</p>
+            <ul class="space-y-2 mb-6">
+              {service.features.map((feature) => (
+                <li class="flex items-center gap-2 text-sm text-zinc-600">
+                  <span class="text-green-600">✓</span> {feature}
+                </li>
+              ))}
+            </ul>
+            <a href="/contact"
+               class="block text-center bg-black text-white py-3 rounded-lg font-medium hover:bg-zinc-800 transition-all">
+              Request Quote →
+            </a>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Lead Form Section -->
+    <div id="global-portal" class="mt-32 max-w-4xl mx-auto bg-white border border-zinc-200 p-8 md:p-16 rounded-[2.5rem] shadow-xl mb-20">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl font-bold uppercase tracking-tighter">Global Business Inquiry</h2>
+        <p class="text-zinc-500 mt-2">Tell us about your international business needs.</p>
+      </div>
+
+      <form action="https://formspree.io/f/YOUR_ID" method="POST" class="space-y-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">Service Needed</label>
+            <select name="service_type" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border">
+              <option>DUNS Number Registration</option>
+              <option>US Business Registration</option>
+              <option>UK Business Registration</option>
+              <option>Global Compliance Package</option>
+              <option>Other International Service</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">Target Country</label>
+            <input type="text" name="target_country" placeholder="e.g., USA, UK, Canada" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+          </div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">Full Name</label>
+            <input type="text" name="name" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">Email Address</label>
+            <input type="email" name="email" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+          </div>
+        </div>
+        
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">WhatsApp Number</label>
+            <input type="tel" name="whatsapp" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+          </div>
+          <div>
+            <label class="block text-xs font-bold uppercase mb-2">Company Name (if applicable)</label>
+            <input type="text" name="company" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase mb-2">Additional Information</label>
+          <textarea name="message" rows="4" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" placeholder="Tell us more about your global expansion goals..."></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-black text-white font-bold py-5 rounded-full uppercase tracking-widest text-sm hover:bg-zinc-800 transition-all">
+          Submit Inquiry
+        </button>
+      </form>
+      
+      <div class="mt-6 pt-6 border-t border-zinc-100 text-center">
+        <a href="/business-pricing#global" class="text-sm text-zinc-500 hover:text-black underline underline-offset-4 inline-flex items-center gap-1">
+          → Need only specific services? View individual pricing
+        </a>
+      </div>
+    </div>
+
+    <div class="mt-20 bg-zinc-50 rounded-3xl p-8 md:p-12">
+      <h2 class="text-2xl font-bold text-center mb-8">Why Choose Vobels for Global Business Access?</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
+            <Icon name="bx:bxs-check-circle" class="text-white w-6 h-6" />
+          </div>
+          <h3 class="font-bold mb-2">No Hidden Fees</h3>
+          <p class="text-sm text-zinc-600">Flat pricing with zero surprises or upsells</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
+            <Icon name="bx:bxs-rocket" class="text-white w-6 h-6" />
+          </div>
+          <h3 class="font-bold mb-2">Quick Processing</h3>
+          <p class="text-sm text-zinc-600">3-5 business days for DUNS registration</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
+            <Icon name="bx:bxs-user" class="text-white w-6 h-6" />
+          </div>
+          <h3 class="font-bold mb-2">Local Support</h3>
+          <p class="text-sm text-zinc-600">Real Nigerian team who understands your needs</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="mt-20 mb-20 text-center bg-black text-white rounded-3xl p-12">
+      <h2 class="text-3xl font-bold mb-4">Ready to Go Global?</h2>
+      <p class="text-zinc-300 mb-8 max-w-2xl mx-auto">
+        Get your DUNS Number or register your business abroad today. 
+        We handle the paperwork so you can focus on growth.
+      </p>
+      <a href="/contact" class="inline-block bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-zinc-100 transition-all">
+        Talk to Our Team →
+      </a>
+    </div>
+  </Container>
+</Layout>
