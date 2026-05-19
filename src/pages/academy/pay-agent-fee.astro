@@ -35,7 +35,7 @@ import Container from "@/components/container.astro";
           <div class="space-y-4">
             <div>
               <label class="block text-[10px] font-bold uppercase tracking-widest text-zinc-400 mb-2">Full Name</label>
-              <input type="text" id="full-name" required class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-black outline-none transition-all" placeholder="Oladimeji Esther" />
+              <input type="text" id="full-name" required class="w-full px-4 py-3 rounded-xl border border-zinc-200 focus:ring-2 focus:ring-black outline-none transition-all" placeholder="John Doe" />
             </div>
 
             <div class="grid grid-cols-2 gap-4">
@@ -99,7 +99,7 @@ import Container from "@/components/container.astro";
       const phone = document.getElementById("phone-number").value;
 
       let handler = PaystackPop.setup({
-        key: 'pk_test_2b93f454a15e33db6100bff98b198e378b439098',
+        key: 'pk_live_135bc22afe817f240cf8027b58af14428fda30dd',
         email: email,
         amount: currentPrice * 100,
         currency: "NGN",
