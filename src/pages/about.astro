@@ -1,0 +1,254 @@
+---
+import { getCollection } from "astro:content";
+import { Picture } from "astro:assets";
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import { Icon } from "astro-icon/components";
+
+// Filter team entries with 'draft: false' & date before current date
+const publishedTeamMembers = await getCollection("team", ({ data }) => {
+  return !data.draft && data.publishDate < new Date();
+});
+
+// Company stats - USING VALID BOXICONS
+const stats = [
+  { value: "500+", label: "Businesses Registered", icon: "bx:bxs-building" },
+  { value: "40+", label: "Countries Served", icon: "bx:bxs-map" }, // ✅ Changed from bxs-globe
+  { value: "100%", label: "Client Satisfaction", icon: "bx:bxs-star" },
+  { value: "50+", label: "Active Clients", icon: "bx:bxs-group" },
+];
+
+// Core values - USING VALID BOXICONS
+const values = [
+  {
+    title: "Integrity First",
+    description: "We believe in transparent pricing, honest communication, and doing what we promise.",
+    icon: "bx:bxs-shield" // ✅ Changed from bxs-shield-alt to bxs-shield
+  },
+  {
+    title: "Excellence Always",
+    description: "We don't just complete tasks; we deliver outcomes that exceed expectations.",
+    icon: "bx:bxs-trophy"
+  },
+  {
+    title: "Client-Centric",
+    description: "Your success is our success. We build solutions tailored to your unique needs.",
+    icon: "bx:bxs-user-check"
+  },
+  {
+    title: "Innovation Driven",
+    description: "We leverage technology and modern systems to give you a competitive edge.",
+    icon: "bx:bxs-bulb" // ✅ Changed from bxs-lightbulb to bxs-bulb
+  }
+];
+
+// Services overview (no icons here, so fine)
+const services = [
+  {
+    name: "Business Formation",
+    description: "CAC registration, legal compliance, and business structurings",
+    link: "/pillars/formation"
+  },
+  {
+    name: "Brand Identity",
+    description: "Logo design, brand guidelines, and corporate identity",
+    link: "/pillars/identity"
+  },
+  {
+    name: "Operations & Management",
+    description: "BizOS setup, workflow automation, and financial systems",
+    link: "/pillars/operations"
+  },
+  {
+    name: "Digital & Tech",
+    description: "Websites, custom applications, and API integrations",
+    link: "/pillars/technology"
+  },
+  {
+    name: "Growth & Expansion",
+    description: "Marketing strategy, lead generation, and market entry",
+    link: "/pillars/expansion"
+  },
+  {
+    name: "Global Business Access",
+    description: "DUNS numbers, US/UK registration, foreign company setup",
+    link: "/pillars/global"
+  }
+];
+---
+
+<Layout title="About Vobels - Business Enablement & Growth Partner">
+  <Container>
+    <!-- Hero Section -->
+    <div class="mt-16 text-center max-w-4xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-black text-black tracking-tighter">
+        We Build Businesses That Matter
+      </h1>
+      <p class="text-lg md:text-xl text-zinc-600 mt-6 leading-relaxed">
+        Vobels Limited is a full-service business development and growth firm. 
+        We help entrepreneurs and companies transform ideas into market-leading institutions.
+      </p>
+    </div>
+
+    <!-- Stats Section -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-6 my-16">
+      {stats.map((stat) => (
+        <div class="text-center p-6 bg-zinc-50 rounded-2xl border border-zinc-100">
+          <Icon name={stat.icon} class="w-8 h-8 mx-auto text-black mb-3" />
+          <div class="text-2xl md:text-3xl font-bold text-black">{stat.value}</div>
+          <div class="text-xs text-zinc-500 mt-1">{stat.label}</div>
+        </div>
+      ))}
+    </div>
+
+
+    <!-- Mission & Vision -->
+    <div class="grid md:grid-cols-2 gap-8 my-20">
+      <div class="bg-black text-white rounded-3xl p-8">
+        <Icon name="bx:bxs-rocket" class="w-10 h-10 text-white mb-4" />
+        <h2 class="text-2xl font-bold mb-4">Our Mission</h2>
+        <p class="text-zinc-300 leading-relaxed">
+          To empower businesses with the structure, systems, and strategies they need 
+          to scale from idea to maturity. We bridge the gap between vision and execution.
+        </p>
+      </div>
+      <div class="bg-zinc-50 rounded-3xl p-8 border border-zinc-200">
+        <Icon name="bx:bxs-show" class="w-10 h-10 text-black mb-4" /> {/* Changed from bxs-eye to bxs-show */}
+        <h2 class="text-2xl font-bold mb-4">Our Vision</h2>
+        <p class="text-zinc-600 leading-relaxed">
+          To become Africa's most trusted business enablement partner, helping 
+          companies across the continent access global markets and operate at world-class standards.
+        </p>
+      </div>
+    </div>
+
+    <!-- What We Do -->
+    <div class="my-20">
+      <Sectionhead>
+        <Fragment slot="title">What We Do</Fragment>
+        <Fragment slot="desc">
+          We deliver end-to-end business solutions across six core pillars of enablement.
+        </Fragment>
+      </Sectionhead>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12">
+        {services.map((service) => (
+          <a href={service.link} class="group">
+            <div class="border border-zinc-200 rounded-2xl p-6 hover:shadow-lg transition-all hover:border-black">
+              <h3 class="font-bold text-lg text-black mb-2 group-hover:text-black">{service.name}</h3>
+              <p class="text-sm text-zinc-500 leading-relaxed">{service.description}</p>
+              <span class="inline-block mt-4 text-xs font-medium text-black opacity-0 group-hover:opacity-100 transition-opacity">
+                Learn more →
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- Core Values -->
+    <div class="my-20">
+      <Sectionhead>
+        <Fragment slot="title">Our Core Values</Fragment>
+        <Fragment slot="desc">
+          The principles that guide everything we do.
+        </Fragment>
+      </Sectionhead>
+      
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mt-12">
+        {values.map((value) => (
+          <div class="text-center p-6">
+            <div class="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
+              <Icon name={value.icon} class="w-8 h-8 text-white" />
+            </div>
+            <h3 class="font-bold text-black mb-2">{value.title}</h3>
+            <p class="text-sm text-zinc-500 leading-relaxed">{value.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Team Section (if team members exist) -->
+    <!-- {publishedTeamMembers.length > 0 && (
+      <div class="my-20">
+        <Sectionhead>
+          <Fragment slot="title">Meet Our Team</Fragment>
+          <Fragment slot="desc">
+            A passionate team of experts dedicated to your success.
+          </Fragment>
+        </Sectionhead>
+        
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10 mt-12">
+          {publishedTeamMembers.map((teamMemberEntry) => (
+            <div class="group text-center">
+              <div class="w-full aspect-square rounded-2xl overflow-hidden bg-zinc-100">
+                <Picture
+                  src={teamMemberEntry.data.avatar.src}
+                  alt={teamMemberEntry.data.avatar.alt}
+                  sizes="(max-width: 800px) 100vw, 400px"
+                  width={400}
+                  height={400}
+                  class="w-full h-full object-cover object-center transition group-hover:scale-105 duration-300"
+                />
+              </div>
+              <div class="mt-4">
+                <h3 class="text-lg font-bold text-black">{teamMemberEntry.data.name}</h3>
+                <p class="text-sm text-zinc-500">{teamMemberEntry.data.title}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )} -->
+
+    <!-- Why Choose Vobels -->
+    <div class="my-20 bg-black rounded-3xl p-8 md:p-12 text-white">
+      <div class="text-center mb-8">
+        <h2 class="text-3xl font-bold">Why Choose Vobels?</h2>
+        <p class="text-zinc-300 mt-2 max-w-2xl mx-auto">
+          We don't just provide services. We become your long-term business partner.
+        </p>
+      </div>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="text-center">
+          <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3">
+            <Icon name="bx:bxs-check-circle" class="w-6 h-6 text-white" />
+          </div>
+          <h3 class="font-bold mb-2">Transparent Pricing</h3>
+          <p class="text-sm text-zinc-300">No hidden fees. No surprise charges. What you see is what you pay.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3">
+            <Icon name="bx:bxs-hourglass" class="w-6 h-6 text-white" /> {/* Changed from bxs-timer to bxs-hourglass */}
+          </div>
+          <h3 class="font-bold mb-2">Fast Turnaround</h3>
+          <p class="text-sm text-zinc-300">CAC registration in 3-5 days. DUNS in 3-5 days. Global registration accelerated.</p>
+        </div>
+        <div class="text-center">
+          <div class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3">
+            <Icon name="bx:bxs-phone" class="w-6 h-6 text-white" /> {/* Changed from bxs-support to bxs-headphone */}
+          </div>
+          <h3 class="font-bold mb-2">Dedicated Support</h3>
+          <p class="text-sm text-zinc-300">WhatsApp, email, and call support. We're here when you need us.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Section -->
+    <div class="my-20 text-center">
+      <h2 class="text-3xl font-bold text-black mb-4">Ready to Build Your Business?</h2>
+      <p class="text-zinc-500 max-w-2xl mx-auto mb-8">
+        Whether you're starting from scratch or looking to scale, we're here to help you succeed.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 justify-center">
+        <a href="/contact" class="bg-black text-white px-8 py-3 rounded-full font-medium hover:bg-zinc-800 transition-all">
+          Start a Conversation
+        </a>
+        <a href="/business-pricing" class="border-2 border-black text-black px-8 py-3 rounded-full font-medium hover:bg-zinc-100 transition-all">
+          View Our Pricing
+        </a>
+      </div>
+    </div>
+  </Container>
+</Layout>

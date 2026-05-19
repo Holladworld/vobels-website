@@ -1,0 +1,72 @@
+---
+import Contactform from "@/components/contactform.astro";
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import Layout from "@/layouts/Layout.astro";
+import { Icon } from "astro-icon/components";
+
+---
+
+<Layout title="Contact | Vobels Venture Studio">
+  <Container>
+    <div class="mt-16">
+      <Sectionhead>
+        <Fragment slot="title">Venture Inquiry</Fragment>
+        <Fragment slot="desc">
+          Whether you are looking for a technical audit, a full brand build, or a Venture Studio partnership, the dialogue begins here.
+        </Fragment>
+      </Sectionhead>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-16 mx-auto max-w-5xl mt-24 mb-24">
+      <div class="reveal-content">
+        <h2 class="font-bold text-3xl text-black uppercase tracking-tighter">Connect with the Studio</h2>
+        <p class="text-lg leading-relaxed text-zinc-500 mt-4">
+          Vobels operates as a remote-first consultancy. We prioritize deep work and high-impact systems, responding to all serious inquiries within 24 hours.
+        </p>
+        
+        <div class="mt-10 space-y-6">
+          <div class="flex items-center space-x-4 text-zinc-700 group">
+            <div class="bg-zinc-100 p-3 rounded-full group-hover:bg-black group-hover:text-white transition-all">
+              <Icon class="w-5 h-5" name="uil:map-marker" />
+            </div>
+            <div class="flex flex-col">
+               <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">HQ</span>
+               <span class="font-medium text-black">Remote / Lagos, NG</span>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 text-zinc-700 group">
+             <div class="bg-zinc-100 p-3 rounded-full group-hover:bg-black group-hover:text-white transition-all">
+              <Icon class="w-5 h-5" name="uil:envelope" />
+            </div>
+            <div class="flex flex-col">
+               <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Direct Correspondence</span>
+               <a href="mailto:vobels.co@gmail.com" class="font-medium text-black hover:underline underline-offset-4">vobels.co@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="flex items-center space-x-4 text-zinc-700 group">
+             <div class="bg-zinc-100 p-3 rounded-full group-hover:bg-black group-hover:text-white transition-all">
+              <Icon class="w-5 h-5" name="uil:phone" />
+            </div>
+            <div class="flex flex-col">
+               <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400">Instant Access</span>
+               <a href="https://call.whatsapp.com/voice/N13O0AraUDOAeAlhFpOjUf" class="font-medium text-black hover:underline underline-offset-4">Speak with a Partner</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12 p-8 border border-zinc-100 rounded-3xl bg-zinc-50/50">
+          <p class="text-sm font-medium text-zinc-500 italic">
+            "We don't just build for you; we build with you. Every venture begins with a single conversation about structure and scale."
+          </p>
+        </div>
+      </div>
+
+      <div class="bg-white border border-zinc-200 p-8 md:p-10 rounded-[2.5rem] shadow-sm">
+        <Contactform />
+      </div>
+    </div>
+  </Container>
+</Layout>

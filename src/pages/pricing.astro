@@ -1,0 +1,72 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import PricingCard from "@/components/pricing.astro";
+
+const pricing = [
+  {
+    name: "Startup Launch",
+    price: "Fixed Fee",
+    popular: false,
+    features: [
+      "Business Idea Validation",
+      "Business Structure Advisory",
+      "CAC Registration & Compliance",
+      "Brand Identity & Positioning",
+      "Professional Web Presence",
+    ],
+    button: {
+      text: "Start Launch",
+      link: "/contact",
+    },
+  },
+  {
+    name: "Growth Accelerator",
+    price: "Retainer",
+    popular: true,
+    features: [
+      "Brand Audit & Repositioning",
+      "Marketing & Visibility Strategy",
+      "Financial Systems (BizOS)",
+      "Sales Acquisition Systems",
+      "Operational Process Review",
+    ],
+    button: {
+      text: "Accelerate Growth",
+      link: "/contact",
+    },
+  },
+  {
+    name: "Enterprise Management",
+    price: "Partnership",
+    popular: false,
+    features: [
+      "Ongoing Strategic Advisory",
+      "Financial & Compliance Monitoring",
+      "Regulatory & IP Protection",
+      "Market Entry & Expansion",
+      "Venture Studio Eligibility",
+    ],
+    button: {
+      text: "Contact Executives",
+      link: "/contact",
+    },
+  },
+];
+---
+
+<Layout title="Service Packages">
+  <Container>
+    <Sectionhead>
+      <Fragment slot="title">Integrated Solutions</Fragment>
+      <Fragment slot="desc">
+        Vobels delivers outcomes, not tasks. Choose the package that aligns with your current business stage.
+      </Fragment>
+    </Sectionhead>
+
+    <div class="grid md:grid-cols-3 gap-10 mx-auto max-w-screen-lg mt-12">
+      {pricing.map((item) => <PricingCard plan={item} />)}
+    </div>
+  </Container>
+</Layout>
