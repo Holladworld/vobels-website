@@ -345,7 +345,7 @@ image:
   <p style="margin-bottom: 24px; font-size: 18px;">Get the complete $350 package with no hidden fees. 3-5 business days processing.</p>
   <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
     <a href="/contact" style="display: inline-block; background: white; color: #1a3c34; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold;">Contact Our Corporate Team →</a>
-    <a href="/pillars/foreign-registration" style="display: inline-block; background: transparent; color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; border: 2px solid white;">Start Registration → ($350 USD)</a>
+    <a href="/service/foreign-registration" style="display: inline-block; background: transparent; color: white; padding: 14px 32px; border-radius: 8px; text-decoration: none; font-weight: bold; border: 2px solid white;">Start Registration → ($350 USD)</a>
   </div>
   <p style="font-size: 14px; margin-top: 24px; opacity: 0.9;">✓ Free Consultation ✓ Fast Processing ✓ 100% Compliance Guarantee ✓ No Hidden Fees</p>
 </div>

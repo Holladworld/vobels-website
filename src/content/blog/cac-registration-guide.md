@@ -15,7 +15,7 @@ tags: [CAC, Nigeria, Startup, Vobels]
 <p>Starting a business in Nigeria is an exciting journey, but it requires a solid legal foundation. That foundation begins with the <strong>Corporate Affairs Commission (CAC)</strong>. At <strong>Vobels Limited</strong>, we specialize in helping entrepreneurs move from "Idea" to "Entity" without the stress of regulatory bottlenecks.</p>
 
 <h2>Why Register with the CAC?</h2>
-<p>Registration isn't just about a piece of paper; it's about <strong>Business Enablement</strong>.</p>
+<p>Registration isn't just about a piece of paper; it's about <strong>Business Services</strong>.</p>
 <ul>
   <li><strong>Legal Identity:</strong> Your business becomes a separate legal entity.</li>
   <li><strong>Banking:</strong> You can open a corporate bank account.</li>

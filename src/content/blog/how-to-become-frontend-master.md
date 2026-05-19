@@ -22,7 +22,7 @@ tags: [astro, tailwindcss, webdev]
 
 <p>When you build, you aren't just writing HTML; you are architecting how components are delivered to the user. My experience with Google AppScript and BizOS was my bridge—it taught me how to take raw data and present it in a way that actually solves a business problem.</p>
 
-<h2>The 3 Pillars of Frontend for Logic-Minded Devs</h2>
+<h2>The 3 Service of Frontend for Logic-Minded Devs</h2>
 
 <p>If you are a backend developer looking to master the frontend, stop thinking about colors and start thinking about <strong>Structure</strong>:</p>
 
