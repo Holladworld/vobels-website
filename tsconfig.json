@@ -1,0 +1,13 @@
+{
+  "extends": "astro/tsconfigs/base",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "strictNullChecks": true,
+    "types": ["astro/client", "node"],
+    "moduleResolution": "bundler",
+    "paths": {
+      "@/*": ["src/*"],
+      "~/*": ["./*"]
+    }
+  }
+}
