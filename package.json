@@ -1,20 +1,19 @@
 {
-  "name": "astroship",
+  "name": "vobels-website",
   "type": "module",
   "version": "3.0.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
+    "dev": "astro dev --config astro.config.dev.mjs",
+    "build": "astro build --config astro.config.mjs",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "pnpm run build && wrangler pages deploy dist"
+    "deploy": "pnpm run build:cloudflare && wrangler pages deploy dist --project-name=vobels-website"
   },
   "dependencies": {
-    "@astrojs/cloudflare": "^13.1.9",
-    "@astrojs/mdx": "^4.2.0",
-    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/cloudflare": "^13.5.2",
+    "@astrojs/mdx": "^5.0.6",
+    "@astrojs/sitemap": "^3.7.2",
     "@fontsource-variable/bricolage-grotesque": "^5.2.5",
     "@fontsource-variable/inter": "^5.2.5",
     "@iconify-json/bx": "^1.2.2",
@@ -23,7 +22,7 @@
     "@tailwindcss/typography": "^0.5.16",
     "@tailwindcss/vite": "^4.0.14",
     "@types/crypto-js": "^4.2.2",
-    "astro": "^6.1.6",
+    "astro": "^6.3.5",
     "astro-icon": "^1.1.5",
     "astro-navbar": "^2.3.9",
     "astro-seo": "^0.8.4",
@@ -35,9 +34,9 @@
     "tailwindcss": "^4.0.14"
   },
   "devDependencies": {
-    "@astrojs/node": "^10.0.4",
+    "@astrojs/node": "^10.1.1",
     "@types/node": "^25.6.0",
-    "typescript": "^6.0.3",
-    "wrangler": "^4.90.0"
+    "typescript": "^5.9.2",
+    "wrangler": "^4.93.0"
   }
 }

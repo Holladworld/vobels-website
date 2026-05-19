@@ -4,6 +4,7 @@ import Footer from "@/components/footer.astro";
 import Navbar from "@/components/navbar/navbar.astro";
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/bricolage-grotesque";
+import WhatsAppButton from "@/components/WhatsappButton.astro";
 import "../styles/global.css";
 
 export interface Props {
@@ -83,7 +84,7 @@ const makeDescription = description
       <slot />
     </main>
     <Footer />
-
+    <WhatsAppButton />
     <script>
       import { inView, animate, stagger } from "motion";
 
@@ -96,7 +97,7 @@ const makeDescription = description
         );
       });
 
-      // Staggered reveal for pillars/features
+      // Staggered reveal for service/features
       inView(".grid", (element) => {
         const items = element.querySelectorAll(".flex");
         animate(
