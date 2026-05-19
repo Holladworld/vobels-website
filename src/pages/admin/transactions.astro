@@ -1,0 +1,62 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+
+const res = await fetch(new URL("/api/v1/admin/transactions", Astro.url));
+const data = await res.json();
+
+// Function to get display category
+const getDisplayCategory = (category) => {
+  const categories = {
+    "Courses": "📚 Courses",
+    "Business_Services": "💼 Business Services",
+    "Gadgets": "📱 Gadgets",
+    "CAC_Registration": "📝 CAC Registration",
+    "Agent_Registration": "🤝 Agent Registration"
+  };
+  return categories[category] || category;
+};
+---
+
+<AdminLayout title="Transactions" current="transactions">
+
+  <div class="overflow-x-auto">
+    <table class="w-full text-sm">
+      <thead>
+        <tr class="text-left border-b text-gray-500">
+          <th class="p-2">Email</th>
+          <th class="p-2">Amount</th>
+          <th class="p-2">Category</th>
+          <th class="p-2">Description</th>
+          <th class="p-2">Ref</th>
+          <th class="p-2">Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        {data.map((row) => (
+          <tr class="border-b hover:bg-gray-50">
+            <td class="p-2">
+              <div class="font-medium">{row.email}</div>
+              <div class="text-xs text-gray-500">{row.name}</div>
+            </td>
+            <td class="p-2 font-semibold">₦{Number(row.amount).toLocaleString()}</td>
+            <td class="p-2">
+              <span class="px-2 py-1 text-xs rounded-full bg-gray-100">
+                {getDisplayCategory(row.category)}
+              </span>
+            </td>
+            <td class="p-2 text-gray-600 max-w-xs truncate">{row.description}</td>
+            <td class="p-2 text-gray-500 text-xs">{row.ref}</td>
+            <td class="p-2 text-gray-500 text-xs">{row.date}</td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+    
+    {data.length === 0 && (
+      <div class="text-center py-8 text-gray-500">
+        No transactions found
+      </div>
+    )}
+  </div>
+
+</AdminLayout>

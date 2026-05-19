@@ -1,0 +1,33 @@
+---
+import AdminLayout from "../../layouts/AdminLayout.astro";
+
+let stats = { revenue: 0, transactions: 0, customers: 0 };
+
+try {
+  const res = await fetch(new URL("/api/v1/admin/stats", Astro.url));
+  stats = await res.json();
+} catch (error) {
+  console.error("Failed to fetch stats:", error);
+}
+---
+
+<AdminLayout title="Dashboard" current="dashboard">
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
+    <div class="p-6 border rounded-xl bg-gradient-to-br from-green-50 to-white">
+      <div class="text-sm text-gray-500 mb-2">💰 Total Revenue</div>
+      <div class="text-3xl font-bold">₦{Number(stats.revenue).toLocaleString()}</div>
+    </div>
+
+    <div class="p-6 border rounded-xl bg-gradient-to-br from-blue-50 to-white">
+      <div class="text-sm text-gray-500 mb-2">📊 Total Transactions</div>
+      <div class="text-3xl font-bold">{Number(stats.transactions).toLocaleString()}</div>
+    </div>
+
+    <div class="p-6 border rounded-xl bg-gradient-to-br from-purple-50 to-white">
+      <div class="text-sm text-gray-500 mb-2">👥 Total Customers</div>
+      <div class="text-3xl font-bold">{Number(stats.customers).toLocaleString()}</div>
+    </div>
+  </div>
+
+</AdminLayout>

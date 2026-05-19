@@ -1,0 +1,91 @@
+---
+import AdminLayout from "@/layouts/AdminLayout.astro";
+import { posts, initializePosts } from "@/lib/posts-store";
+
+await initializePosts();
+
+const allPosts = [...posts].sort((a, b) => {
+  return new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime();
+});
+---
+
+<AdminLayout title="Blog Manager" current="blog">
+
+  <div class="flex justify-between mb-6">
+    <h2 class="font-semibold">All Posts ({allPosts.length})</h2>
+
+    <a href="/admin/new" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+      + New Post
+    </a>
+  </div>
+
+  <div class="space-y-3">
+    {allPosts.length === 0 ? (
+      <div class="text-center py-8 text-gray-500">
+        No posts yet. Click "+ New Post" to create one.
+      </div>
+    ) : (
+      allPosts.map((post) => (
+        <div class="border p-4 rounded flex justify-between items-center hover:bg-gray-50">
+          <div class="flex-1">
+            <h3 class="font-bold">
+              {post.title}
+              {post.source === 'content' ? (
+                <span class="ml-2 text-xs bg-green-100 text-green-700 px-2 py-1 rounded">From MD/MDX</span>
+              ) : (
+                <span class="ml-2 text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded">API Created</span>
+              )}
+            </h3>
+            <p class="text-sm text-gray-500">/{post.slug}</p>
+            <p class="text-xs text-gray-400 mt-1">
+              {new Date(post.publishDate).toLocaleString()} by {post.author}
+            </p>
+          </div>
+          <div class="flex gap-3">
+            <a href={`/blog/${post.slug}`} target="_blank" class="text-blue-500 text-sm hover:underline">
+              View
+            </a>
+            {post.source === 'api' && (
+              <>
+                <a href={`/admin/edit/${post.id}`} class="text-green-500 text-sm hover:underline">
+                  Edit
+                </a>
+                <button 
+                  data-id={post.id}
+                  class="text-red-500 text-sm hover:underline delete-btn"
+                >
+                  Delete
+                </button>
+              </>
+            )}
+          </div>
+        </div>
+      ))
+    )}
+  </div>
+
+</AdminLayout>
+
+<script>
+  // Delete functionality
+  document.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', async (e) => {
+      if (!confirm('Delete this post permanently?')) return;
+      
+      const id = btn.dataset.id;
+      
+      try {
+        const res = await fetch(`/api/v1/posts/${id}`, { method: 'DELETE' });
+        if (res.ok) {
+          window.showToast("Post deleted successfully!", "success");
+          setTimeout(() => window.location.reload(), 1000);
+        } else {
+          const error = await res.json();
+          window.showToast(error.error || 'Failed to delete', "error");
+        }
+      } catch (err) {
+        window.showToast("Error: " + err.message, "error");
+      }
+    });
+  });
+</script>

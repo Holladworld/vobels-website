@@ -1,0 +1,146 @@
+---
+import AdminLayout from "@/layouts/AdminLayout.astro";
+---
+
+<AdminLayout title="New Post" current="blog">
+
+  <div class="max-w-xl mx-auto mt-10">
+    <h1 class="text-2xl font-bold mb-6">Create New Post</h1>
+
+    <form id="form" class="space-y-4">
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Title *</label>
+        <input 
+          name="title" 
+          type="text"
+          required
+          placeholder="Enter post title" 
+          class="border p-2 w-full rounded" 
+        />
+        <p class="text-xs text-gray-500 mt-1">Required. Will be used to create the URL slug.</p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Author</label>
+        <input 
+          name="author" 
+          type="text"
+          placeholder="Author name (default: Admin)" 
+          class="border p-2 w-full rounded" 
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Category</label>
+        <input 
+          name="category" 
+          type="text"
+          placeholder="e.g., Business, Technology" 
+          class="border p-2 w-full rounded" 
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Cover Image URL</label>
+        <input 
+          name="coverImage" 
+          type="url"
+          placeholder="https://images.unsplash.com/..." 
+          class="border p-2 w-full rounded" 
+        />
+        <p class="text-xs text-gray-500 mt-1">Optional. Leave empty for default image.</p>
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Content *</label>
+        <textarea 
+          name="content" 
+          required
+          placeholder="Write your post content here (HTML supported)..." 
+          rows="15" 
+          class="border p-2 w-full rounded font-mono text-sm"
+        ></textarea>
+        <p class="text-xs text-gray-500 mt-1">Required. You can use HTML tags like &lt;p&gt;, &lt;h2&gt;, &lt;strong&gt;, etc.</p>
+      </div>
+
+      <div class="flex gap-3">
+        <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+          Publish Post
+        </button>
+        <a href="/admin/blog" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+          Cancel
+        </a>
+      </div>
+
+    </form>
+  </div>
+
+</AdminLayout>
+
+<script>
+  const form = document.getElementById("form");
+
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Publishing...";
+    submitBtn.disabled = true;
+
+    try {
+      const formData = new FormData(form);
+      
+      const title = formData.get("title")?.trim();
+      const content = formData.get("content")?.trim();
+      
+      if (!title) {
+        window.showToast("Please enter a title", "warning");
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        return;
+      }
+      
+      if (!content) {
+        window.showToast("Please enter content", "warning");
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+        return;
+      }
+      
+      const data = {
+        title: title,
+        author: formData.get("author")?.trim() || "Admin",
+        category: formData.get("category")?.trim() || "General",
+        coverImage: formData.get("coverImage")?.trim() || "",
+        content: content,
+      };
+
+      const res = await fetch("/api/v1/posts", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+
+      if (res.ok && result.success) {
+        window.showToast("Post created successfully!", "success");
+        setTimeout(() => {
+          window.location.href = "/admin/blog";
+        }, 1000);
+      } else {
+        window.showToast(result.error || "Failed to create post", "error");
+      }
+    } catch (err) {
+      console.error("Error:", err);
+      window.showToast("Error: " + err.message, "error");
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+</script>

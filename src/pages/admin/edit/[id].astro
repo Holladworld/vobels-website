@@ -1,0 +1,136 @@
+---
+import AdminLayout from "@/layouts/AdminLayout.astro";
+import { posts, initializePosts } from "@/lib/posts-store";
+
+const { id } = Astro.params;
+await initializePosts();
+
+const post = posts.find(p => p.id == id && p.source === 'api');
+
+if (!post) {
+  return new Response("Post not found or cannot edit content posts", { status: 404 });
+}
+---
+
+<AdminLayout title={`Edit: ${post.title}`} current="blog">
+
+  <div class="max-w-4xl mx-auto mt-10">
+    <h1 class="text-2xl font-bold mb-6">Edit Post</h1>
+
+    <form id="editForm" class="space-y-4">
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Title *</label>
+        <input 
+          name="title" 
+          type="text"
+          value={post.title}
+          required 
+          class="border p-2 w-full rounded" 
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Author</label>
+        <input 
+          name="author" 
+          type="text"
+          value={post.author}
+          class="border p-2 w-full rounded" 
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Category</label>
+        <input 
+          name="category" 
+          type="text"
+          value={post.category}
+          class="border p-2 w-full rounded" 
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Cover Image URL</label>
+        <input 
+          name="coverImage" 
+          type="url"
+          value={post.coverImage}
+          class="border p-2 w-full rounded" 
+        />
+      </div>
+
+      <div>
+        <label class="block text-sm font-medium mb-1">Content</label>
+        <textarea 
+          name="content" 
+          rows="20" 
+          class="border p-2 w-full rounded font-mono text-sm"
+        >{post.content}</textarea>
+        <p class="text-xs text-gray-500 mt-1">HTML supported. Use &amp;lt;p&amp;gt;, &amp;lt;h2&amp;gt;, &amp;lt;strong&amp;gt;, etc.</p>
+      </div>
+
+      <div class="flex gap-3">
+        <button type="submit" class="bg-black text-white px-4 py-2 rounded hover:bg-gray-800">
+          Update Post
+        </button>
+        <a href="/admin/blog" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+          Cancel
+        </a>
+      </div>
+
+    </form>
+  </div>
+
+</AdminLayout>
+
+<script>
+  const form = document.getElementById('editForm');
+  const postId = window.location.pathname.split('/').pop();
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const submitBtn = form.querySelector('button[type="submit"]');
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = "Updating...";
+    submitBtn.disabled = true;
+
+    try {
+      const formData = new FormData(form);
+      
+      const data = {
+        title: formData.get('title')?.trim(),
+        author: formData.get('author')?.trim() || "Admin",
+        category: formData.get('category')?.trim() || "General",
+        coverImage: formData.get('coverImage')?.trim() || "/default-cover.jpg",
+        content: formData.get('content') || "",
+      };
+
+      const res = await fetch(`/api/v1/posts/${postId}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+
+      if (res.ok && result.success) {
+        window.showToast("Post updated successfully!", "success");
+        setTimeout(() => {
+          window.location.href = '/admin/blog';
+        }, 1000);
+      } else {
+        window.showToast(result.error || "Failed to update", "error");
+      }
+    } catch (err) {
+      console.error('Error:', err);
+      window.showToast("Error: " + err.message, "error");
+    } finally {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }
+  });
+</script>
