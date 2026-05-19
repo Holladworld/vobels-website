@@ -1,0 +1,26 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import BusinessCalculator from "@/components/BusinessCalculator.astro";
+---
+
+<Layout title="Business Cost Calculator | Vobels">
+  <Container>
+    <div class="mt-16 max-w-2xl mx-auto">
+      <div class="text-center mb-8">
+        <h1 class="text-4xl md:text-5xl font-black text-black">Business Registration Cost Calculator</h1>
+        <p class="text-zinc-600 mt-4">
+          Estimate your CAC registration fees instantly. Get a free breakdown via email.
+        </p>
+      </div>
+      
+      <BusinessCalculator />
+      
+      <div class="mt-12 text-center">
+        <p class="text-sm text-zinc-500">
+          Need help with registration? <a href="/contact" class="text-black font-bold underline">Talk to our team →</a>
+        </p>
+      </div>
+    </div>
+  </Container>
+</Layout>
