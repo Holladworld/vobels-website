@@ -1,0 +1,139 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+
+const price = "16,000";
+const originalPrice = "20,000";
+---
+
+<Layout title="Become a Registration Agent">
+  <Container>
+    <div class="mt-16">
+      <Sectionhead>
+        <Fragment slot="title">Become a Certified Registration Agent</Fragment>
+        <Fragment slot="desc">
+          Master CAC, NAFDAC, and Trademark registrations. Build a high-income business as a professional intermediary.
+        </Fragment>
+      </Sectionhead>
+    </div>
+
+    <main class="mt-16 max-w-5xl mx-auto mb-20">
+      <div class="grid md:grid-cols-2 gap-12 items-start">
+        <div class="space-y-8">
+          <section>
+            <h2 class="text-2xl font-bold mb-4 text-black">Tired of "Agent Exploitation"?</h2>
+            <p class="text-zinc-600 leading-relaxed">
+              Most business owners are terrified of the CAC portal because of hidden fees and complex legal talk. 
+              As a <strong>Vobels-trained Agent</strong>, you bridge that gap. You won't just register businesses; 
+              you'll manage the entire compliance lifecycle for clients.
+            </p>
+          </section>
+
+          <section class="bg-zinc-50 p-8 rounded-3xl border border-zinc-100">
+            <h3 class="font-bold text-lg mb-4 text-black text-center">What You'll Master</h3>
+            <ul class="space-y-3">
+              {[
+                "Thorough Name Search & Conflict Resolution",
+                "Advanced Name Reservation Strategies",
+                "Setting up Individual & Professional Agent Accounts",
+                "Step-by-Step Business Name & LTD Registration",
+                "Navigating NAFDAC & Trademark Filings",
+                "Handling Tax (TIN) Registration & Annual Returns",
+                "Correcting Queries & Avoiding Document Rejection"
+              ].map((item) => (
+                <li class="flex items-start gap-3 text-zinc-700 text-sm">
+                  <span class="text-green-600 font-bold">✓</span> {item}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          <div class="p-6 border-l-4 border-black bg-zinc-50 italic text-zinc-600">
+            "We don't just teach you to fill forms. We teach you to build a consultancy."
+          </div>
+        </div>
+
+        <div class="sticky top-24 bg-white border border-zinc-200 p-8 rounded-[2.5rem] shadow-2xl shadow-zinc-200/50">
+          <div class="text-center mb-8">
+            <div id="countdown" class="text-[10px] font-bold uppercase tracking-widest text-red-600 mb-2 bg-red-50 py-1 px-3 rounded-full inline-block animate-pulse">
+              Loading Offer...
+            </div>
+            
+            <div class="flex items-center justify-center gap-4 mt-2">
+              <span class="text-4xl font-black text-black">₦{price}</span>
+              <span class="text-xl text-zinc-300 line-through">₦{originalPrice}</span>
+            </div>
+            <p class="text-zinc-500 text-sm mt-2">One-time payment for lifetime access</p>
+          </div>
+
+          <div class="space-y-4">
+            <a 
+              href="/academy/pay-agent-fee" 
+              class="block w-full text-center bg-black text-white font-bold py-4 rounded-2xl hover:bg-zinc-800 transition-all transform hover:scale-[1.02]"
+            >
+              Get Instant Access
+            </a>
+            <p class="text-[10px] text-center text-zinc-400">
+              Secure Payment via Paystack/Flutterwave
+            </p>
+          </div>
+
+          <div class="mt-8 pt-8 border-t border-zinc-100 space-y-4">
+            <div class="flex items-center gap-4">
+              <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8h2a2 2 0 012 2v6a2 2 0 01-2 2h-2v4l-4-4H9l-4 4v-4H3a2 2 0 01-2-2V10a2 2 0 012-2h2M9 21V5a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H9l-4 4z" />
+                </svg>
+              </div>
+              <div>
+                <h4 class="text-sm font-bold text-black">Private Community</h4>
+                <p class="text-xs text-zinc-500">Access to our WhatsApp Agent Group for real-time support.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </Container>
+
+  <script is:inline>
+    (function() {
+        const GLOBAL_KEY = 'vobels_global_deadline';
+        const countdownEl = document.getElementById('countdown');
+        
+        // Check if a deadline already exists in the browser
+        let deadline = localStorage.getItem(GLOBAL_KEY);
+
+        if (!deadline) {
+        // First visit: Set deadline for 48 hours from now
+        deadline = Date.now() + (48 * 60 * 60 * 1000);
+        localStorage.setItem(GLOBAL_KEY, deadline);
+        }
+
+        function updateSyncTimer() {
+        const now = Date.now();
+        const remaining = deadline - now;
+
+        if (!countdownEl) return;
+
+        if (remaining <= 0) {
+            countdownEl.innerHTML = "OFFER EXPIRED - PRICE UPDATING...";
+            countdownEl.classList.replace('text-red-600', 'text-zinc-400');
+            return;
+        }
+
+        const h = Math.floor(remaining / (1000 * 60 * 60));
+        const m = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((remaining % (1000 * 60)) / 1000);
+
+        // This text works for both the badge on Academy and the header on Agent page
+        countdownEl.innerHTML = `DISCOUNT EXPIRES IN: ${h}h ${m}m ${s}s`;
+        }
+
+        // Run immediately and then every second
+        setInterval(updateSyncTimer, 1000);
+        updateSyncTimer();
+    })();
+    </script>
+</Layout>

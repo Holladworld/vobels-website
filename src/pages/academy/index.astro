@@ -1,0 +1,100 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+
+// Logic for the 2-day countdown (Client-side)
+---
+
+<Layout title="Vobels Academy | Skill Mastery">
+  <Container>
+    <div class="mt-20 text-center">
+      <h1 class="text-4xl md:text-6xl font-black text-black tracking-tighter">Vobels Academy</h1>
+      <p class="mt-4 text-zinc-500 max-w-2xl mx-auto">Choose your path: Build a professional registration agency or upskill in global industries.</p>
+    </div>
+
+    <div class="grid md:grid-cols-2 gap-8 mt-16 mb-20">
+      
+      <div class="relative group p-1 bg-gradient-to-br from-zinc-200 to-zinc-50 rounded-[2.5rem] overflow-hidden">
+        <div class="bg-white p-10 rounded-[2.4rem] h-full flex flex-col">
+          <div class="flex justify-between items-start mb-6">
+            <span class="px-4 py-1 bg-black text-white text-[10px] font-bold rounded-full uppercase tracking-widest">Premium</span>
+            <div id="countdown" class="text-red-600 font-bold text-xs animate-pulse"></div>
+          </div>
+          
+          <h2 class="text-3xl font-bold text-black mb-4">Certified Registration Agent</h2>
+          <p class="text-zinc-600 text-sm mb-6 flex-1">Become a professional intermediary. Master the legal portals of Nigeria.</p>
+          
+          <ul class="space-y-3 mb-8 text-sm text-zinc-700">
+            <li class="flex items-center gap-2">✅ CAC Agent Account & Filings</li>
+            <li class="flex items-center gap-2">✅ Trademark & NAFDAC Registration</li>
+            <li class="flex items-center gap-2">✅ Tax (TIN) & Annual Returns</li>
+            <li class="flex items-center gap-2">✅ Access to Private WhatsApp Group</li>
+          </ul>
+
+          <div class="mb-6">
+            <span class="text-3xl font-black text-black">₦16,000</span>
+            <span class="text-zinc-400 line-through ml-2">₦20,000</span>
+            <p class="text-[10px] text-green-600 font-bold mt-1">20% DISCOUNT ACTIVE (New Student Bonus)</p>
+          </div>
+
+          <a href="/academy/become-an-agent" class="block w-full text-center py-4 bg-black text-white rounded-2xl font-bold hover:bg-zinc-800 transition-all">Enroll as Agent</a>
+        </div>
+      </div>
+
+      <div class="p-10 border border-zinc-200 rounded-[2.5rem] flex flex-col">
+        <span class="w-fit px-4 py-1 bg-zinc-100 text-zinc-500 text-[10px] font-bold rounded-full uppercase tracking-widest mb-6">Upskill with Vobels</span>
+        
+        <h2 class="text-3xl font-bold text-black mb-4">Join Upskill with Vobels</h2>
+        <p class="text-zinc-600 text-sm mb-6 flex-1">Access global courses in Software Engineering, Nursing, Marketing, and more for free. Only pay a commitment fee for follow-up and certification.</p>
+        
+        <div class="mb-8">
+           <p class="text-sm font-bold text-black mb-2">Commitment Fee:</p>
+           <span class="text-2xl font-black text-black">₦2,000</span>
+        </div>
+
+        <a href="YOUR_GOOGLE_FORM_LINK" target="_blank" class="block w-full text-center py-4 border-2 border-black text-black rounded-2xl font-bold hover:bg-zinc-50 transition-all">Apply for Upskill</a>
+      </div>
+
+    </div>
+  </Container>
+
+  <script is:inline>
+    (function() {
+        const GLOBAL_KEY = 'vobels_global_deadline';
+        const countdownEl = document.getElementById('countdown');
+        
+        // Check if a deadline already exists in the browser
+        let deadline = localStorage.getItem(GLOBAL_KEY);
+
+        if (!deadline) {
+        // First visit: Set deadline for 48 hours from now
+        deadline = Date.now() + (48 * 60 * 60 * 1000);
+        localStorage.setItem(GLOBAL_KEY, deadline);
+        }
+
+        function updateSyncTimer() {
+        const now = Date.now();
+        const remaining = deadline - now;
+
+        if (!countdownEl) return;
+
+        if (remaining <= 0) {
+            countdownEl.innerHTML = "OFFER EXPIRED - PRICE UPDATING...";
+            countdownEl.classList.replace('text-red-600', 'text-zinc-400');
+            return;
+        }
+
+        const h = Math.floor(remaining / (1000 * 60 * 60));
+        const m = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+        const s = Math.floor((remaining % (1000 * 60)) / 1000);
+
+        // This text works for both the badge on Academy and the header on Agent page
+        countdownEl.innerHTML = `DISCOUNT EXPIRES IN: ${h}h ${m}m ${s}s`;
+        }
+
+        // Run immediately and then every second
+        setInterval(updateSyncTimer, 1000);
+        updateSyncTimer();
+    })();
+    </script>
+</Layout>

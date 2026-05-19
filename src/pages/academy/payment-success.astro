@@ -1,0 +1,89 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+
+const ref = Astro.url.searchParams.get('ref');
+const service = Astro.url.searchParams.get('service');
+const whatsappLink = import.meta.env.WHATSAPP_GROUP_LINK;
+const isBusinessService = !!service;
+---
+
+<Layout title={isBusinessService ? "Payment Successful | Vobels" : "Welcome to Vobels Academy"}>
+  <Container>
+    <div class="mt-20 max-w-md mx-auto text-center">
+      <div class="mb-8 flex justify-center">
+        <div class="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center animate-bounce">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7" />
+          </svg>
+        </div>
+      </div>
+
+      {isBusinessService ? (
+        <>
+          <h1 class="text-3xl font-black text-black">Payment Successful!</h1>
+          <p class="text-zinc-500 mt-4">
+            Thank you for purchasing <span class="font-bold text-black">{service}</span>.
+          </p>
+          <p class="text-zinc-500 mt-2">
+            Your transaction reference is <span class="font-mono text-black font-bold">{ref}</span>.
+          </p>
+          
+          <div class="mt-10 p-6 bg-blue-50 rounded-2xl border border-blue-100">
+            <h2 class="font-bold text-black mb-2">What Happens Next?</h2>
+            <div class="text-left space-y-3 mt-4">
+              <div class="flex items-start gap-3 text-sm">
+                <span class="text-blue-600 font-bold">1.</span>
+                <span class="text-zinc-600">You'll receive a payment receipt via email</span>
+              </div>
+              <div class="flex items-start gap-3 text-sm">
+                <span class="text-blue-600 font-bold">2.</span>
+                <span class="text-zinc-600">Our team will contact you within 24 hours</span>
+              </div>
+              <div class="flex items-start gap-3 text-sm">
+                <span class="text-blue-600 font-bold">3.</span>
+                <span class="text-zinc-600">We'll begin work on your {service}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-6 p-4 bg-yellow-50 rounded-xl">
+            <p class="text-sm text-yellow-800">
+              📞 Need to speak with us urgently? Call or WhatsApp: <span class="font-bold">+234 XXX XXX XXXX</span>
+            </p>
+          </div>
+        </>
+      ) : (
+        <>
+          <h1 class="text-3xl font-black text-black">Enrollment Complete!</h1>
+          <p class="text-zinc-500 mt-4">
+            Your payment was successful. Your transaction reference is <span class="font-mono text-black font-bold">{ref}</span>.
+          </p>
+
+          <div class="mt-10 p-6 bg-zinc-50 rounded-[2rem] border border-zinc-100">
+            <h2 class="font-bold text-black mb-2">Final Step: Join the Group</h2>
+            <p class="text-xs text-zinc-500 mb-6">Click the button below to join the private WhatsApp group for mentorship and course materials.</p>
+            
+            <a 
+              href={whatsappLink}
+              class="block w-full bg-[#07b351] text-white font-bold py-4 rounded-2xl hover:opacity-90 transition-all flex items-center justify-center gap-3 shadow-xl"
+            >
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-5 h-5 brightness-0 invert" alt="WA" />
+              Join Agent Community
+            </a>
+          </div>
+        </>
+      )}
+
+      <div class="mt-8">
+        <a href="/" class="text-sm text-zinc-400 hover:text-black transition-colors">
+          ← Return to Home
+        </a>
+      </div>
+
+      <p class="mt-10 text-[10px] text-zinc-400 uppercase tracking-widest">
+        Vobels Limited &copy; 2026 • All Rights Reserved
+      </p>
+    </div>
+  </Container>
+</Layout>
