@@ -3,20 +3,17 @@ import tailwindcss from "@tailwindcss/vite";
 import mdx from "@astrojs/mdx";
 import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
-import cloudflare from "@astrojs/cloudflare";
+import node from "@astrojs/node";
 
 export default defineConfig({
   site: "https://vobels.com.ng",
   output: "server",
-  adapter: cloudflare({
-    mode: "directory",
+  adapter: node({
+    mode: "development",
   }),
   integrations: [mdx(), sitemap(), icon()],
   vite: {
     plugins: [tailwindcss()],
-    optimizeDeps: {
-      exclude: ["astro-icon", "astro-icon/components"]
-    },
     ssr: {
       noExternal: ["astro-icon", "astro-navbar"],
     },
