@@ -1,0 +1,28 @@
+<div id="toast" class="hidden fixed top-5 right-5 z-50 px-4 py-3 rounded-lg shadow-lg transition-all duration-300">
+  <span id="toast-message">Success</span>
+</div>
+
+<script>
+  window.showToast = (msg, type = "success") => {
+    const toast = document.getElementById("toast");
+    const messageSpan = document.getElementById("toast-message");
+    
+    // Set color based on type
+    if (type === "success") {
+      toast.className = "hidden fixed top-5 right-5 z-50 px-4 py-3 rounded-lg shadow-lg transition-all duration-300 bg-green-500 text-white";
+    } else if (type === "error") {
+      toast.className = "hidden fixed top-5 right-5 z-50 px-4 py-3 rounded-lg shadow-lg transition-all duration-300 bg-red-500 text-white";
+    } else if (type === "warning") {
+      toast.className = "hidden fixed top-5 right-5 z-50 px-4 py-3 rounded-lg shadow-lg transition-all duration-300 bg-yellow-500 text-white";
+    } else {
+      toast.className = "hidden fixed top-5 right-5 z-50 px-4 py-3 rounded-lg shadow-lg transition-all duration-300 bg-blue-500 text-white";
+    }
+    
+    messageSpan.innerText = msg;
+    toast.classList.remove("hidden");
+
+    setTimeout(() => {
+      toast.classList.add("hidden");
+    }, 3000);
+  };
+</script>
