@@ -1,0 +1,25 @@
+---
+const { data = [] } = Astro.props;
+---
+
+<table class="w-full bg-white rounded shadow">
+  <thead>
+    <tr class="border-b">
+      <th class="p-2 text-left">Email</th>
+      <th class="p-2 text-left">Amount</th>
+      <th class="p-2 text-left">Category</th>
+      <th class="p-2 text-left">Ref</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    {data.map((row) => (
+      <tr class="border-b">
+        <td class="p-2">{row.email}</td>
+        <td class="p-2">{row.amount}</td>
+        <td class="p-2">{row.category}</td>
+        <td class="p-2">{row.ref}</td>
+      </tr>
+    ))}
+  </tbody>
+</table>

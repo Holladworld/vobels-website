@@ -1,0 +1,47 @@
+---
+const { current = "" } = Astro.props;
+---
+
+<aside class="w-64 h-screen bg-gray-900 text-white flex flex-col">
+
+  <div class="p-6 text-xl font-bold border-b border-gray-800">
+    Vobels Admin
+  </div>
+
+  <nav class="flex-1 p-4 space-y-2 text-sm">
+
+    <a href="/admin"
+      class={`block px-3 py-2 rounded ${
+        current === "dashboard" ? "bg-gray-800" : "hover:bg-gray-800"
+      }`}>
+      Dashboard
+    </a>
+
+    <a href="/admin/transactions"
+      class={`block px-3 py-2 rounded ${
+        current === "transactions" ? "bg-gray-800" : "hover:bg-gray-800"
+      }`}>
+      Transactions
+    </a>
+
+    <a href="/admin/blog"
+      class={`block px-3 py-2 rounded ${
+        current === "blog" ? "bg-gray-800" : "hover:bg-gray-800"
+      }`}>
+      Blog
+    </a>
+
+    <a href="/admin/customers"
+      class="block px-3 py-2 rounded hover:bg-gray-800">
+      Customers
+    </a>
+
+  </nav>
+
+  <div class="p-4 border-t border-gray-800">
+    <a href="/api/v1/admin/logout" class="text-red-400 text-sm">
+      Logout
+    </a>
+  </div>
+
+</aside>
