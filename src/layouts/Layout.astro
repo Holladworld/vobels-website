@@ -5,6 +5,7 @@ import Navbar from "@/components/navbar/navbar.astro";
 import "@fontsource-variable/inter/index.css";
 import "@fontsource-variable/bricolage-grotesque";
 import WhatsAppButton from "@/components/WhatsappButton.astro";
+import Popup from "@/components/Popup.astro";
 import "../styles/global.css";
 
 export interface Props {
@@ -84,6 +85,7 @@ const makeDescription = description
       <slot />
     </main>
     <Footer />
+    <Popup />
     <WhatsAppButton />
     <script>
       import { inView, animate, stagger } from "motion";
