@@ -1,0 +1,161 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import { Picture } from "astro:assets";
+import opsHero from "@/assets/pillars-image/hero-operation.png"; 
+
+const opsProjects = [
+  {
+    name: "OTP Global Migration",
+    tagline: "ERP Transformation & Cost Recovery",
+    description: "Successfully transitioning corporate operations from high-subscription Flectra servers to a streamlined BizOS environment. This move targets a 70% reduction in monthly operational overhead.",
+    outcome: "Infrastructure move from heavy-server dependency to lightweight, high-automation Google Cloud architecture."
+  },
+  {
+    name: "BizOS Core Development",
+    tagline: "Proprietary Business Operating System",
+    description: "Built a custom ecosystem using Google App Script and Sheets to manage bookkeeping, inventory, and staff tasks. Designed specifically for businesses that have 'outgrown' spreadsheets but aren't ready for $500/mo ERPs.",
+    outcome: "Replacing 3+ recurring subscriptions with one unified, zero-subscription dashboard."
+  }
+];
+---
+
+<Layout title="Operations & Management | Vobels">
+  <Container>
+    <div class="mt-16 grid lg:grid-cols-2 gap-12 items-center">
+      <div class="reveal-content">
+        <span class="text-xs uppercase tracking-[0.3em] text-zinc-400">Pillar 03</span>
+        <h1 class="text-5xl font-bold mt-4 mb-6 tracking-tight text-black">Operations & Management</h1>
+        <p class="text-xl text-zinc-600 font-light leading-relaxed mb-8">
+          The difference between a "hustle" and a "company" is a system. Vobels eliminates administrative chaos 
+          by building custom operational engines that run while you sleep.
+        </p>
+        
+        <div class="grid gap-8">
+          <div class="flex gap-4">
+            <div class="flex-none w-1 h-12 bg-black"></div>
+            <div>
+              <h3 class="font-bold text-lg uppercase tracking-tight">Financial Engineering</h3>
+              <p class="text-zinc-500">Automated bookkeeping, cashflow forecasting, and expense tracking without the SaaS fees.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-none w-1 h-12 bg-zinc-200"></div>
+            <div>
+              <h3 class="font-bold text-lg uppercase tracking-tight">Workflow Automation</h3>
+              <p class="text-zinc-500">Connecting your sales, inventory, and delivery into a single, automated pipeline.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="flex-none w-1 h-12 bg-zinc-200"></div>
+            <div>
+              <h3 class="font-bold text-lg uppercase tracking-tight">The BizOS Engine</h3>
+              <p class="text-zinc-500">A custom-built Operating System that gives you total control over your business data.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-12">
+          <a href="#ops-portal" class="bg-black text-white px-10 py-4 rounded-full uppercase tracking-widest text-xs font-bold hover:bg-zinc-800 transition-all">
+            Optimize My Business
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal-content">
+        <Picture 
+          src={opsHero} 
+          alt="Vobels Operational Systems Visualization" 
+          class="rounded-3xl shadow-2xl border border-zinc-100" 
+        />
+      </div>
+    </div>
+
+    <div class="mt-32">
+      <div class="mb-12">
+        <h2 class="text-3xl font-bold uppercase tracking-tighter">Operational Success</h2>
+        <p class="text-zinc-500 mt-2">Engineering efficiency for growing organizations.</p>
+      </div>
+
+      <div class="grid gap-6">
+        {opsProjects.map((project) => (
+          <div class="group border border-zinc-100 rounded-[2rem] overflow-hidden bg-white hover:border-zinc-300 transition-all p-8 md:p-10">
+            <h3 class="text-2xl font-bold">{project.name}</h3>
+            <p class="text-zinc-400 font-medium mb-4">{project.tagline}</p>
+            
+            <details class="group/details">
+              <summary class="list-none cursor-pointer flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-zinc-500 hover:text-black">
+                <span class="group-open/details:rotate-90 transition-transform">→</span> System Details
+              </summary>
+              <div class="mt-6 text-zinc-600 leading-relaxed grid md:grid-cols-2 gap-8 animate-in slide-in-from-top-2">
+                <p>{project.description}</p>
+                <div class="bg-zinc-50 p-6 rounded-2xl">
+                   <span class="text-[10px] font-bold uppercase tracking-widest text-zinc-400 block mb-2">Key Outcome</span>
+                   <p class="text-sm font-semibold text-black">{project.outcome}</p>
+                </div>
+              </div>
+            </details>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <div id="ops-portal" class="mt-32 max-w-4xl mx-auto bg-white border border-zinc-200 p-8 md:p-16 rounded-[2.5rem] shadow-xl mb-20">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold uppercase tracking-tighter">Operational Health Check</h2>
+            <p class="text-zinc-500 mt-2">Tell us where the bottleneck is; we'll build the solution.</p>
+        </div>
+
+        <form action="https://formspree.io/f/YOUR_ID" method="POST" class="space-y-8">
+            <div>
+                <label class="block text-xs font-bold uppercase mb-4 text-black">What is your biggest operational pain point?</label>
+                <select name="pain_point" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border appearance-none">
+                    <option>Disorganized Finances / Bookkeeping</option>
+                    <option>Too Many Expensive Subscriptions</option>
+                    <option>Manual Staff/Task Tracking</option>
+                    <option>General Chaos / Lack of Systems</option>
+                </select>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6">
+                <div>
+                    <label class="block text-xs font-bold uppercase mb-2">Team Size</label>
+                    <input type="text" name="team_size" placeholder="e.g. 1-10" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase mb-2">Current Software Used</label>
+                    <input type="text" name="current_stack" placeholder="e.g. Excel, Odoo, Flectra" class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+                </div>
+            </div>
+
+            <div class="grid md:grid-cols-2 gap-6 pt-6 border-t border-zinc-100">
+                <div>
+                    <label class="block text-xs font-bold uppercase mb-2">Contact Name</label>
+                    <input type="text" name="name" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+                </div>
+                <div>
+                    <label class="block text-xs font-bold uppercase mb-2">WhatsApp Number</label>
+                    <input type="tel" name="whatsapp" required class="w-full bg-zinc-50 border-zinc-200 rounded-lg p-4 border" />
+                </div>
+            </div>
+
+            <button type="submit" class="w-full bg-black text-white font-bold py-5 rounded-full uppercase tracking-widest text-sm hover:invert transition-all">
+                Request System Audit
+            </button>
+        </form>
+         <div class="mt-6 pt-6 border-t border-zinc-100 text-center">
+        <a href="/business-pricing#operations" class="text-sm text-zinc-500 hover:text-black underline underline-offset-4 inline-flex items-center gap-1">
+            → Need only specific services? View individual pricing
+        </a>
+    </div>
+    </div>
+
+    <div class="mt-32 p-12 bg-black rounded-[2rem] text-white text-center">
+      <h2 class="text-3xl font-bold mb-6">The Outcome</h2>
+      <blockquote class="text-2xl font-light italic max-w-3xl mx-auto border-l-4 border-zinc-700 pl-8 text-left">
+        "Transitioning from human-dependent chaos to system-driven growth. Your business becomes an asset, not just a job."
+      </blockquote>
+      <div class="mt-10 text-sm uppercase tracking-[.4em] text-zinc-500">Chaos > Automated Order</div>
+    </div>
+  </Container>
+</Layout>
