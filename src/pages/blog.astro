@@ -1,0 +1,67 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import Sectionhead from "@/components/sectionhead.astro";
+import { posts, initializePosts } from "@/lib/posts-store";
+
+// Load all posts
+await initializePosts();
+
+// Filter out drafts and sort by date
+const allPosts = posts
+  .filter(p => !p.draft)
+  .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
+---
+
+<Layout title="Journal | Vobels">
+  <Container>
+    <div class="mt-16 text-center">
+      <Sectionhead>
+        <Fragment slot="title">
+          <span class="text-black">Vobels Journal</span>
+        </Fragment>
+        
+        <Fragment slot="desc">
+          Insights on engineering, business systems, and luxury market expansion.
+        </Fragment>
+      </Sectionhead>
+    </div>
+
+    <main class="mt-20">
+      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {allPosts.length === 0 ? (
+          <p class="text-center col-span-3">No blog posts yet.</p>
+        ) : (
+          allPosts.map((post) => (
+            <article class="group">
+
+              <a href={`/blog/${post.slug}`}>
+                <img 
+                  src={post.coverImage} 
+                  alt={post.title}
+                  class="rounded-2xl mb-4 w-full h-[200px] object-cover"
+                  loading="lazy"
+                />
+              </a>
+
+              <h2 class="text-xl font-bold">
+                <a href={`/blog/${post.slug}`}>
+                  {post.title}
+                </a>
+              </h2>
+
+              <p class="text-sm text-zinc-500 mt-1">
+                {post.author} • {new Date(post.publishDate).toDateString()}
+              </p>
+              
+              <p class="text-zinc-600 mt-2 line-clamp-2">
+                {post.snippet}
+              </p>
+
+            </article>
+          ))
+        )}
+      </div>
+    </main>
+  </Container>
+</Layout>
