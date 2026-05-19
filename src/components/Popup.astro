@@ -1,5 +1,4 @@
 ---
-// Popup component - appears after scroll or time delay
 const popupTitle = "Free Business Growth Assessment";
 const popupDescription = "Not sure how to take your business from small to enterprise?";
 const benefits = [
@@ -33,17 +32,14 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
     
     <!-- Content -->
     <div class="p-6">
-      <!-- Title -->
       <h3 class="text-xl font-bold text-black text-center mb-2">
         {popupTitle}
       </h3>
       
-      <!-- Description -->
       <p class="text-zinc-600 text-center text-sm mb-4">
         {popupDescription}
       </p>
       
-      <!-- Benefits -->
       <ul class="space-y-2 mb-6">
         {benefits.map((benefit) => (
           <li class="flex items-center gap-2 text-sm text-zinc-700">
@@ -55,25 +51,27 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
         ))}
       </ul>
       
-      <!-- Form -->
+      <!-- Form - FIXED -->
       <form id="popup-form" class="space-y-4">
         <input 
           type="email" 
           id="popup-email" 
+          name="email"
           required
           placeholder="Enter your business email" 
           class="w-full px-4 py-3 border border-zinc-200 rounded-lg focus:ring-2 focus:ring-black outline-none"
         />
         <button 
           type="submit" 
-          class="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-zinc-800 transition-all"
+          id="popup-submit-btn"
+          class="w-full bg-black text-white py-3 rounded-lg font-semibold hover:bg-zinc-800 transition-all cursor-pointer"
         >
           {buttonText}
         </button>
       </form>
       
       <p class="text-xs text-zinc-400 text-center mt-4">
-        No spam. Get the file directly in your mail.
+        No spam. Get your free assessment.
       </p>
     </div>
   </div>
@@ -117,13 +115,13 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
       }, 200);
     }
     
-    // Trigger popup after 30 seconds
+    // Show popup after 30 seconds
     const timer = setTimeout(showPopup, 30000);
     
-    // Or trigger on scroll (50% of page)
+    // Show on scroll (50% of page)
     let scrollTriggered = false;
-    window.addEventListener('scroll', () => {
-      if (scrollTriggered) return;
+    window.addEventListener('scroll', function() {
+      if (scrollTriggered || popupShown) return;
       const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
       if (scrollPercent > 0.5) {
         scrollTriggered = true;
@@ -132,50 +130,72 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
       }
     });
     
-    // Close button
+    // Close button click
     if (closeBtn) {
       closeBtn.addEventListener('click', closePopup);
     }
     
-    // Close on click outside
-    popup.addEventListener('click', (e) => {
+    // Close when clicking outside
+    popup.addEventListener('click', function(e) {
       if (e.target === popup) {
         closePopup();
       }
     });
     
     // Form submission
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const email = emailInput.value;
-      
-      // Send to your API
-      try {
-        const response = await fetch('/api/capture-lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            email, 
-            source: 'growth_popup',
-            timestamp: new Date().toISOString()
-          })
-        });
+    if (form) {
+      form.addEventListener('submit', async function(e) {
+        e.preventDefault();
         
-        if (response.ok) {
-          // Show success message
-          form.innerHTML = `
-            <div class="text-center p-4 bg-green-50 rounded-lg">
-              <p class="text-green-700 font-semibold">Thank you!</p>
-              <p class="text-sm text-green-600 mt-1">Check your email for your assessment.</p>
-            </div>
-          `;
-          
-          // Auto close after 3 seconds
-          setTimeout(closePopup, 3000);
+        const email = emailInput.value.trim();
+        
+        if (!email) {
+          alert('Please enter your email address');
+          return;
         }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-    });
+        
+        // Change button text to show loading
+        const submitBtn = document.getElementById('popup-submit-btn');
+        const originalText = submitBtn.innerHTML;
+        submitBtn.innerHTML = 'Sending...';
+        submitBtn.disabled = true;
+        
+        try {
+          const response = await fetch('/api/capture-lead', {
+            method: 'POST',
+            headers: { 
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ 
+              email: email, 
+              source: 'growth_popup',
+              timestamp: new Date().toISOString()
+            })
+          });
+          
+          const result = await response.json();
+          
+          if (response.ok) {
+            // Show success message
+            form.innerHTML = `
+              <div class="text-center p-4 bg-green-50 rounded-lg">
+                <p class="text-green-700 font-semibold">Thank you!</p>
+                <p class="text-sm text-green-600 mt-1">Check your email for your free e-book.</p>
+              </div>
+            `;
+            
+            // Auto close after 3 seconds
+            setTimeout(closePopup, 3000);
+          } else {
+            throw new Error(result.error || 'Something went wrong');
+          }
+        } catch (error) {
+          console.error('Error:', error);
+          submitBtn.innerHTML = originalText;
+          submitBtn.disabled = false;
+          alert('Something went wrong. Please try again.');
+        }
+      });
+    }
   })();
 </script>
