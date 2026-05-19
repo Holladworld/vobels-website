@@ -1,15 +1,5 @@
 name = "vobels-website"
-main = "./dist/_worker.js"
-compatibility_date = "2024-01-01"
+compatibility_date = "2025-01-01"
+compatibility_flags = ["nodejs_compat"]
 
-[env.production]
-vars = { ENVIRONMENT = "production" }
-
-[env.production.secrets]
-# Add your secrets here (will be set in Cloudflare dashboard instead)
-# PAYSTACK_SECRET_KEY = ""
-# GOOGLE_SHEET_URL = ""
-# VOBELS_ADMIN_EMAIL = ""
-# VOBELS_ADMIN_PASSWORD = ""
-# WHATSAPP_GROUP_LINK = ""
-
+# Don't specify 'main' - let Cloudflare handle it
