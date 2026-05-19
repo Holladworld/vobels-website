@@ -74,7 +74,7 @@ text
 │   │   ├── academy/     # Agent certification
 │   │   ├── admin/       # Admin dashboard
 │   │   ├── api/         # API endpoints
-│   │   └── pillars/     # Service pillar pages
+│   │   └── service/     # Service pillar pages
 │   ├── styles/          # Global styles
 │   └── utils/           # Utility functions
 ├── astro.config.mjs     # Astro configuration
