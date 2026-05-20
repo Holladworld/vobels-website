@@ -486,23 +486,23 @@ const bannerImages = [
     </div>
     
     <!-- Slider Controls -->
-    <button id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-all">
+    <button id="prevSlide" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-all z-10">
       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
       </svg>
     </button>
-    <button id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-all">
+    <button id="nextSlide" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-all z-10">
       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
       </svg>
     </button>
     
     <!-- Dots -->
-    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3">
       {bannerImages.map((_, index) => (
         <button 
           id={`topDot-${index}`}
-          class={`dot w-2 h-2 rounded-full transition-all ${index === 0 ? 'bg-white w-4' : 'bg-white/50'}`}
+          class="top-slider-dot"
           data-index={index}
         ></button>
       ))}
@@ -527,6 +527,7 @@ const bannerImages = [
       <a href="#expansion" class="text-xs bg-zinc-100 hover:bg-black hover:text-white px-4 py-2 rounded-full transition-all">Expansion</a>
     </div>
 
+    <!-- Service Sections -->
     {Object.entries(services).map(([key, section]) => (
       <div id={section.id} class="mb-16 scroll-mt-24">
         <h2 class="text-2xl font-bold mb-6 pb-2 border-b-2 border-black inline-block">
@@ -537,7 +538,6 @@ const bannerImages = [
             <div class="border border-zinc-200 rounded-xl p-5 hover:shadow-lg transition-all bg-white">
               <h3 class="font-semibold text-black mb-2">{item.name}</h3>
               
-              {/* Show price or dropdown if hasOptions */}
               {item.hasOptions ? (
                 <div class="mb-4">
                   <select 
@@ -569,7 +569,6 @@ const bannerImages = [
                     {item.price === "Varies" ? item.price : formatPrice(item.price, item.currency)}
                   </p>
                   
-                  {/* Show documents if they exist */}
                   {item.documents && (
                     <details class="mb-4 text-xs">
                       <summary class="cursor-pointer text-zinc-500 hover:text-black font-medium">
@@ -640,28 +639,80 @@ const bannerImages = [
     </div>
     
     <!-- Slider Controls for Bottom -->
-    <button id="prevSlideBottom" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-all">
+    <button id="prevSlideBottom" class="absolute left-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-all z-10">
       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
       </svg>
     </button>
-    <button id="nextSlideBottom" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-all">
+    <button id="nextSlideBottom" class="absolute right-4 top-1/2 -translate-y-1/2 bg-white/20 hover:bg-white/40 p-2 rounded-full transition-all z-10">
       <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
       </svg>
     </button>
     
     <!-- Dots for Bottom -->
-    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
+    <div class="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-3">
       {bannerImages.map((_, index) => (
         <button 
           id={`bottomDot-${index}`}
-          class={`bottom-dot w-2 h-2 rounded-full transition-all ${index === 0 ? 'bg-white w-4' : 'bg-white/50'}`}
+          class="bottom-slider-dot"
           data-index={index}
         ></button>
       ))}
     </div>
   </div>
+
+  <style is:global>
+    /* Top Slider Dot Styles */
+    .top-slider-dot {
+      width: 8px !important;
+      height: 8px !important;
+      border-radius: 50% !important;
+      background-color: white !important;
+      opacity: 0.4 !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      min-height: 8px !important;
+      display: block !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+    }
+    
+    .top-slider-dot.active {
+      opacity: 1 !important;
+      transform: scale(1.5) !important;
+    }
+    
+    .top-slider-dot:hover {
+      opacity: 0.8 !important;
+    }
+    
+    /* Bottom Slider Dot Styles */
+    .bottom-slider-dot {
+      width: 8px !important;
+      height: 8px !important;
+      border-radius: 50% !important;
+      background-color: white !important;
+      opacity: 0.4 !important;
+      transition: all 0.3s ease !important;
+      cursor: pointer !important;
+      min-height: 8px !important;
+      display: block !important;
+      padding: 0 !important;
+      margin: 0 !important;
+      border: none !important;
+    }
+    
+    .bottom-slider-dot.active {
+      opacity: 1 !important;
+      transform: scale(1.5) !important;
+    }
+    
+    .bottom-slider-dot:hover {
+      opacity: 0.8 !important;
+    }
+  </style>
 </Layout>
 
 <script is:inline>
@@ -695,7 +746,7 @@ const bannerImages = [
   // Top Slider Functionality
   let topCurrentIndex = 0;
   const topSlides = document.querySelectorAll('[id^="topSlide-"]');
-  const topDots = document.querySelectorAll('.dot');
+  const topDots = document.querySelectorAll('.top-slider-dot');
   const totalSlides = topSlides.length;
 
   function showTopSlide(index) {
@@ -704,11 +755,9 @@ const bannerImages = [
     });
     topDots.forEach((dot, i) => {
       if (i === index) {
-        dot.classList.add('bg-white', 'w-4');
-        dot.classList.remove('bg-white/50', 'w-2');
+        dot.classList.add('active');
       } else {
-        dot.classList.remove('bg-white', 'w-4');
-        dot.classList.add('bg-white/50', 'w-2');
+        dot.classList.remove('active');
       }
     });
   }
@@ -726,17 +775,24 @@ const bannerImages = [
   // Auto-advance top slider
   let topInterval = setInterval(nextTopSlide, 5000);
 
-  document.getElementById('nextSlide')?.addEventListener('click', () => {
-    clearInterval(topInterval);
-    nextTopSlide();
-    topInterval = setInterval(nextTopSlide, 5000);
-  });
-
-  document.getElementById('prevSlide')?.addEventListener('click', () => {
-    clearInterval(topInterval);
-    prevTopSlide();
-    topInterval = setInterval(nextTopSlide, 5000);
-  });
+  const topPrevBtn = document.getElementById('prevSlide');
+  const topNextBtn = document.getElementById('nextSlide');
+  
+  if (topPrevBtn) {
+    topPrevBtn.addEventListener('click', () => {
+      clearInterval(topInterval);
+      prevTopSlide();
+      topInterval = setInterval(nextTopSlide, 5000);
+    });
+  }
+  
+  if (topNextBtn) {
+    topNextBtn.addEventListener('click', () => {
+      clearInterval(topInterval);
+      nextTopSlide();
+      topInterval = setInterval(nextTopSlide, 5000);
+    });
+  }
 
   topDots.forEach((dot, i) => {
     dot.addEventListener('click', () => {
@@ -750,7 +806,7 @@ const bannerImages = [
   // Bottom Slider Functionality
   let bottomCurrentIndex = 0;
   const bottomSlides = document.querySelectorAll('[id^="bottomSlide-"]');
-  const bottomDots = document.querySelectorAll('.bottom-dot');
+  const bottomDots = document.querySelectorAll('.bottom-slider-dot');
   const bottomTotalSlides = bottomSlides.length;
 
   function showBottomSlide(index) {
@@ -759,11 +815,9 @@ const bannerImages = [
     });
     bottomDots.forEach((dot, i) => {
       if (i === index) {
-        dot.classList.add('bg-white', 'w-4');
-        dot.classList.remove('bg-white/50', 'w-2');
+        dot.classList.add('active');
       } else {
-        dot.classList.remove('bg-white', 'w-4');
-        dot.classList.add('bg-white/50', 'w-2');
+        dot.classList.remove('active');
       }
     });
   }
@@ -781,17 +835,24 @@ const bannerImages = [
   // Auto-advance bottom slider
   let bottomInterval = setInterval(nextBottomSlide, 5000);
 
-  document.getElementById('nextSlideBottom')?.addEventListener('click', () => {
-    clearInterval(bottomInterval);
-    nextBottomSlide();
-    bottomInterval = setInterval(nextBottomSlide, 5000);
-  });
-
-  document.getElementById('prevSlideBottom')?.addEventListener('click', () => {
-    clearInterval(bottomInterval);
-    prevBottomSlide();
-    bottomInterval = setInterval(nextBottomSlide, 5000);
-  });
+  const bottomPrevBtn = document.getElementById('prevSlideBottom');
+  const bottomNextBtn = document.getElementById('nextSlideBottom');
+  
+  if (bottomPrevBtn) {
+    bottomPrevBtn.addEventListener('click', () => {
+      clearInterval(bottomInterval);
+      prevBottomSlide();
+      bottomInterval = setInterval(nextBottomSlide, 5000);
+    });
+  }
+  
+  if (bottomNextBtn) {
+    bottomNextBtn.addEventListener('click', () => {
+      clearInterval(bottomInterval);
+      nextBottomSlide();
+      bottomInterval = setInterval(nextBottomSlide, 5000);
+    });
+  }
 
   bottomDots.forEach((dot, i) => {
     dot.addEventListener('click', () => {

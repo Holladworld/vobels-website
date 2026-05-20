@@ -5,8 +5,29 @@ export const POST: APIRoute = async ({ request }) => {
     const body = await request.json();
     const { name, email, phone, message } = body;
     
-    // Send email using your Google Sheets webhook (which will forward to email)
+    // Validate required fields
+    if (!name || !email || !message) {
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: "Name, email, and message are required" 
+      }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
+    
     const sheetUrl = import.meta.env.GOOGLE_SHEET_URL;
+    
+    if (!sheetUrl) {
+      console.error('GOOGLE_SHEET_URL environment variable is not set');
+      return new Response(JSON.stringify({ 
+        success: false, 
+        error: "Configuration error" 
+      }), {
+        status: 500,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    }
     
     const response = await fetch(sheetUrl, {
       method: 'POST',
@@ -16,20 +37,30 @@ export const POST: APIRoute = async ({ request }) => {
         payload: {
           name: name,
           email: email,
-          phone: phone,
+          phone: phone || "Not provided",
           message: message,
           timestamp: new Date().toISOString()
         }
       })
     });
     
-    return new Response(JSON.stringify({ success: true }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    const result = await response.json();
+    
+    if (result.success) {
+      return new Response(JSON.stringify({ success: true }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
+    } else {
+      throw new Error(result.error || "Failed to send");
+    }
+    
   } catch (error) {
     console.error('Error:', error);
-    return new Response(JSON.stringify({ success: false, error: error.message }), {
+    return new Response(JSON.stringify({ 
+      success: false, 
+      error: error.message || "Failed to send message" 
+    }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
     });
