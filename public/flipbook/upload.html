@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vobels Flipbook | Create Digital Publication</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="shortcut icon" href="/favicon.svg">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #f7f6f4;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        
+        .container {
+            max-width: 680px;
+            width: 100%;
+            background: #ffffff;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.05);
+        }
+        
+        .header {
+            padding: 2rem 2rem 1rem;
+            border-bottom: 1px solid #ebe9e4;
+        }
+        
+        .header h1 {
+            font-family: 'Playfair Display', Georgia, serif;
+            font-size: 1.75rem;
+            font-weight: 400;
+            color: #1f1e1c;
+            margin-bottom: 0.5rem;
+        }
+        
+        .header p {
+            color: #6b6760;
+            font-size: 0.875rem;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 0;
+            border-bottom: 1px solid #ebe9e4;
+            padding: 0 2rem;
+        }
+        
+        .tab {
+            padding: 1rem 1.5rem;
+            background: none;
+            border: none;
+            font-size: 0.875rem;
+            cursor: pointer;
+            color: #6b6760;
+            transition: all 0.2s;
+        }
+        
+        .tab.active {
+            color: #1f1e1c;
+            border-bottom: 2px solid #1f1e1c;
+            margin-bottom: -1px;
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 2rem;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .upload-area {
+            border: 1px dashed #d4cfc6;
+            padding: 2rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: #fefdfc;
+        }
+        
+        .upload-area:hover {
+            border-color: #8b7e6b;
+            background: #ffffff;
+        }
+        
+        .upload-icon {
+            width: 40px;
+            height: 40px;
+            stroke: #8b7e6b;
+            margin-bottom: 1rem;
+        }
+        
+        .file-input { display: none; }
+        
+        .url-input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e3dfd8;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+        
+        .url-input:focus {
+            outline: none;
+            border-color: #8b7e6b;
+        }
+        
+        .create-btn {
+            width: 100%;
+            background: #1f1e1c;
+            color: white;
+            border: none;
+            padding: 0.875rem;
+            font-size: 0.8rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-top: 1rem;
+        }
+        
+        .create-btn:hover:not(:disabled) {
+            background: #8b7e6b;
+        }
+        
+        .create-btn:disabled {
+            background: #d4cfc6;
+            cursor: not-allowed;
+        }
+        
+        .result-card {
+            padding: 2rem;
+            display: none;
+            text-align: center;
+            background: #fefdfc;
+            border-top: 1px solid #ebe9e4;
+        }
+        
+        .share-link {
+            display: flex;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+        
+        .share-link input {
+            flex: 1;
+            padding: 0.75rem;
+            border: 1px solid #e3dfd8;
+            font-family: monospace;
+            font-size: 0.75rem;
+        }
+        
+        .copy-btn, .view-btn {
+            padding: 0.75rem 1.5rem;
+            background: #1f1e1c;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 0.8rem;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .view-btn {
+            background: transparent;
+            border: 1px solid #1f1e1c;
+            color: #1f1e1c;
+            margin-left: 0.5rem;
+        }
+        
+        .loading {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        .spinner {
+            width: 30px;
+            height: 30px;
+            border: 1px solid #e3dfd8;
+            border-top-color: #1f1e1c;
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            margin: 0 auto 1rem;
+        }
+        
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .error-msg, .success-msg {
+            padding: 0.75rem;
+            margin: 1rem 0;
+            font-size: 0.8rem;
+            display: none;
+        }
+        
+        .error-msg { background: #fee; color: #c44; border-left: 3px solid #c44; }
+        .success-msg { background: #efe; color: #2a6b2a; border-left: 3px solid #2a6b2a; }
+        
+        .info-note {
+            background: #f4f2ef;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-size: 0.75rem;
+            color: #6b6760;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Vobels Flipbook</h1>
+            <p>Transform your PDF into an elegant, shareable digital publication</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" data-tab="upload">Upload PDF</button>
+            <button class="tab" data-tab="url">PDF URL</button>
+        </div>
+        
+        <!-- Upload Tab -->
+        <div id="upload-tab" class="tab-content active">
+            <div class="upload-area" id="dropzone">
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2">
+                    <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"/>
+                </svg>
+                <p>Click or drag your PDF here</p>
+                <small style="color: #9a968f;">Maximum file size: 50MB</small>
+                <input type="file" id="fileInput" accept=".pdf" class="file-input">
+            </div>
+            <div id="fileSelected" style="font-size: 0.8rem; color: #2a6b2a; text-align: center; margin-top: 0.5rem; display: none;"></div>
+            <button id="uploadBtn" class="create-btn" disabled>Create Flipbook</button>
+        </div>
+        
+        <!-- URL Tab -->
+        <div id="url-tab" class="tab-content">
+            <input type="url" id="pdfUrl" class="url-input" placeholder="https://example.com/document.pdf">
+            <p style="font-size: 0.7rem; color: #9a968f; margin-bottom: 1rem;">
+                Enter a publicly accessible PDF URL (Google Drive, Dropbox, etc.)
+            </p>
+            <button id="createFromUrlBtn" class="create-btn">Create from URL</button>
+        </div>
+        
+        <div id="errorMsg" class="error-msg"></div>
+        <div id="successMsg" class="success-msg"></div>
+        
+        <div id="resultSection" class="result-card">
+            <h3 style="font-family: 'Playfair Display', serif; font-weight: 400; margin-bottom: 1rem;">Your flipbook is ready</h3>
+            <div class="share-link">
+                <input type="text" id="shareUrl" readonly>
+                <button id="copyBtn" class="copy-btn">Copy</button>
+                <a id="viewLink" href="#" target="_blank" class="view-btn">View →</a>
+            </div>
+        </div>
+        
+        <div id="loadingIndicator" class="loading">
+            <div class="spinner"></div>
+            <p>Processing your document...</p>
+        </div>
+        
+        <div class="info-note">
+            💡 Your flipbook gets a permanent shareable link. Works with Google Drive, Dropbox, or direct PDF URLs.
+        </div>
+    </div>
+
+    <script>
+        // Tab switching
+        const tabs = document.querySelectorAll('.tab');
+        const contents = document.querySelectorAll('.tab-content');
+        
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                tabs.forEach(t => t.classList.remove('active'));
+                contents.forEach(c => c.classList.remove('active'));
+                tab.classList.add('active');
+                document.getElementById(`${tabId}-tab`).classList.add('active');
+                hideMessages();
+            });
+        });
+        
+        // File upload handling
+        const dropzone = document.getElementById('dropzone');
+        const fileInput = document.getElementById('fileInput');
+        const uploadBtn = document.getElementById('uploadBtn');
+        const createFromUrlBtn = document.getElementById('createFromUrlBtn');
+        const pdfUrlInput = document.getElementById('pdfUrl');
+        
+        let selectedFile = null;
+        
+        dropzone.addEventListener('click', () => fileInput.click());
+        
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = '#8b7e6b';
+        });
+        
+        dropzone.addEventListener('dragleave', () => {
+            dropzone.style.borderColor = '#d4cfc6';
+        });
+        
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.style.borderColor = '#d4cfc6';
+            const files = e.dataTransfer.files;
+            if (files[0]?.type === 'application/pdf') {
+                selectedFile = files[0];
+                document.getElementById('fileSelected').style.display = 'block';
+                document.getElementById('fileSelected').textContent = `✓ ${selectedFile.name}`;
+                uploadBtn.disabled = false;
+                hideMessages();
+            } else {
+                showError('Please select a valid PDF file');
+            }
+        });
+        
+        fileInput.addEventListener('change', (e) => {
+            if (e.target.files[0]) {
+                selectedFile = e.target.files[0];
+                document.getElementById('fileSelected').style.display = 'block';
+                document.getElementById('fileSelected').textContent = `✓ ${selectedFile.name}`;
+                uploadBtn.disabled = false;
+                hideMessages();
+            }
+        });
+        
+        // Create from uploaded file
+        uploadBtn.addEventListener('click', async () => {
+            if (!selectedFile) return;
+            
+            const formData = new FormData();
+            formData.append('pdf', selectedFile);
+            
+            showLoading(true);
+            document.getElementById('upload-tab').style.display = 'none';
+            
+            try {
+                const response = await fetch('/api/flipbook', { method: 'POST', body: formData });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult(data.shareUrl);
+                } else {
+                    throw new Error(data.error || 'Upload failed');
+                }
+            } catch (error) {
+                showError(error.message);
+                document.getElementById('upload-tab').style.display = 'block';
+            } finally {
+                showLoading(false);
+            }
+        });
+        
+        // Create from URL
+        createFromUrlBtn.addEventListener('click', async () => {
+            const url = pdfUrlInput.value.trim();
+            if (!url) {
+                showError('Please enter a PDF URL');
+                return;
+            }
+            
+            showLoading(true);
+            document.getElementById('url-tab').style.display = 'none';
+            
+            // For URL, we create a flipbook entry that points to the external URL
+            // Generate a fake book ID and store in localStorage or return directly
+            const bookId = Math.random().toString(36).substring(2, 15);
+            const shareUrl = `/flipbook/view.html?pdf=${encodeURIComponent(url)}`;
+            
+            setTimeout(() => {
+                showLoading(false);
+                showResult(shareUrl);
+            }, 500);
+        });
+        
+        function showResult(shareUrl) {
+            document.getElementById('resultSection').style.display = 'block';
+            const fullUrl = shareUrl.startsWith('http') ? shareUrl : window.location.origin + shareUrl;
+            document.getElementById('shareUrl').value = fullUrl;
+            document.getElementById('viewLink').href = fullUrl;
+            
+            document.getElementById('copyBtn').onclick = () => {
+                navigator.clipboard.writeText(fullUrl);
+                showSuccess('Link copied to clipboard!');
+            };
+        }
+        
+        function showError(msg) {
+            const errorDiv = document.getElementById('errorMsg');
+            errorDiv.textContent = msg;
+            errorDiv.style.display = 'block';
+            setTimeout(() => errorDiv.style.display = 'none', 5000);
+        }
+        
+        function showSuccess(msg) {
+            const successDiv = document.getElementById('successMsg');
+            successDiv.textContent = msg;
+            successDiv.style.display = 'block';
+            setTimeout(() => successDiv.style.display = 'none', 3000);
+        }
+        
+        function hideMessages() {
+            document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('successMsg').style.display = 'none';
+        }
+        
+        function showLoading(show) {
+            document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
+        }
+    </script>
+</body>
+</html>
