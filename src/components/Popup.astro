@@ -13,32 +13,20 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
 <div id="growth-popup" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden transition-all duration-300">
   <div class="bg-white rounded-2xl max-w-md w-full mx-4 relative shadow-2xl transform transition-all duration-300 scale-95 overflow-hidden">
     
-    <!-- Image at the top -->
     <div class="relative h-32 overflow-hidden">
-      <img 
-        src={popupImage} 
-        alt="Business growth" 
-        class="w-full h-full object-cover"
-      />
+      <img src={popupImage} alt="Business growth" class="w-full h-full object-cover" />
       <div class="absolute inset-0 bg-black/20"></div>
     </div>
     
-    <!-- Close button -->
     <button id="close-popup" class="absolute top-2 right-2 bg-white/80 hover:bg-white rounded-full p-1 transition-colors z-10">
       <svg class="w-4 h-4 text-black" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
       </svg>
     </button>
     
-    <!-- Content -->
     <div class="p-6">
-      <h3 class="text-xl font-bold text-black text-center mb-2">
-        {popupTitle}
-      </h3>
-      
-      <p class="text-zinc-600 text-center text-sm mb-4">
-        {popupDescription}
-      </p>
+      <h3 class="text-xl font-bold text-black text-center mb-2">{popupTitle}</h3>
+      <p class="text-zinc-600 text-center text-sm mb-4">{popupDescription}</p>
       
       <ul class="space-y-2 mb-6">
         {benefits.map((benefit) => (
@@ -51,7 +39,6 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
         ))}
       </ul>
       
-      <!-- Form - FIXED -->
       <form id="popup-form" class="space-y-4">
         <input 
           type="email" 
@@ -71,7 +58,7 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
       </form>
       
       <p class="text-xs text-zinc-400 text-center mt-4">
-        No spam. Get your free assessment.
+        No spam. Unsubscribe anytime.
       </p>
     </div>
   </div>
@@ -85,15 +72,20 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
     const form = document.getElementById('popup-form');
     const emailInput = document.getElementById('popup-email');
     
-    // Check if popup was already shown in this session
-    if (sessionStorage.getItem('popupShown')) {
+    // Check if user already submitted successfully (permanent)
+    if (localStorage.getItem('popupSubscribed')) {
+      return; // Never show again to people who already subscribed
+    }
+    
+    // Check if user dismissed the popup in this session
+    // But allow them to see it again on refresh if they didn't submit
+    if (sessionStorage.getItem('popupDismissed')) {
       return;
     }
     
     function showPopup() {
       if (popupShown) return;
       popupShown = true;
-      sessionStorage.setItem('popupShown', 'true');
       popup.classList.remove('hidden');
       setTimeout(() => {
         const modalContent = popup.querySelector('.bg-white');
@@ -104,7 +96,7 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
       }, 10);
     }
     
-    function closePopup() {
+    function closePopup(dismissed = true) {
       const modalContent = popup.querySelector('.bg-white');
       if (modalContent) {
         modalContent.classList.remove('scale-100');
@@ -112,19 +104,34 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
       }
       setTimeout(() => {
         popup.classList.add('hidden');
+        // Remember that user dismissed the popup (so it doesn't reappear immediately)
+        if (dismissed) {
+          sessionStorage.setItem('popupDismissed', 'true');
+        }
       }, 200);
     }
     
-    // Show popup after 30 seconds
-    const timer = setTimeout(showPopup, 30000);
+    // Show popup after 15 seconds (faster than before)
+    const timer = setTimeout(showPopup, 15000);
     
-    // Show on scroll (50% of page)
+    // Show on scroll (40% of page - earlier)
     let scrollTriggered = false;
     window.addEventListener('scroll', function() {
       if (scrollTriggered || popupShown) return;
       const scrollPercent = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
-      if (scrollPercent > 0.5) {
+      if (scrollPercent > 0.4) {
         scrollTriggered = true;
+        clearTimeout(timer);
+        showPopup();
+      }
+    });
+    
+    // Also show on exit intent (mouse leaves window)
+    let exitTriggered = false;
+    document.addEventListener('mouseleave', function(e) {
+      if (exitTriggered || popupShown) return;
+      if (e.clientY < 0) {
+        exitTriggered = true;
         clearTimeout(timer);
         showPopup();
       }
@@ -132,13 +139,15 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
     
     // Close button click
     if (closeBtn) {
-      closeBtn.addEventListener('click', closePopup);
+      closeBtn.addEventListener('click', function() {
+        closePopup(true);
+      });
     }
     
     // Close when clicking outside
     popup.addEventListener('click', function(e) {
       if (e.target === popup) {
-        closePopup();
+        closePopup(true);
       }
     });
     
@@ -154,7 +163,6 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
           return;
         }
         
-        // Change button text to show loading
         const submitBtn = document.getElementById('popup-submit-btn');
         const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = 'Sending...';
@@ -173,9 +181,10 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
             })
           });
           
-          const result = await response.json();
-          
           if (response.ok) {
+            // Mark as permanently subscribed - NEVER show popup to this user again
+            localStorage.setItem('popupSubscribed', 'true');
+            
             // Show success message
             form.innerHTML = `
               <div class="text-center p-4 bg-green-50 rounded-lg">
@@ -185,9 +194,9 @@ const popupImage = "https://images.unsplash.com/photo-1557804506-669a67965ba0?w=
             `;
             
             // Auto close after 3 seconds
-            setTimeout(closePopup, 3000);
+            setTimeout(() => closePopup(false), 3000);
           } else {
-            throw new Error(result.error || 'Something went wrong');
+            throw new Error('Submission failed');
           }
         } catch (error) {
           console.error('Error:', error);
