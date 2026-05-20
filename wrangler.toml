@@ -2,8 +2,4 @@ name = "vobels-website"
 compatibility_date = "2025-01-01"
 compatibility_flags = ["nodejs_compat"]
 
-# R2 bucket binding for flipbook storage
-[[r2_buckets]]
-binding = "FLIPBOOK_BUCKET"
-bucket_name = "vobels-flipbooks"
-preview_bucket_name = "vobels-flipbooks-dev"
+# Don't specify 'main' - let Cloudflare handle it
