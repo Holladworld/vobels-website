@@ -1,6 +1,7 @@
 import type { APIRoute } from 'astro';
+import { env } from "cloudflare:workers";
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
   try {
     const body = await request.json();
     const { name, email, phone, message } = body;
@@ -12,27 +13,30 @@ export const POST: APIRoute = async ({ request, locals }) => {
         error: "Name, email, and message are required"
       }), {
         status: 400,
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
     }
 
-    // GET ENV VARIABLE FROM CLOUDFLARE WORKER
-    const sheetUrl = locals.runtime.env.GOOGLE_SHEET_URL;
-
-    console.log("SHEET URL EXISTS:", !!sheetUrl);
+    // GET ENV VARIABLE FROM CLOUDFLARE
+    const sheetUrl = env.GOOGLE_SHEET_URL;
 
     if (!sheetUrl) {
-      console.error('GOOGLE_SHEET_URL environment variable is not set');
+      console.error("GOOGLE_SHEET_URL is missing");
 
       return new Response(JSON.stringify({
         success: false,
-        error: "Environment variable missing"
+        error: "Server configuration error"
       }), {
         status: 500,
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json'
+        }
       });
     }
 
+    // SEND TO GOOGLE SHEET
     const response = await fetch(sheetUrl, {
       method: 'POST',
       headers: {
@@ -50,8 +54,6 @@ export const POST: APIRoute = async ({ request, locals }) => {
       })
     });
 
-    console.log("STATUS:", response.status);
-
     const rawText = await response.text();
 
     console.log("RAW RESPONSE:", rawText);
@@ -60,30 +62,35 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
     try {
       result = JSON.parse(rawText);
-    } catch (e) {
+    } catch (err) {
       throw new Error(`Invalid JSON response: ${rawText}`);
     }
 
-    if (result.success) {
-      return new Response(JSON.stringify({
-        success: true
-      }), {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      });
+    if (!result.success) {
+      throw new Error(result.error || "Failed to send");
     }
 
-    throw new Error(result.error || "Failed to send");
+    return new Response(JSON.stringify({
+      success: true
+    }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    });
 
   } catch (error: any) {
+
     console.error("SEND CONTACT ERROR:", error);
 
     return new Response(JSON.stringify({
       success: false,
-      error: error.message || "Failed to send message"
+      error: error.message || "Something went wrong"
     }), {
       status: 500,
-      headers: { 'Content-Type': 'application/json' }
+      headers: {
+        'Content-Type': 'application/json'
+      }
     });
   }
 };

@@ -1,20 +1,26 @@
 import type { APIRoute } from 'astro';
+import { env } from "cloudflare:workers";
 
-// Simple in-memory storage for demo (stores raw bytes)
+// Simple in-memory storage for demo
 const demoFlipbooks = new Map();
 
-// CORS-friendly demo PDF
-const DEMO_PDF_URL = 'https://cdn.jsdelivr.net/gh/mozilla/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
+// Demo PDF
+const DEMO_PDF_URL =
+  'https://cdn.jsdelivr.net/gh/mozilla/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
 
-// POST: Upload a PDF
-import type { APIRoute } from 'astro';
 
+// =========================
+// POST: Upload PDF
+// =========================
 export const POST: APIRoute = async ({ request }) => {
   try {
+
     const formData = await request.formData();
+
     const pdf = formData.get('pdf');
 
     if (!pdf || !(pdf instanceof File)) {
+
       return new Response(
         JSON.stringify({
           success: false,
@@ -22,22 +28,35 @@ export const POST: APIRoute = async ({ request }) => {
         }),
         {
           status: 400,
-          headers: { 'Content-Type': 'application/json' }
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
       );
     }
 
-    // Convert PDF to base64
+    // GET ENV VARIABLE
+    const sheetUrl = env.GOOGLE_SHEET_URL;
+
+    if (!sheetUrl) {
+      throw new Error("GOOGLE_SHEET_URL is missing");
+    }
+
+    // CONVERT PDF TO BASE64
     const arrayBuffer = await pdf.arrayBuffer();
 
     const bytes = new Uint8Array(arrayBuffer);
 
     let binary = '';
-    bytes.forEach((b) => binary += String.fromCharCode(b));
+
+    bytes.forEach((b) => {
+      binary += String.fromCharCode(b);
+    });
 
     const base64 = btoa(binary);
 
-    const response = await fetch(import.meta.env.GOOGLE_SHEET_URL, {
+    // SEND TO GOOGLE SHEET
+    const response = await fetch(sheetUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -51,14 +70,32 @@ export const POST: APIRoute = async ({ request }) => {
       })
     });
 
-    const result = await response.json();
+    const rawText = await response.text();
 
-    return new Response(JSON.stringify(result), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    console.log("UPLOAD RESPONSE:", rawText);
+
+    let result;
+
+    try {
+      result = JSON.parse(rawText);
+    } catch (e) {
+      throw new Error(`Invalid JSON response: ${rawText}`);
+    }
+
+    return new Response(
+      JSON.stringify(result),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
 
   } catch (error: any) {
+
+    console.error("UPLOAD FLIPBOOK ERROR:", error);
+
     return new Response(
       JSON.stringify({
         success: false,
@@ -66,18 +103,26 @@ export const POST: APIRoute = async ({ request }) => {
       }),
       {
         status: 500,
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
     );
   }
 };
 
-// GET: Retrieve a PDF
+
+// =========================
+// GET: Retrieve PDF
+// =========================
 export const GET: APIRoute = async ({ url }) => {
+
   try {
+
     const id = url.searchParams.get('id');
 
     if (!id) {
+
       return new Response(
         JSON.stringify({
           success: false,
@@ -85,12 +130,22 @@ export const GET: APIRoute = async ({ url }) => {
         }),
         {
           status: 400,
-          headers: { 'Content-Type': 'application/json' }
+          headers: {
+            'Content-Type': 'application/json'
+          }
         }
       );
     }
 
-    const response = await fetch(import.meta.env.GOOGLE_SHEET_URL, {
+    // GET ENV VARIABLE
+    const sheetUrl = env.GOOGLE_SHEET_URL;
+
+    if (!sheetUrl) {
+      throw new Error("GOOGLE_SHEET_URL is missing");
+    }
+
+    // FETCH FLIPBOOK
+    const response = await fetch(sheetUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
@@ -103,14 +158,32 @@ export const GET: APIRoute = async ({ url }) => {
       })
     });
 
-    const result = await response.json();
+    const rawText = await response.text();
 
-    return new Response(JSON.stringify(result), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' }
-    });
+    console.log("GET RESPONSE:", rawText);
+
+    let result;
+
+    try {
+      result = JSON.parse(rawText);
+    } catch (e) {
+      throw new Error(`Invalid JSON response: ${rawText}`);
+    }
+
+    return new Response(
+      JSON.stringify(result),
+      {
+        status: 200,
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }
+    );
 
   } catch (error: any) {
+
+    console.error("GET FLIPBOOK ERROR:", error);
+
     return new Response(
       JSON.stringify({
         success: false,
@@ -118,21 +191,28 @@ export const GET: APIRoute = async ({ url }) => {
       }),
       {
         status: 500,
-        headers: { 'Content-Type': 'application/json' }
+        headers: {
+          'Content-Type': 'application/json'
+        }
       }
     );
   }
 };
 
-// Handle OPTIONS preflight requests for CORS
+
+// =========================
+// OPTIONS: CORS
+// =========================
 export const OPTIONS: APIRoute = async () => {
-    return new Response(null, {
-        status: 204,
-        headers: {
-            'Access-Control-Allow-Origin': '*',
-            'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-            'Access-Control-Allow-Headers': 'Content-Type',
-            'Access-Control-Max-Age': '86400',
-        }
-    });
+
+  return new Response(null, {
+    status: 204,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+      'Access-Control-Max-Age': '86400',
+    }
+  });
+
 };
