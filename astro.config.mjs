@@ -9,7 +9,7 @@ export default defineConfig({
   site: "https://vobels.com.ng",
   output: "server",
   adapter: cloudflare({
-    mode: "directory",
+    mode: "advanced",
   }),
   integrations: [mdx(), sitemap(), icon()],
   vite: {
