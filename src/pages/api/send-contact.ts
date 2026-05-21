@@ -31,6 +31,7 @@ export const POST: APIRoute = async ({ request }) => {
     
     const response = await fetch(sheetUrl, {
       method: 'POST',
+      redirect: 'follow',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         action: "SEND_CONTACT_EMAIL",
@@ -43,8 +44,21 @@ export const POST: APIRoute = async ({ request }) => {
         }
       })
     });
-    
-    const result = await response.json();
+
+    console.log("STATUS:", response.status);
+    console.log("CONTENT-TYPE:", response.headers.get("content-type"));
+
+    const rawText = await response.text();
+
+    console.log("RAW RESPONSE:", rawText);
+
+    let result;
+
+    try {
+      result = JSON.parse(rawText);
+    } catch (e) {
+      throw new Error(`Invalid JSON response: ${rawText}`);
+    }
     
     if (result.success) {
       return new Response(JSON.stringify({ success: true }), {
