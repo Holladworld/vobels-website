@@ -2,11 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Interactive Flipbook - Vobels</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vobels Flipbook - Create Stunning Digital Publications</title>
+    <meta name="description" content="Transform your PDFs into elegant, shareable flipbooks. Free plan available. Premium features for professionals.">
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="shortcut icon" href="/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- AOS Animation Library -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -15,449 +19,679 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #1a1a2e;
-            min-height: 100vh;
-            padding: 20px;
+            font-family: 'Inter', sans-serif;
+            background: #faf9f7;
+            color: #1f1e1c;
+            line-height: 1.5;
+            overflow-x: hidden;
         }
 
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            background: #2d2d44;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            padding: 0 24px;
         }
 
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
+        /* Navigation */
+        .nav {
+            padding: 24px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            border-bottom: 1px solid #e8e5df;
+            animation: fadeInDown 0.8s ease-out;
         }
 
-        .header h1 {
-            color: white;
-            font-size: 1.5rem;
-            margin-bottom: 8px;
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 500;
+            color: #1f1e1c;
+            text-decoration: none;
+            transition: transform 0.3s ease;
         }
 
-        .header p {
-            color: #a0a0c0;
-            font-size: 0.875rem;
+        .logo:hover {
+            transform: scale(1.05);
         }
 
-        #flipbook {
-            background: #e8e8e8;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
-            margin-bottom: 20px;
-            min-height: 500px;
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #4a4742;
+            font-size: 0.9rem;
+            transition: color 0.2s;
             position: relative;
         }
 
-        .toolbar {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            margin-top: 20px;
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #1f1e1c;
+            transition: width 0.3s ease;
         }
 
-        .toolbar button {
-            background: #3d3d5c;
-            border: none;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #1f1e1c;
+        }
+
+        .btn-outline {
+            border: 1px solid #1f1e1c;
+            padding: 8px 20px;
+            border-radius: 30px;
+            background: transparent;
             cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            color: #1f1e1c;
         }
 
-        .toolbar button:hover {
-            background: #4d4d6e;
-            transform: translateY(-1px);
-        }
-
-        .toolbar button:active {
-            transform: translateY(1px);
-        }
-
-        .page-info {
-            background: #3d3d5c;
-            padding: 10px 20px;
-            border-radius: 8px;
+        .btn-outline:hover {
+            background: #1f1e1c;
             color: white;
-            font-size: 14px;
-            display: inline-flex;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            font-weight: 500;
+            line-height: 1.2;
+            max-width: 800px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, #1f1e1c 0%, #4a4742 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: #5a5752;
+            max-width: 600px;
+            margin: 0 auto 32px;
+        }
+
+        .hero-image {
+            margin-top: 48px;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image:hover {
+            transform: translateY(-10px);
+        }
+
+        .btn-primary {
+            background: #1f1e1c;
+            color: white;
+            padding: 14px 32px;
+            border-radius: 40px;
+            text-decoration: none;
+            font-weight: 500;
+            display: inline-block;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary:hover {
+            background: #3d3c38;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        /* Features */
+        .features {
+            padding: 80px 0;
+            background: white;
+            border-radius: 32px;
+            margin: 40px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            font-weight: 500;
+            margin-bottom: 48px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 2px;
+            background: #1f1e1c;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 32px 24px;
+            transition: all 0.3s ease;
+            border-radius: 16px;
+            background: #faf9f7;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 30px rgba(0,0,0,0.05);
+            background: white;
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 20px;
+            background: #1f1e1c;
+            border-radius: 50%;
+            display: flex;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            transition: transform 0.3s ease;
         }
 
-        .fullscreen-btn {
-            background: #3b82f6 !important;
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1);
         }
 
-        .fullscreen-btn:hover {
-            background: #2563eb !important;
+        .feature-icon svg {
+            width: 32px;
+            height: 32px;
+            stroke: white;
+            stroke-width: 1.5;
+            fill: none;
         }
 
-        .download-btn {
-            background: #10b981 !important;
+        .feature-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 12px;
+            font-weight: 500;
         }
 
-        .download-btn:hover {
-            background: #059669 !important;
+        .feature-card p {
+            color: #5a5752;
+            font-size: 0.9rem;
+            line-height: 1.5;
         }
 
-        .new-btn {
-            background: #8b5cf6 !important;
+        /* Pricing */
+        .pricing {
+            padding: 80px 0;
         }
 
-        .new-btn:hover {
-            background: #7c3aed !important;
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 32px;
+            margin-top: 48px;
+        }
+
+        .pricing-card {
+            background: white;
+            border-radius: 24px;
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            border: 1px solid #e8e5df;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .pricing-card.premium {
+            border: 2px solid #1f1e1c;
+            position: relative;
+        }
+
+        .pricing-card.premium::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(31,30,28,0.03) 0%, transparent 70%);
+            animation: shimmer 8s infinite linear;
+        }
+
+        @keyframes shimmer {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .popular-badge {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #1f1e1c;
+            color: white;
+            padding: 4px 16px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            z-index: 1;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin: 20px 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: normal;
+            color: #5a5752;
+        }
+
+        .pricing-card ul {
+            list-style: none;
+            margin: 24px 0;
+        }
+
+        .pricing-card li {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+        }
+
+        .check {
+            color: #10b981;
+            font-weight: 600;
+        }
+
+        .cross {
+            color: #c4c1bc;
+        }
+
+        .btn-secondary {
+            display: block;
+            text-align: center;
+            background: #f0efec;
+            color: #1f1e1c;
+            padding: 12px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #e3e0db;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary.premium-btn {
+            background: #1f1e1c;
+            color: white;
+        }
+
+        .btn-secondary.premium-btn:hover {
+            background: #3d3c38;
+        }
+
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, #1f1e1c 0%, #3d3c38 100%);
+            color: white;
+            text-align: center;
+            padding: 64px;
+            border-radius: 32px;
+            margin: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: pulse 10s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.1); }
+        }
+
+        .cta h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta p {
+            opacity: 0.8;
+            max-width: 500px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta .btn-primary {
+            background: white;
+            color: #1f1e1c;
+            margin-top: 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta .btn-primary:hover {
+            background: #e8e5df;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            padding: 40px 0;
+            border-top: 1px solid #e8e5df;
+            color: #5a5752;
+            font-size: 0.8rem;
+        }
+
+        .footer a {
+            color: #5a5752;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer a:hover {
+            color: #1f1e1c;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         @media (max-width: 768px) {
-            body {
-                padding: 10px;
-            }
-            
-            .container {
-                padding: 12px;
-            }
-            
-            .toolbar button {
-                padding: 8px 12px;
-                font-size: 12px;
-            }
-        }
-
-        .loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            text-align: center;
-        }
-
-        .spinner {
-            border: 4px solid #f3f3f3;
-            border-top: 4px solid #3b82f6;
-            border-radius: 50%;
-            width: 50px;
-            height: 50px;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 16px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+            .hero h1 { font-size: 2.2rem; }
+            .nav { flex-direction: column; }
+            .container { padding: 0 16px; }
+            .cta { padding: 32px 20px; }
+            .hero { padding: 40px 0; }
+            .hero-image { width: 100%; height: auto; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>Vobels Flipbook</h1>
-            <p>Click or drag pages to flip | Fullscreen mode available</p>
-        </div>
-        
-        <div id="flipbook">
-            <div class="loading">
-                <div class="spinner"></div>
-                <p style="color: #666;">Loading your flipbook...</p>
+        <!-- Navigation -->
+        <nav class="nav">
+            <a href="/" class="logo">Vobels</a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#pricing">Pricing</a>
+                <a href="/contact">Contact</a>
+                <a href="/flipbook/upload" class="btn-outline">Create Free</a>
+            </div>
+        </nav>
+<!-- Hero -->
+<section class="hero" data-aos="fade-up">
+    <h1>Transform PDFs into Elegant Digital Flipbooks</h1>
+    <p>Create stunning, shareable publications that feel like a luxury magazine. Perfect for catalogs, portfolios, ebooks, and business proposals.</p>
+    <a href="/flipbook/upload" class="btn-primary">Create Your First Flipbook →</a>
+    
+        <!-- Hero Mockup - Fixed -->
+        <div style="display: flex; justify-content: center; gap: 24px; margin-top: 60px; flex-wrap: wrap;">
+            <div style="background: #f0efec; border-radius: 16px; padding: 20px; text-align: center; width: 250px;">
+                <div style="background: #1f1e1c; border-radius: 8px; height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                        <path d="M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                        <path d="M9 7h6M9 11h6M9 15h4"/>
+                    </svg>
+                </div>
+                <p style="font-weight: 500;">1. Upload PDF</p>
+                <p style="font-size: 0.8rem; color: #5a5752;">Your document</p>
+            </div>
+            
+            <div style="display: flex; align-items: center;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1f1e1c" stroke-width="1.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </div>
+            
+            <div style="background: white; border-radius: 16px; padding: 20px; text-align: center; width: 250px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);">
+                <div style="background: #e8e5df; border-radius: 8px; height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#1f1e1c" stroke-width="1.2">
+                        <rect x="2" y="4" width="20" height="16" rx="2"/>
+                        <path d="M8 8h8M8 12h6M8 16h4"/>
+                    </svg>
+                </div>
+                <p style="font-weight: 500;">2. Becomes Flipbook</p>
+                <p style="font-size: 0.8rem; color: #5a5752;">Interactive pages</p>
+            </div>
+            
+            <div style="display: flex; align-items: center;">
+                <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#1f1e1c" stroke-width="1.5">
+                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+            </div>
+            
+            <div style="background: #faf9f7; border-radius: 16px; padding: 20px; text-align: center; width: 250px; border: 1px solid #e8e5df;">
+                <div style="background: #1f1e1c; border-radius: 8px; height: 160px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.5">
+                        <circle cx="12" cy="12" r="10"/>
+                        <path d="M8 12h8M12 8v8"/>
+                        <path d="M12 8v8M8 12h8"/>
+                    </svg>
+                </div>
+                <p style="font-weight: 500;">3. Share Anywhere</p>
+                <p style="font-size: 0.8rem; color: #5a5752;">Unique link</p>
             </div>
         </div>
-        
-        <div class="toolbar">
-            <button id="prev-page">◀ Previous</button>
-            <div class="page-info">
-                Page <span id="current-page">1</span> of <span id="total-pages">...</span>
+    </section>
+        <!-- Features -->
+        <section id="features" class="features">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Why Choose Vobels Flipbook</h2>
+                <div class="grid-3">
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="0">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3>Simple Upload</h3>
+                        <p>Upload any PDF and get a shareable flipbook link in seconds. No technical skills required.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M12 4v16m8-8H4"/>
+                            </svg>
+                        </div>
+                        <h3>Interactive Flipping</h3>
+                        <p>Realistic page-flipping experience. Click edges or use arrow keys to navigate.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"/>
+                            </svg>
+                        </div>
+                        <h3>Easy Sharing</h3>
+                        <p>Get a unique link for every flipbook. Share on social media, email, or embed on your website.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/>
+                            </svg>
+                        </div>
+                        <h3>Mobile Responsive</h3>
+                        <p>Perfect viewing experience on any device — phone, tablet, or desktop.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="400">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4"/>
+                            </svg>
+                        </div>
+                        <h3>Fullscreen Mode</h3>
+                        <p>Immersive reading experience with one-click fullscreen.</p>
+                    </div>
+                    <div class="feature-card" data-aos="fade-up" data-aos-delay="500">
+                        <div class="feature-icon">
+                            <svg viewBox="0 0 24 24" stroke="currentColor">
+                                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <h3>Premium Upgrades</h3>
+                        <p>Remove watermark, get unlimited uploads, and permanent storage.</p>
+                    </div>
+                </div>
             </div>
-            <button id="next-page">Next ▶</button>
-            <button id="fullscreen-btn" class="fullscreen-btn">🖥️ Fullscreen</button>
-            <button id="download-btn" class="download-btn">⬇️ Download PDF</button>
-            <button id="new-flipbook" class="new-btn">📄 New Flipbook</button>
-        </div>
+        </section>
+
+        <!-- Pricing -->
+        <section id="pricing" class="pricing">
+            <div class="container">
+                <h2 class="section-title" data-aos="fade-up">Simple, Transparent Pricing</h2>
+                <div class="pricing-grid">
+                    <!-- Free Plan -->
+                    <div class="pricing-card" data-aos="fade-up" data-aos-delay="0">
+                        <h3>Free</h3>
+                        <div class="price">₦0<span> / month</span></div>
+                        <ul>
+                            <li><span class="check">✓</span> 3 flipbooks</li>
+                            <li><span class="check">✓</span> 3-day storage</li>
+                            <li><span class="check">✓</span> Standard viewer</li>
+                            <li><span class="check">✓</span> Shareable links</li>
+                            <li><span class="cross">✗</span> Watermark on pages</li>
+                            <li><span class="cross">✗</span> Unlimited uploads</li>
+                        </ul>
+                        <a href="/flipbook/upload" class="btn-secondary">Get Started</a>
+                    </div>
+
+                    <!-- Premium Plan -->
+                    <div class="pricing-card premium" data-aos="fade-up" data-aos-delay="100">
+                        <div class="popular-badge">Most Popular</div>
+                        <h3>Premium</h3>
+                        <div class="price">₦3,000<span> / month</span></div>
+                        <ul>
+                            <li><span class="check">✓</span> Unlimited flipbooks</li>
+                            <li><span class="check">✓</span> Permanent storage</li>
+                            <li><span class="check">✓</span> No watermark</li>
+                            <li><span class="check">✓</span> Priority support</li>
+                            <li><span class="check">✓</span> View analytics</li>
+                            <li><span class="check">✓</span> API access</li>
+                        </ul>
+                        <a href="/flipbook/pricing" class="btn-secondary premium-btn">Upgrade Now →</a>
+                    </div>
+
+                    <!-- Business Plan -->
+                    <div class="pricing-card" data-aos="fade-up" data-aos-delay="200">
+                        <h3>Business</h3>
+                        <div class="price">Custom<span></span></div>
+                        <ul>
+                            <li><span class="check">✓</span> Everything in Premium</li>
+                            <li><span class="check">✓</span> Custom branding</li>
+                            <li><span class="check">✓</span> Team accounts</li>
+                            <li><span class="check">✓</span> Password protection</li>
+                            <li><span class="check">✓</span> White-label option</li>
+                            <li><span class="check">✓</span> Dedicated support</li>
+                        </ul>
+                        <a href="/contact" class="btn-secondary">Contact Sales</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- CTA -->
+        <section class="cta" data-aos="zoom-in">
+            <h2>Ready to Create Your First Flipbook?</h2>
+            <p>Join hundreds of businesses using Vobels Flipbook to showcase their content.</p>
+            <a href="/flipbook/upload" class="btn-primary">Start Creating Free →</a>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer" data-aos="fade-up">
+            <p>© 2026 Vobels Limited. All rights reserved.</p>
+            <p style="margin-top: 8px;">
+                <a href="/privacy">Privacy Policy</a> | 
+                <a href="/terms">Terms of Service</a>
+            </p>
+        </footer>
     </div>
 
-    <!-- Load libraries -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/turn.js/3/turn.min.js"></script>
-    
+    <!-- AOS Animation Script -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
-        
-        let pdfDoc = null;
-        let pageCount = 0;
-        let currentPage = 1;
-        let currentPDFUrl = null;
-        let pagesData = [];
-        
-        // Get PDF source from localStorage or URL params
-        function getPDFSource() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const pdfParam = urlParams.get('pdf');
-            
-            if (pdfParam) {
-                return { type: 'url', source: pdfParam };
-            }
-            
-            const sourceType = localStorage.getItem('flipbookSource');
-            if (sourceType === 'upload') {
-                const data = localStorage.getItem('tempFlipbookPDF');
-                if (data) {
-                    localStorage.removeItem('tempFlipbookPDF');
-                    localStorage.removeItem('flipbookSource');
-                    return { type: 'data', source: data };
-                }
-            } else if (sourceType === 'url') {
-                const url = localStorage.getItem('tempFlipbookPDFUrl');
-                if (url) {
-                    localStorage.removeItem('tempFlipbookPDFUrl');
-                    localStorage.removeItem('flipbookSource');
-                    return { type: 'url', source: url };
-                }
-            }
-            
-            // Default fallback PDF
-            return { type: 'url', source: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf' };
-        }
-        
-        // Load PDF
-        async function loadPDF() {
-            const source = getPDFSource();
-            const flipbookDiv = document.getElementById('flipbook');
-            
-            try {
-                let loadingTask;
-                
-                if (source.type === 'data') {
-                    // Handle data URL
-                    const dataArray = source.source.split(',')[1];
-                    const binaryString = atob(dataArray);
-                    const bytes = new Uint8Array(binaryString.length);
-                    for (let i = 0; i < binaryString.length; i++) {
-                        bytes[i] = binaryString.charCodeAt(i);
-                    }
-                    loadingTask = pdfjsLib.getDocument({ data: bytes });
-                    currentPDFUrl = null;
-                } else {
-                    loadingTask = pdfjsLib.getDocument(source.source);
-                    currentPDFUrl = source.source;
-                }
-                
-                pdfDoc = await loadingTask.promise;
-                pageCount = pdfDoc.numPages;
-                document.getElementById('total-pages').textContent = pageCount;
-                
-                await convertPagesToImages();
-                
-            } catch (error) {
-                console.error('Error loading PDF:', error);
-                flipbookDiv.innerHTML = `
-                    <div style="text-align: center; padding: 100px 20px; color: #666;">
-                        <h3>⚠️ Failed to Load PDF</h3>
-                        <p>${error.message}</p>
-                        <button onclick="window.location.href='/flipbook/upload.html'" style="margin-top: 20px; padding: 10px 20px; background: #3b82f6; color: white; border: none; border-radius: 8px; cursor: pointer;">
-                            Try Another PDF
-                        </button>
-                    </div>
-                `;
-            }
-        }
-        
-        // Convert PDF pages to images
-        async function convertPagesToImages() {
-            const flipbookDiv = document.getElementById('flipbook');
-            flipbookDiv.innerHTML = '<div class="loading"><div class="spinner"></div><p>Preparing pages...</p></div>';
-            
-            pagesData = [];
-            
-            for (let i = 1; i <= pageCount; i++) {
-                try {
-                    const page = await pdfDoc.getPage(i);
-                    const viewport = page.getViewport({ scale: 1.5 });
-                    
-                    const canvas = document.createElement('canvas');
-                    canvas.width = viewport.width;
-                    canvas.height = viewport.height;
-                    const ctx = canvas.getContext('2d');
-                    
-                    await page.render({ canvasContext: ctx, viewport: viewport }).promise;
-                    
-                    const imgData = canvas.toDataURL('image/jpeg', 0.9);
-                    pagesData.push(imgData);
-                    
-                    console.log(`Page ${i}/${pageCount} converted`);
-                } catch (err) {
-                    console.error(`Error converting page ${i}:`, err);
-                }
-            }
-            
-            createFlipbook();
-        }
-        
-        // Create the interactive flipbook
-        function createFlipbook() {
-            const flipbookDiv = document.getElementById('flipbook');
-            
-            let html = '';
-            for (let i = 0; i < pagesData.length; i++) {
-                html += `
-                    <div id="page-${i + 1}" style="background: white; display: flex; align-items: center; justify-content: center;">
-                        <img src="${pagesData[i]}" style="max-width: 100%; height: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.1);" alt="Page ${i + 1}">
-                    </div>
-                `;
-            }
-            
-            flipbookDiv.innerHTML = html;
-            flipbookDiv.style.width = '100%';
-            flipbookDiv.style.height = '550px';
-            flipbookDiv.style.background = '#e8e8e8';
-            flipbookDiv.style.position = 'relative';
-            flipbookDiv.style.overflow = 'hidden';
-            
-            // Initialize turn.js
-            if ($ && $.fn && $.fn.turn) {
-                $(flipbookDiv).turn({
-                    width: Math.min(900, window.innerWidth - 100),
-                    height: 550,
-                    autoCenter: true,
-                    display: 'single',
-                    acceleration: true,
-                    gradients: true,
-                    elevation: 50,
-                    when: {
-                        turned: function(e, page) {
-                            currentPage = page;
-                            document.getElementById('current-page').textContent = currentPage;
-                            updateButtons();
-                        }
-                    }
-                });
-                
-                $(flipbookDiv).turn('page', 1);
-            } else {
-                setupFallbackViewer();
-            }
-            
-            updateButtons();
-        }
-        
-        function setupFallbackViewer() {
-            let fallbackPage = 1;
-            const flipbookDiv = document.getElementById('flipbook');
-            
-            flipbookDiv.innerHTML = `
-                <div style="position: relative; height: 100%; display: flex; align-items: center; justify-content: center; background: #333;">
-                    <button id="fb-prev" style="position: absolute; left: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">◀</button>
-                    <img id="fb-img" src="${pagesData[0]}" style="max-width: 80%; max-height: 90%; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
-                    <button id="fb-next" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); background: rgba(0,0,0,0.5); color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer;">▶</button>
-                </div>
-            `;
-            
-            const img = document.getElementById('fb-img');
-            const prev = document.getElementById('fb-prev');
-            const next = document.getElementById('fb-next');
-            
-            prev.addEventListener('click', () => {
-                if (fallbackPage > 1) {
-                    fallbackPage--;
-                    img.src = pagesData[fallbackPage - 1];
-                    document.getElementById('current-page').textContent = fallbackPage;
-                }
-            });
-            
-            next.addEventListener('click', () => {
-                if (fallbackPage < pagesData.length) {
-                    fallbackPage++;
-                    img.src = pagesData[fallbackPage - 1];
-                    document.getElementById('current-page').textContent = fallbackPage;
-                }
-            });
-        }
-        
-        function updateButtons() {
-            const prevBtn = document.getElementById('prev-page');
-            const nextBtn = document.getElementById('next-page');
-            if (prevBtn) prevBtn.disabled = currentPage <= 1;
-            if (nextBtn) nextBtn.disabled = currentPage >= pageCount;
-        }
-        
-        function goToPrevPage() {
-            if (currentPage > 1) {
-                if ($ && $.fn && $.fn.turn) {
-                    $('#flipbook').turn('page', currentPage - 1);
-                } else {
-                    currentPage--;
-                    document.getElementById('current-page').textContent = currentPage;
-                    updateButtons();
-                }
-            }
-        }
-        
-        function goToNextPage() {
-            if (currentPage < pageCount) {
-                if ($ && $.fn && $.fn.turn) {
-                    $('#flipbook').turn('page', currentPage + 1);
-                } else {
-                    currentPage++;
-                    document.getElementById('current-page').textContent = currentPage;
-                    updateButtons();
-                }
-            }
-        }
-        
-        function toggleFullscreen() {
-            const container = document.querySelector('.container');
-            if (!document.fullscreenElement) {
-                container.requestFullscreen().catch(err => {
-                    console.error(`Fullscreen error: ${err.message}`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        }
-        
-        function downloadPDF() {
-            if (currentPDFUrl) {
-                const link = document.createElement('a');
-                link.href = currentPDFUrl;
-                link.download = 'flipbook.pdf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-            } else {
-                alert('Download not available for uploaded PDFs. Please use the "New Flipbook" button to upload again.');
-            }
-        }
-        
-        // Event listeners
-        document.getElementById('prev-page')?.addEventListener('click', goToPrevPage);
-        document.getElementById('next-page')?.addEventListener('click', goToNextPage);
-        document.getElementById('fullscreen-btn')?.addEventListener('click', toggleFullscreen);
-        document.getElementById('download-btn')?.addEventListener('click', downloadPDF);
-        document.getElementById('new-flipbook')?.addEventListener('click', () => {
-            window.location.href = '/flipbook/upload.html';
+        AOS.init({
+            duration: 800,
+            once: true,
+            offset: 100
         });
-        
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') goToPrevPage();
-            else if (e.key === 'ArrowRight') goToNextPage();
-        });
-        
-        // Start
-        loadPDF();
     </script>
 </body>
 </html>
