@@ -5,6 +5,7 @@ import sitemap from "@astrojs/sitemap";
 import icon from "astro-icon";
 import cloudflare from "@astrojs/cloudflare";
 
+
 export default defineConfig({
   site: "https://vobels.com.ng",
   output: "server",
@@ -14,5 +15,11 @@ export default defineConfig({
   integrations: [mdx(), sitemap(), icon()],
   vite: {
     plugins: [tailwindcss()],
+    optimizeDeps: {
+      exclude: ["astro-icon", "astro-icon/components"]
+    },
+    ssr: {
+      noExternal: ["astro-icon", "astro-navbar"],
+    },
   },
 });
