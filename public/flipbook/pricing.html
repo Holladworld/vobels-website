@@ -328,8 +328,8 @@
             <a href="/flipbook" class="logo">Vobels Flipbook</a>
             <div class="nav-links">
                 <a href="/flipbook">Home</a>
-                <a href="/flipbook/upload">Create</a>
-                <a href="/flipbook/pricing" style="font-weight: 500;">Pricing</a>
+                <a href="/flipbook/upload.html">Create</a>
+                <a href="/flipbook/pricing.html" style="font-weight: 500;">Pricing</a>
             </div>
         </nav>
 
@@ -624,7 +624,7 @@
                 if (result.success) {
                     showToast('Account upgraded to Premium! Redirecting...');
                     setTimeout(() => {
-                        window.location.href = '/flipbook/upload';
+                        window.location.href = '/flipbook/upload.html';
                     }, 2000);
                 } else {
                     showToast('Upgrade failed. Please contact support.');

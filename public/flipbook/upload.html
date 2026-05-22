@@ -543,7 +543,7 @@
             };
 
             document.getElementById('upgradeBtn').onclick = () => {
-                window.location.href = '/flipbook/pricing?utm_source=flipbook&utm_campaign=post_upload';
+                window.location.href = '/flipbook/pricing.html?utm_source=flipbook&utm_campaign=post_upload';
             };
         }
 
@@ -558,7 +558,7 @@
             const errorDiv = document.getElementById('limitError');
             errorDiv.textContent = msg;
             errorDiv.style.display = 'block';
-            const upgradeHtml = `<div style="margin-top: 10px;"><a href="/flipbook/pricing" style="color: #8b5cf6; font-weight: bold;">Upgrade to Premium →</a></div>`;
+            const upgradeHtml = `<div style="margin-top: 10px;"><a href="/flipbook/pricing.html" style="color: #8b5cf6; font-weight: bold;">Upgrade to Premium →</a></div>`;
             errorDiv.innerHTML = msg + upgradeHtml;
         }
 
