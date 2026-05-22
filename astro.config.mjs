@@ -14,18 +14,5 @@ export default defineConfig({
   integrations: [mdx(), sitemap(), icon()],
   vite: {
     plugins: [tailwindcss()],
-    optimizeDeps: {
-      exclude: ["astro-icon", "astro-icon/components"]
-    },
-    ssr: {
-      noExternal: ["astro-icon", "astro-navbar"],
-    },
-  // },
-  // // ✅ Redirects for clean URLs
-  // redirects: {
-  //   '/flipbook': '/flipbook/index.html',
-  //   '/flipbook/upload': '/flipbook/upload.html',
-  //   '/flipbook/view': '/flipbook/view.html',
-  //   '/flipbook/pricing': '/flipbook/pricing.html',
-  // }
+  },
 });

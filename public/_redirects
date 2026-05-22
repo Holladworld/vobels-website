@@ -1,0 +1,6 @@
+# /public/_redirects
+# Redirect old .html URLs to clean URLs
+/flipbook/index.html   /flipbook   301
+/flipbook/upload.html  /flipbook/upload  301
+/flipbook/view.html    /flipbook/view  301
+/flipbook/pricing.html /flipbook/pricing  301
