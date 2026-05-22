@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vobels Flipbook | Create Digital Publication</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="shortcut icon" href="/favicon.svg">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        
+
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
             background: #f7f6f4;
@@ -18,19 +17,19 @@
             justify-content: center;
             padding: 2rem;
         }
-        
+
         .container {
             max-width: 680px;
             width: 100%;
             background: #ffffff;
             box-shadow: 0 20px 40px rgba(0,0,0,0.02), 0 1px 2px rgba(0,0,0,0.05);
         }
-        
+
         .header {
             padding: 2rem 2rem 1rem;
             border-bottom: 1px solid #ebe9e4;
         }
-        
+
         .header h1 {
             font-family: 'Playfair Display', Georgia, serif;
             font-size: 1.75rem;
@@ -38,19 +37,55 @@
             color: #1f1e1c;
             margin-bottom: 0.5rem;
         }
-        
+
         .header p {
             color: #6b6760;
             font-size: 0.875rem;
         }
-        
+
+        .email-section {
+            padding: 1.5rem 2rem;
+            background: #fefdfc;
+            border-bottom: 1px solid #ebe9e4;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 0.875rem;
+            border: 1px solid #e3dfd8;
+            font-size: 0.875rem;
+            margin-top: 0.5rem;
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: #8b7e6b;
+        }
+
+        .limit-info {
+            font-size: 0.75rem;
+            color: #6b6760;
+            margin-top: 0.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .premium-badge {
+            background: #1f1e1c;
+            color: #e8e5df;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.7rem;
+        }
+
         .tabs {
             display: flex;
             gap: 0;
             border-bottom: 1px solid #ebe9e4;
             padding: 0 2rem;
         }
-        
+
         .tab {
             padding: 1rem 1.5rem;
             background: none;
@@ -60,22 +95,22 @@
             color: #6b6760;
             transition: all 0.2s;
         }
-        
+
         .tab.active {
             color: #1f1e1c;
             border-bottom: 2px solid #1f1e1c;
             margin-bottom: -1px;
         }
-        
+
         .tab-content {
             display: none;
             padding: 2rem;
         }
-        
+
         .tab-content.active {
             display: block;
         }
-        
+
         .upload-area {
             border: 1px dashed #d4cfc6;
             padding: 2rem;
@@ -84,21 +119,21 @@
             transition: all 0.2s;
             background: #fefdfc;
         }
-        
+
         .upload-area:hover {
             border-color: #8b7e6b;
             background: #ffffff;
         }
-        
+
         .upload-icon {
             width: 40px;
             height: 40px;
             stroke: #8b7e6b;
             margin-bottom: 1rem;
         }
-        
+
         .file-input { display: none; }
-        
+
         .url-input {
             width: 100%;
             padding: 0.75rem;
@@ -106,12 +141,7 @@
             font-size: 0.875rem;
             margin-bottom: 1rem;
         }
-        
-        .url-input:focus {
-            outline: none;
-            border-color: #8b7e6b;
-        }
-        
+
         .create-btn {
             width: 100%;
             background: #1f1e1c;
@@ -125,16 +155,16 @@
             transition: background 0.2s;
             margin-top: 1rem;
         }
-        
+
         .create-btn:hover:not(:disabled) {
             background: #8b7e6b;
         }
-        
+
         .create-btn:disabled {
             background: #d4cfc6;
             cursor: not-allowed;
         }
-        
+
         .result-card {
             padding: 2rem;
             display: none;
@@ -142,13 +172,14 @@
             background: #fefdfc;
             border-top: 1px solid #ebe9e4;
         }
-        
+
         .share-link {
             display: flex;
             gap: 0.5rem;
             margin: 1rem 0;
+            flex-wrap: wrap;
         }
-        
+
         .share-link input {
             flex: 1;
             padding: 0.75rem;
@@ -156,8 +187,8 @@
             font-family: monospace;
             font-size: 0.75rem;
         }
-        
-        .copy-btn, .view-btn {
+
+        .copy-btn, .view-btn, .upgrade-btn {
             padding: 0.75rem 1.5rem;
             background: #1f1e1c;
             color: white;
@@ -167,20 +198,24 @@
             text-decoration: none;
             display: inline-block;
         }
-        
+
+        .upgrade-btn {
+            background: #8b5cf6;
+            margin-top: 1rem;
+        }
+
         .view-btn {
             background: transparent;
             border: 1px solid #1f1e1c;
             color: #1f1e1c;
-            margin-left: 0.5rem;
         }
-        
+
         .loading {
             display: none;
             text-align: center;
             padding: 2rem;
         }
-        
+
         .spinner {
             width: 30px;
             height: 30px;
@@ -190,19 +225,19 @@
             animation: spin 0.6s linear infinite;
             margin: 0 auto 1rem;
         }
-        
+
         @keyframes spin { to { transform: rotate(360deg); } }
-        
-        .error-msg, .success-msg {
+
+        .error-msg, .success-msg, .limit-error {
             padding: 0.75rem;
             margin: 1rem 0;
             font-size: 0.8rem;
             display: none;
         }
-        
-        .error-msg { background: #fee; color: #c44; border-left: 3px solid #c44; }
+
+        .error-msg, .limit-error { background: #fee; color: #c44; border-left: 3px solid #c44; }
         .success-msg { background: #efe; color: #2a6b2a; border-left: 3px solid #2a6b2a; }
-        
+
         .info-note {
             background: #f4f2ef;
             padding: 1rem;
@@ -219,12 +254,21 @@
             <h1>Vobels Flipbook</h1>
             <p>Transform your PDF into an elegant, shareable digital publication</p>
         </div>
-        
+
+        <!-- EMAIL SECTION - Required -->
+        <div class="email-section">
+            <label style="font-size: 0.8rem; font-weight: 500;">Your Email *</label>
+            <input type="email" id="userEmail" class="email-input" placeholder="you@example.com" required>
+            <div class="limit-info" id="limitInfo">
+                <span>Checking account status...</span>
+            </div>
+        </div>
+
         <div class="tabs">
             <button class="tab active" data-tab="upload">Upload PDF</button>
             <button class="tab" data-tab="url">PDF URL</button>
         </div>
-        
+
         <!-- Upload Tab -->
         <div id="upload-tab" class="tab-content active">
             <div class="upload-area" id="dropzone">
@@ -238,7 +282,7 @@
             <div id="fileSelected" style="font-size: 0.8rem; color: #2a6b2a; text-align: center; margin-top: 0.5rem; display: none;"></div>
             <button id="uploadBtn" class="create-btn" disabled>Create Flipbook</button>
         </div>
-        
+
         <!-- URL Tab -->
         <div id="url-tab" class="tab-content">
             <input type="url" id="pdfUrl" class="url-input" placeholder="https://example.com/document.pdf">
@@ -247,10 +291,11 @@
             </p>
             <button id="createFromUrlBtn" class="create-btn">Create from URL</button>
         </div>
-        
+
         <div id="errorMsg" class="error-msg"></div>
+        <div id="limitError" class="limit-error"></div>
         <div id="successMsg" class="success-msg"></div>
-        
+
         <div id="resultSection" class="result-card">
             <h3 style="font-family: 'Playfair Display', serif; font-weight: 400; margin-bottom: 1rem;">Your flipbook is ready</h3>
             <div class="share-link">
@@ -258,23 +303,31 @@
                 <button id="copyBtn" class="copy-btn">Copy</button>
                 <a id="viewLink" href="#" target="_blank" class="view-btn">View →</a>
             </div>
+            <button id="upgradeBtn" class="upgrade-btn" style="display: none;">✨ Upgrade to Premium → Remove Watermark & Unlimited</button>
         </div>
-        
+
         <div id="loadingIndicator" class="loading">
             <div class="spinner"></div>
             <p>Processing your document...</p>
         </div>
-        
+
         <div class="info-note">
-            💡 Your flipbook gets a permanent shareable link. Works with Google Drive, Dropbox, or direct PDF URLs.
+            💡 Free: 3 flipbooks • 3-day expiry • Watermarked<br>
+            Premium: Unlimited • No watermark • Permanent storage
         </div>
     </div>
 
     <script>
+        // Check if email is stored in localStorage
+        const savedEmail = localStorage.getItem('flipbook_user_email');
+        if (savedEmail) {
+            document.getElementById('userEmail').value = savedEmail;
+        }
+
         // Tab switching
         const tabs = document.querySelectorAll('.tab');
         const contents = document.querySelectorAll('.tab-content');
-        
+
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
                 const tabId = tab.getAttribute('data-tab');
@@ -285,27 +338,75 @@
                 hideMessages();
             });
         });
-        
+
         // File upload handling
         const dropzone = document.getElementById('dropzone');
         const fileInput = document.getElementById('fileInput');
         const uploadBtn = document.getElementById('uploadBtn');
         const createFromUrlBtn = document.getElementById('createFromUrlBtn');
         const pdfUrlInput = document.getElementById('pdfUrl');
-        
+        const emailInput = document.getElementById('userEmail');
+
         let selectedFile = null;
-        
+        let isPremium = false;
+        let remainingUploads = 3;
+
+        // Check user status when email changes
+        let emailCheckTimeout;
+        emailInput.addEventListener('input', () => {
+            clearTimeout(emailCheckTimeout);
+            emailCheckTimeout = setTimeout(() => checkUserStatus(), 500);
+        });
+
+        async function checkUserStatus() {
+            const email = emailInput.value.trim();
+            if (!email || !email.includes('@')) {
+                document.getElementById('limitInfo').innerHTML = '<span>Enter email to check status</span>';
+                return;
+            }
+
+            localStorage.setItem('flipbook_user_email', email);
+            document.getElementById('limitInfo').innerHTML = '<span>Checking...</span>';
+
+            try {
+                // Call your Apps Script to check premium status
+                const response = await fetch('/api/check-user', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, action: 'CHECK_STATUS' })
+                });
+                const data = await response.json();
+
+                isPremium = data.isPremium || false;
+                remainingUploads = data.remainingUploads !== undefined ? data.remainingUploads : (isPremium ? 999 : 3);
+
+                if (isPremium) {
+                    document.getElementById('limitInfo').innerHTML = `
+                        <span>✨ Premium account - Unlimited uploads</span>
+                        <span class="premium-badge">Premium</span>
+                    `;
+                } else {
+                    document.getElementById('limitInfo').innerHTML = `
+                        <span>📄 Free plan: ${remainingUploads} uploads remaining</span>
+                        <a href="/flipbook-pricing" style="color: #8b5cf6;">Upgrade →</a>
+                    `;
+                }
+            } catch (err) {
+                document.getElementById('limitInfo').innerHTML = '<span>Unable to check status. Upload may be limited.</span>';
+            }
+        }
+
         dropzone.addEventListener('click', () => fileInput.click());
-        
+
         dropzone.addEventListener('dragover', (e) => {
             e.preventDefault();
             dropzone.style.borderColor = '#8b7e6b';
         });
-        
+
         dropzone.addEventListener('dragleave', () => {
             dropzone.style.borderColor = '#d4cfc6';
         });
-        
+
         dropzone.addEventListener('drop', (e) => {
             e.preventDefault();
             dropzone.style.borderColor = '#d4cfc6';
@@ -320,7 +421,7 @@
                 showError('Please select a valid PDF file');
             }
         });
-        
+
         fileInput.addEventListener('change', (e) => {
             if (e.target.files[0]) {
                 selectedFile = e.target.files[0];
@@ -330,89 +431,157 @@
                 hideMessages();
             }
         });
-        
+
         // Create from uploaded file
         uploadBtn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
             if (!selectedFile) return;
-            
+            if (!email || !email.includes('@')) {
+                showError('Please enter a valid email address');
+                return;
+            }
+
+            if (!isPremium && remainingUploads <= 0) {
+                showLimitError('Free plan limit reached. Upgrade to continue uploading.');
+                return;
+            }
+
             const formData = new FormData();
             formData.append('pdf', selectedFile);
-            
+            formData.append('email', email);  // ← CRITICAL: Send email
+
             showLoading(true);
-            document.getElementById('upload-tab').style.display = 'none';
-            
+            document.getElementById('upload-tab').style.opacity = '0.5';
+
             try {
                 const response = await fetch('/api/flipbook', { method: 'POST', body: formData });
                 const data = await response.json();
-                
+
                 if (data.success) {
                     showResult(data.shareUrl);
+                    // Re-check status after upload
+                    checkUserStatus();
+                } else {
+                    if (data.error && data.error.includes('limit')) {
+                        showLimitError(data.error);
+                    } else {
+                        throw new Error(data.error || 'Upload failed');
+                    }
+                }
+            } catch (error) {
+                showError(error.message);
+            } finally {
+                showLoading(false);
+                document.getElementById('upload-tab').style.opacity = '1';
+            }
+        });
+
+        // Create from URL
+        createFromUrlBtn.addEventListener('click', async () => {
+            const email = emailInput.value.trim();
+            const url = pdfUrlInput.value.trim();
+
+            if (!url) {
+                showError('Please enter a PDF URL');
+                return;
+            }
+            if (!email || !email.includes('@')) {
+                showError('Please enter a valid email address');
+                return;
+            }
+
+            if (!isPremium && remainingUploads <= 0) {
+                showLimitError('Free plan limit reached. Upgrade to continue uploading.');
+                return;
+            }
+
+            // For URL, we need to fetch the PDF first then upload
+            showLoading(true);
+
+            try {
+                // Fetch the PDF from URL
+                const pdfResponse = await fetch(url);
+                const pdfBlob = await pdfResponse.blob();
+
+                if (pdfBlob.type !== 'application/pdf') {
+                    throw new Error('URL does not point to a valid PDF');
+                }
+
+                const formData = new FormData();
+                formData.append('pdf', pdfBlob, 'document.pdf');
+                formData.append('email', email);
+
+                const response = await fetch('/api/flipbook', { method: 'POST', body: formData });
+                const data = await response.json();
+
+                if (data.success) {
+                    showResult(data.shareUrl);
+                    checkUserStatus();
                 } else {
                     throw new Error(data.error || 'Upload failed');
                 }
             } catch (error) {
                 showError(error.message);
-                document.getElementById('upload-tab').style.display = 'block';
             } finally {
                 showLoading(false);
             }
         });
-        
-        // Create from URL
-        createFromUrlBtn.addEventListener('click', async () => {
-            const url = pdfUrlInput.value.trim();
-            if (!url) {
-                showError('Please enter a PDF URL');
-                return;
-            }
-            
-            showLoading(true);
-            document.getElementById('url-tab').style.display = 'none';
-            
-            // For URL, we create a flipbook entry that points to the external URL
-            // Generate a fake book ID and store in localStorage or return directly
-            const bookId = Math.random().toString(36).substring(2, 15);
-            const shareUrl = `/flipbook/view.html?pdf=${encodeURIComponent(url)}`;
-            
-            setTimeout(() => {
-                showLoading(false);
-                showResult(shareUrl);
-            }, 500);
-        });
-        
+
         function showResult(shareUrl) {
             document.getElementById('resultSection').style.display = 'block';
             const fullUrl = shareUrl.startsWith('http') ? shareUrl : window.location.origin + shareUrl;
             document.getElementById('shareUrl').value = fullUrl;
             document.getElementById('viewLink').href = fullUrl;
-            
+
+            if (!isPremium) {
+                document.getElementById('upgradeBtn').style.display = 'inline-block';
+            }
+
             document.getElementById('copyBtn').onclick = () => {
                 navigator.clipboard.writeText(fullUrl);
                 showSuccess('Link copied to clipboard!');
             };
+
+            document.getElementById('upgradeBtn').onclick = () => {
+                window.location.href = '/flipbook/pricing?utm_source=flipbook&utm_campaign=post_upload';
+            };
         }
-        
+
         function showError(msg) {
             const errorDiv = document.getElementById('errorMsg');
             errorDiv.textContent = msg;
             errorDiv.style.display = 'block';
             setTimeout(() => errorDiv.style.display = 'none', 5000);
         }
-        
+
+        function showLimitError(msg) {
+            const errorDiv = document.getElementById('limitError');
+            errorDiv.textContent = msg;
+            errorDiv.style.display = 'block';
+            const upgradeHtml = `<div style="margin-top: 10px;"><a href="/flipbook/pricing" style="color: #8b5cf6; font-weight: bold;">Upgrade to Premium →</a></div>`;
+            errorDiv.innerHTML = msg + upgradeHtml;
+        }
+
         function showSuccess(msg) {
             const successDiv = document.getElementById('successMsg');
             successDiv.textContent = msg;
             successDiv.style.display = 'block';
             setTimeout(() => successDiv.style.display = 'none', 3000);
         }
-        
+
         function hideMessages() {
             document.getElementById('errorMsg').style.display = 'none';
+            document.getElementById('limitError').style.display = 'none';
             document.getElementById('successMsg').style.display = 'none';
         }
-        
+
         function showLoading(show) {
             document.getElementById('loadingIndicator').style.display = show ? 'block' : 'none';
+        }
+
+        // Initial check if email exists
+        if (savedEmail) {
+            checkUserStatus();
         }
     </script>
 </body>
