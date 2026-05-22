@@ -1,210 +1,155 @@
+// src/pages/api/flipbook.ts
 import type { APIRoute } from 'astro';
-import { env } from "cloudflare:workers";
 
-// Simple in-memory storage for demo
-const demoFlipbooks = new Map();
-
-// Demo PDF
-const DEMO_PDF_URL =
-  'https://cdn.jsdelivr.net/gh/mozilla/pdf.js/web/compressed.tracemonkey-pldi-09.pdf';
-
+// Helper to get env variables (works locally + Cloudflare)
+function getEnv(key: string): string | undefined {
+    // For Cloudflare production
+    if (typeof (globalThis as any).env !== 'undefined') {
+        return (globalThis as any).env[key];
+    }
+    // For local development
+    return import.meta.env?.[key];
+}
 
 // =========================
 // POST: Upload PDF
 // =========================
 export const POST: APIRoute = async ({ request }) => {
   try {
-
     const formData = await request.formData();
-
     const pdf = formData.get('pdf');
+    const userEmail = formData.get('email');
 
     if (!pdf || !(pdf instanceof File)) {
-
       return new Response(
-        JSON.stringify({
-          success: false,
-          error: 'No PDF uploaded'
-        }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
+        JSON.stringify({ success: false, error: 'No PDF uploaded' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    // GET ENV VARIABLE
-    const sheetUrl = env.GOOGLE_SHEET_URL;
-
-    if (!sheetUrl) {
-      throw new Error("GOOGLE_SHEET_URL is missing");
+    // Require email for tracking
+    if (!userEmail || typeof userEmail !== 'string') {
+      return new Response(
+        JSON.stringify({ success: false, error: 'Email is required' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
-    // CONVERT PDF TO BASE64
+    const sheetUrl = getEnv('GOOGLE_SHEET_URL');
+    if (!sheetUrl) throw new Error("GOOGLE_SHEET_URL is missing");
+
+    // Convert PDF to base64
     const arrayBuffer = await pdf.arrayBuffer();
-
     const bytes = new Uint8Array(arrayBuffer);
-
     let binary = '';
-
-    bytes.forEach((b) => {
-      binary += String.fromCharCode(b);
-    });
-
+    bytes.forEach((b) => { binary += String.fromCharCode(b); });
     const base64 = btoa(binary);
 
-    // SEND TO GOOGLE SHEET
+    // Send to Google Sheets WITH email
     const response = await fetch(sheetUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         action: 'UPLOAD_FLIPBOOK',
         payload: {
           fileName: pdf.name,
-          pdfData: `data:application/pdf;base64,${base64}`
+          pdfData: `data:application/pdf;base64,${base64}`,
+          userEmail: userEmail
         }
       })
     });
 
     const rawText = await response.text();
-
-    console.log("UPLOAD RESPONSE:", rawText);
-
     let result;
-
-    try {
-      result = JSON.parse(rawText);
-    } catch (e) {
-      throw new Error(`Invalid JSON response: ${rawText}`);
+    try { 
+      result = JSON.parse(rawText); 
+    } catch (e) { 
+      throw new Error(`Invalid JSON: ${rawText}`); 
     }
 
-    return new Response(
-      JSON.stringify(result),
-      {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    );
+    return new Response(JSON.stringify(result), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
 
   } catch (error: any) {
-
     console.error("UPLOAD FLIPBOOK ERROR:", error);
-
     return new Response(
-      JSON.stringify({
-        success: false,
-        error: error.message
-      }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
+      JSON.stringify({ success: false, error: error.message }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
 };
 
-
 // =========================
-// GET: Retrieve PDF
+// GET: Retrieve PDF by ID
 // =========================
 export const GET: APIRoute = async ({ url }) => {
-
   try {
-
     const id = url.searchParams.get('id');
+    const checkPlan = url.searchParams.get('checkPlan');
 
     if (!id) {
-
       return new Response(
-        JSON.stringify({
-          success: false,
-          error: 'Missing ID'
-        }),
-        {
-          status: 400,
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }
+        JSON.stringify({ success: false, error: 'Missing ID' }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
       );
     }
 
-    // GET ENV VARIABLE
-    const sheetUrl = env.GOOGLE_SHEET_URL;
+    const sheetUrl = getEnv('GOOGLE_SHEET_URL');
+    if (!sheetUrl) throw new Error("GOOGLE_SHEET_URL is missing");
 
-    if (!sheetUrl) {
-      throw new Error("GOOGLE_SHEET_URL is missing");
+    if (checkPlan === 'true') {
+      const response = await fetch(sheetUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'CHECK_FLIPBOOK_PLAN',
+          payload: { bookId: id }
+        })
+      });
+      const result = await response.json();
+      return new Response(JSON.stringify(result), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' }
+      });
     }
 
-    // FETCH FLIPBOOK
     const response = await fetch(sheetUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         action: 'GET_FLIPBOOK',
-        payload: {
-          bookId: id
-        }
+        payload: { bookId: id }
       })
     });
 
     const rawText = await response.text();
-
-    console.log("GET RESPONSE:", rawText);
-
     let result;
-
     try {
       result = JSON.parse(rawText);
     } catch (e) {
       throw new Error(`Invalid JSON response: ${rawText}`);
     }
 
-    return new Response(
-      JSON.stringify(result),
-      {
-        status: 200,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
-    );
+    return new Response(JSON.stringify(result), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    });
 
   } catch (error: any) {
-
     console.error("GET FLIPBOOK ERROR:", error);
-
     return new Response(
-      JSON.stringify({
-        success: false,
-        error: error.message
-      }),
-      {
-        status: 500,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
+      JSON.stringify({ success: false, error: error.message }),
+      { status: 500, headers: { 'Content-Type': 'application/json' } }
     );
   }
 };
-
 
 // =========================
 // OPTIONS: CORS
 // =========================
 export const OPTIONS: APIRoute = async () => {
-
   return new Response(null, {
     status: 204,
     headers: {
@@ -214,5 +159,4 @@ export const OPTIONS: APIRoute = async () => {
       'Access-Control-Max-Age': '86400',
     }
   });
-
 };
