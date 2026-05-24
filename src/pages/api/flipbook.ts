@@ -64,7 +64,7 @@ async function fetchWithRetry(
 // POST - UPLOAD FLIPBOOK
 // ========================================
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
 
     try {
 
@@ -116,7 +116,7 @@ export const POST: APIRoute = async ({ request }) => {
 
         // CHECK ENV
         const sheetUrl =
-            getEnv('GOOGLE_SHEET_URL');
+            locals.runtime.env.GOOGLE_SHEET_URL;
 
         if (!sheetUrl) {
 
@@ -265,7 +265,7 @@ export const POST: APIRoute = async ({ request }) => {
 // GET FLIPBOOK
 // ========================================
 
-export const GET: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ url, locals }) => {
 
     try {
 
