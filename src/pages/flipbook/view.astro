@@ -83,9 +83,13 @@
             position: relative;
             overflow: auto;
             background: #2c2b28;
+
             display: flex;
-            align-items: center;
+
+            align-items: flex-start;
+
             justify-content: center;
+
             padding: 20px;
         }
         
@@ -105,7 +109,8 @@
         
         #flipbook .page img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: contain;
             display: block;
         }
         
@@ -177,7 +182,7 @@
 </head>
 <body>
     <div class="navbar">
-        <a href="/" class="brand">Vobels</a>
+        <a href="/" class="brand">Vobels Flipbook</a>
         <div class="toolbar">
             <button id="prev-page">← Previous</button>
             <span class="page-info">
@@ -265,7 +270,7 @@
                     <p>No publication specified</p>
                     <p style="font-size: 0.8rem; color: #a09d96; margin-top: 10px;">URL should contain ?id=BOOK_ID</p>
                     <p style="font-size: 0.7rem; color: #a09d96;">Example: /flipbook/view.?id=abc123</p>
-                    <a href="/flipbook/upload.html" style="color: #8b7e6b; margin-top: 1rem;">Create a flipbook →</a>
+                    <a href="/flipbook/create" style="color: #8b7e6b; margin-top: 1rem;">Create a flipbook →</a>
                 </div>
             `;
             return;
@@ -371,9 +376,17 @@
         flipbookDiv.innerHTML = html;
         
         // Set the flipbook size based on original dimensions and scale
+        const viewportWidth = window.innerWidth - 80;
+        const viewportHeight = window.innerHeight - 160;
+
+        const scaleX = viewportWidth / originalWidth;
+        const scaleY = viewportHeight / originalHeight;
+
+        currentScale = 0.6;
+
         const displayWidth = originalWidth * currentScale;
         const displayHeight = originalHeight * currentScale;
-        
+
         flipbookDiv.style.width = displayWidth + 'px';
         flipbookDiv.style.height = displayHeight + 'px';
         
@@ -474,15 +487,12 @@
     }
     
     function fitToScreen() {
-        const maxWidth = Math.min(1000, window.innerWidth - 100);
-        const maxHeight = window.innerHeight - 150;
-        
-        const scaleByWidth = maxWidth / originalWidth;
-        const scaleByHeight = maxHeight / originalHeight;
-        currentScale = Math.min(scaleByWidth, scaleByHeight, 1.0);
-        
+
+        currentScale = 0.6;
+
         applyZoom();
-        showInstruction('Fit to screen', 500);
+
+        showInstruction('Fit: 60%', 500);
     }
     
     function updateButtons() {
