@@ -1,660 +1,225 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flipbook Premium - Vobels</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600&family=Playfair+Display:wght@400;500;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+---
 
-        body {
-            font-family: 'Inter', sans-serif;
-            background: #faf9f7;
-            color: #1f1e1c;
-            line-height: 1.5;
-        }
+<Layout title="Flipbook Pricing | Vobels" description="Upgrade to Premium for unlimited flipbooks">
+  <Container>
+    <!-- Header -->
+    <div class="mt-16 text-center max-w-3xl mx-auto">
+      <h1 class="text-4xl md:text-5xl font-bold text-black tracking-tighter">Upgrade to Premium</h1>
+      <p class="text-xl text-zinc-600 mt-4">Get unlimited flipbooks, remove watermark, and enjoy permanent storage</p>
+    </div>
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
+    <!-- Email Check -->
+    <div class="max-w-md mx-auto mt-8">
+      <input 
+        type="email" 
+        id="userEmail" 
+        class="w-full px-4 py-3 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-black outline-none text-center"
+        placeholder="Enter your email to check status"
+      />
+      <div id="statusDisplay" class="text-center text-sm mt-2"></div>
+    </div>
 
-        /* Navigation */
-        .nav {
-            padding: 24px 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            border-bottom: 1px solid #e8e5df;
-        }
+    <!-- Pricing Cards -->
+    <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto mt-12">
+      
+      <!-- Free Plan -->
+      <div class="bg-white border border-zinc-200 rounded-xl p-6 text-center hover:shadow-lg transition-all">
+        <h3 class="font-bold text-xl mb-2">Free</h3>
+        <p class="text-3xl font-black mb-4">₦0<span class="text-sm font-normal">/month</span></p>
+        <ul class="space-y-2 text-sm mb-6">
+          <li class="flex items-center justify-center gap-2">✓ 3 flipbooks</li>
+          <li class="flex items-center justify-center gap-2">✓ 3-day storage</li>
+          <li class="flex items-center justify-center gap-2 text-zinc-400">✗ Watermark</li>
+        </ul>
+        <a href="/flipbook/create" class="block bg-zinc-100 text-black py-2 rounded-lg font-medium hover:bg-zinc-200 transition-all">Get Started</a>
+      </div>
 
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.75rem;
-            font-weight: 500;
-            color: #1f1e1c;
-            text-decoration: none;
-        }
+      <!-- Premium Monthly -->
+      <div class="bg-white border-2 border-black rounded-xl p-6 text-center relative hover:shadow-lg transition-all">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-3 py-1 rounded-full font-medium">Most Popular</div>
+        <h3 class="font-bold text-xl mb-2">Premium Monthly</h3>
+        <p class="text-3xl font-black mb-4">₦3,000<span class="text-sm font-normal">/month</span></p>
+        <ul class="space-y-2 text-sm mb-6">
+          <li class="flex items-center justify-center gap-2">✓ Unlimited flipbooks</li>
+          <li class="flex items-center justify-center gap-2">✓ Permanent storage</li>
+          <li class="flex items-center justify-center gap-2">✓ No watermark</li>
+        </ul>
+        <button id="payMonthlyBtn" class="w-full bg-black text-white py-2 rounded-lg font-medium hover:bg-zinc-800 transition-all cursor-pointer">Upgrade Now →</button>
+      </div>
 
-        .nav-links {
-            display: flex;
-            gap: 32px;
-            align-items: center;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: #4a4742;
-            font-size: 0.9rem;
-            transition: color 0.2s;
-        }
-
-        .nav-links a:hover {
-            color: #1f1e1c;
-        }
-
-        /* Pricing Section */
-        .pricing-section {
-            padding: 60px 0 80px;
-        }
-
-        .section-title {
-            text-align: center;
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            font-weight: 500;
-            margin-bottom: 16px;
-        }
-
-        .section-subtitle {
-            text-align: center;
-            color: #5a5752;
-            max-width: 600px;
-            margin: 0 auto 48px;
-        }
-
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-            gap: 32px;
-            margin-top: 20px;
-        }
-
-        .pricing-card {
-            background: white;
-            border-radius: 24px;
-            padding: 40px 32px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.05);
-            border: 1px solid #e8e5df;
-            transition: all 0.3s ease;
-            position: relative;
-        }
-
-        .pricing-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-        }
-
-        .pricing-card.premium {
-            border: 2px solid #1f1e1c;
-            transform: scale(1.02);
-        }
-
-        .pricing-card.premium:hover {
-            transform: scale(1.02) translateY(-8px);
-        }
-
-        .popular-badge {
-            position: absolute;
-            top: -12px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1f1e1c;
-            color: white;
-            padding: 4px 16px;
-            border-radius: 20px;
-            font-size: 0.75rem;
-            font-weight: 500;
-        }
-
-        .plan-name {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 16px;
-        }
-
-        .price {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .price span {
-            font-size: 1rem;
-            font-weight: normal;
-            color: #5a5752;
-        }
-
-        .price-note {
-            font-size: 0.8rem;
-            color: #5a5752;
-            margin-bottom: 24px;
-        }
-
-        .features {
-            list-style: none;
-            margin: 24px 0 32px;
-        }
-
-        .features li {
-            padding: 10px 0;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.9rem;
-        }
-
-        .check {
-            color: #10b981;
-            font-weight: 600;
-        }
-
-        .cross {
-            color: #c4c1bc;
-        }
-
-        .btn-pay {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background: #1f1e1c;
-            color: white;
-            padding: 14px;
-            border-radius: 40px;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
-            border: none;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .btn-pay:hover:not(:disabled) {
-            background: #3d3c38;
-            transform: translateY(-2px);
-        }
-
-        .btn-pay:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-pay.free {
-            background: #f0efec;
-            color: #1f1e1c;
-        }
-
-        /* Email Section */
-        .email-section {
-            max-width: 500px;
-            margin: 0 auto 40px;
-            text-align: center;
-        }
-
-        .email-input {
-            width: 100%;
-            padding: 14px 18px;
-            border: 1px solid #e8e5df;
-            border-radius: 40px;
-            font-size: 1rem;
-            margin-top: 16px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        .email-input:focus {
-            outline: none;
-            border-color: #1f1e1c;
-        }
-
-        .status-badge {
-            display: inline-block;
-            margin-top: 12px;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-        }
-
-        .status-premium {
-            background: #10b981;
-            color: white;
-        }
-
-        .status-free {
-            background: #f0efec;
-            color: #5a5752;
-        }
-
-        /* Loading Overlay */
-        .loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0,0,0,0.8);
-            display: none;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: 1000;
-        }
-
-        .loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 3px solid #e8e5df;
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-
-        .loading-overlay p {
-            color: white;
-        }
-
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #1f1e1c;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            z-index: 1001;
-            display: none;
-            animation: fadeInUp 0.3s ease;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateX(-50%) translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 40px 0;
-            border-top: 1px solid #e8e5df;
-            color: #5a5752;
-            font-size: 0.8rem;
-        }
-
-        @media (max-width: 768px) {
-            .pricing-card.premium {
-                transform: scale(1);
-            }
-            .section-title { font-size: 1.8rem; }
-            .container { padding: 0 16px; }
-        }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <!-- Navigation -->
-        <nav class="nav">
-            <a href="/flipbook" class="logo">Vobels Flipbook</a>
-            <div class="nav-links">
-                <a href="/flipbook">Home</a>
-                <a href="/flipbook/upload.html">Create</a>
-                <a href="/flipbook/pricing.html" style="font-weight: 500;">Pricing</a>
-            </div>
-        </nav>
-
-        <!-- Pricing Section -->
-        <section class="pricing-section">
-            <h1 class="section-title">Upgrade to Premium</h1>
-            <p class="section-subtitle">Get unlimited flipbooks, remove watermark, and enjoy permanent storage</p>
-
-            <!-- Email Check -->
-            <div class="email-section">
-                <input type="email" id="userEmail" class="email-input" placeholder="Enter your email to check status" autocomplete="email">
-                <div id="statusDisplay"></div>
-            </div>
-
-            <!-- Pricing Cards -->
-            <div class="pricing-grid">
-                <!-- Free Plan -->
-                <div class="pricing-card">
-                    <div class="plan-name">Free</div>
-                    <div class="price">₦0<span>/month</span></div>
-                    <div class="price-note">Current plan</div>
-                    <ul class="features">
-                        <li><span class="check">✓</span> 3 flipbooks</li>
-                        <li><span class="check">✓</span> 3-day storage</li>
-                        <li><span class="check">✓</span> Standard viewer</li>
-                        <li><span class="check">✓</span> Shareable links</li>
-                        <li><span class="cross">✗</span> Watermark on pages</li>
-                        <li><span class="cross">✗</span> Unlimited uploads</li>
-                        <li><span class="cross">✗</span> Permanent storage</li>
-                    </ul>
-                    <button class="btn-pay free" disabled id="currentPlanBtn">Current Plan</button>
-                </div>
-
-                <!-- Premium Monthly -->
-                <div class="pricing-card premium">
-                    <div class="popular-badge">Most Popular</div>
-                    <div class="plan-name">Premium Monthly</div>
-                    <div class="price">₦3,000<span>/month</span></div>
-                    <div class="price-note">Billed monthly • Cancel anytime</div>
-                    <ul class="features">
-                        <li><span class="check">✓</span> Unlimited flipbooks</li>
-                        <li><span class="check">✓</span> Permanent storage</li>
-                        <li><span class="check">✓</span> No watermark</li>
-                        <li><span class="check">✓</span> Priority support</li>
-                        <li><span class="check">✓</span> View analytics</li>
-                        <li><span class="check">✓</span> API access</li>
-                    </ul>
-                    <button class="btn-pay" id="payMonthlyBtn">Upgrade to Premium →</button>
-                </div>
-
-                <!-- Premium Yearly -->
-                <div class="pricing-card">
-                    <div class="plan-name">Premium Yearly</div>
-                    <div class="price">₦30,000<span>/year</span></div>
-                    <div class="price-note">Save 17% • ₦2,500/month</div>
-                    <ul class="features">
-                        <li><span class="check">✓</span> Unlimited flipbooks</li>
-                        <li><span class="check">✓</span> Permanent storage</li>
-                        <li><span class="check">✓</span> No watermark</li>
-                        <li><span class="check">✓</span> Priority support</li>
-                        <li><span class="check">✓</span> View analytics</li>
-                        <li><span class="check">✓</span> API access</li>
-                    </ul>
-                    <button class="btn-pay" id="payYearlyBtn">Upgrade to Premium →</button>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>© 2026 Vobels Limited. All rights reserved.</p>
-            <p style="margin-top: 8px;">Secure payments powered by Paystack</p>
-        </footer>
+      <!-- Business -->
+      <div class="bg-white border border-zinc-200 rounded-xl p-6 text-center hover:shadow-lg transition-all">
+        <h3 class="font-bold text-xl mb-2">Business</h3>
+        <p class="text-3xl font-black mb-4">Custom</p>
+        <ul class="space-y-2 text-sm mb-6">
+          <li class="flex items-center justify-center gap-2">✓ Everything in Premium</li>
+          <li class="flex items-center justify-center gap-2">✓ Custom branding</li>
+          <li class="flex items-center justify-center gap-2">✓ Team accounts</li>
+        </ul>
+        <a href="/contact" class="block bg-zinc-100 text-black py-2 rounded-lg font-medium hover:bg-zinc-200 transition-all">Contact Sales →</a>
+      </div>
     </div>
 
     <!-- Loading Overlay -->
-    <div id="loadingOverlay" class="loading-overlay">
-        <div class="loading-spinner"></div>
-        <p>Processing your payment...</p>
+    <div id="loadingOverlay" class="fixed inset-0 bg-black/50 flex items-center justify-center z-50 hidden">
+      <div class="bg-white rounded-xl p-6 text-center">
+        <div class="inline-block w-8 h-8 border-2 border-zinc-300 border-t-black rounded-full animate-spin"></div>
+        <p class="mt-3 text-zinc-600">Processing your payment...</p>
+      </div>
     </div>
 
-    <div id="toast" class="toast"></div>
+    <div class="text-center mt-12 text-sm text-zinc-500">
+      <p>Secure payments powered by Paystack</p>
+    </div>
+  </Container>
 
-    <!-- Paystack Script -->
-    <script src="https://js.paystack.co/v1/inline.js"></script>
+  <!-- Load Paystack script dynamically -->
+  <script>
+    // First, load Paystack script
+    const script = document.createElement('script');
+    script.src = 'https://js.paystack.co/v1/inline.js';
+    script.onload = function() {
+      console.log('Paystack loaded successfully');
+      window.paystackLoaded = true;
+    };
+    script.onerror = function() {
+      console.error('Failed to load Paystack');
+      window.paystackLoaded = false;
+    };
+    document.head.appendChild(script);
+  </script>
 
-    <script>
-        // IMPORTANT: Replace this with your actual Paystack public key from your dashboard
-        // Get it from: https://dashboard.paystack.com/#/settings/developer
-        const PAYSTACK_PUBLIC_KEY = 'pk_live_135bc22afe817f240cf8027b58af14428fda30dd';
+  <script>
+    // Wait for DOM and Paystack to be ready
+    function initPricing() {
+      console.log('Initializing pricing page');
+      
+      const PAYSTACK_KEY = 'pk_live_135bc22afe817f240cf8027b58af14428fda30dd';
+      let currentEmail = '';
+      
+      const emailInput = document.getElementById('userEmail');
+      const payBtn = document.getElementById('payMonthlyBtn');
+      const statusDiv = document.getElementById('statusDisplay');
+      const loadingOverlay = document.getElementById('loadingOverlay');
+      
+      if (!payBtn) {
+        console.error('Button not found!');
+        return;
+      }
+      
+      console.log('Button found');
+      
+      // Load saved email
+      const savedEmail = localStorage.getItem('flipbook_user_email');
+      if (savedEmail && emailInput) {
+        emailInput.value = savedEmail;
+        currentEmail = savedEmail;
+        statusDiv.innerHTML = '<span class="text-green-600">✓ Email ready</span>';
+      }
+      
+      // Update email as user types
+      if (emailInput) {
+        emailInput.addEventListener('input', function(e) {
+          currentEmail = e.target.value.trim();
+          localStorage.setItem('flipbook_user_email', currentEmail);
+          if (currentEmail && currentEmail.includes('@')) {
+            statusDiv.innerHTML = '<span class="text-green-600">✓ Email ready</span>';
+          } else {
+            statusDiv.innerHTML = '';
+          }
+        });
+      }
+      
+      // Payment function
+      function startPayment() {
+        console.log('startPayment called, email:', currentEmail);
         
-        let currentUserEmail = '';
-        let isPremium = false;
-
-        // Wait for DOM to be fully loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('DOM loaded, initializing...');
+        if (!currentEmail || !currentEmail.includes('@')) {
+          alert('Please enter a valid email address');
+          emailInput.focus();
+          return;
+        }
+        
+        // Check if Paystack is loaded
+        if (typeof PaystackPop === 'undefined') {
+          console.log('Paystack not loaded yet, waiting...');
+          alert('Loading payment system. Please click again in a moment.');
+          return;
+        }
+        
+        const reference = 'FLIP_' + Date.now() + '_' + Math.random().toString(36).substr(2, 8);
+        console.log('Starting payment with reference:', reference);
+        
+        const handler = PaystackPop.setup({
+          key: PAYSTACK_KEY,
+          email: currentEmail,
+          amount: 3000 * 100,
+          currency: 'NGN',
+          ref: reference,
+          metadata: {
+            custom_fields: [
+              { display_name: "Product", variable_name: "product_name", value: "Flipbook Premium - Monthly" },
+              { display_name: "Category", variable_name: "category", value: "flipbook_premium" },
+              { display_name: "Product ID", variable_name: "product_id", value: "FLIPBOOK_PRO_MONTHLY" }
+            ]
+          },
+          callback: function(response) {
+            console.log('Payment success:', response);
+            loadingOverlay.style.display = 'flex';
             
-            // Get elements
-            const emailInput = document.getElementById('userEmail');
-            const payMonthlyBtn = document.getElementById('payMonthlyBtn');
-            const payYearlyBtn = document.getElementById('payYearlyBtn');
-            
-            if (!payMonthlyBtn) console.error('payMonthlyBtn not found!');
-            if (!payYearlyBtn) console.error('payYearlyBtn not found!');
-            
-            // Check user status when email changes
-            let emailCheckTimeout;
-            
-            if (emailInput) {
-                emailInput.addEventListener('input', () => {
-                    clearTimeout(emailCheckTimeout);
-                    emailCheckTimeout = setTimeout(() => checkUserStatus(), 500);
-                });
-            }
-            
-            // Set up button click handlers
-            if (payMonthlyBtn) {
-                payMonthlyBtn.addEventListener('click', () => {
-                    console.log('Monthly button clicked');
-                    initializePayment('monthly', 3000, 'Monthly');
-                });
-            }
-            
-            if (payYearlyBtn) {
-                payYearlyBtn.addEventListener('click', () => {
-                    console.log('Yearly button clicked');
-                    initializePayment('yearly', 30000, 'Yearly');
-                });
-            }
-            
-            // Check if email was stored from upload page
-            const savedEmail = localStorage.getItem('flipbook_user_email');
-            if (savedEmail && emailInput) {
-                emailInput.value = savedEmail;
-                checkUserStatus();
-            }
+            fetch('/api/upgrade-flipbook', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                reference: response.reference,
+                email: currentEmail,
+                plan: 'monthly'
+              })
+            })
+            .then(res => res.json())
+            .then(data => {
+              loadingOverlay.style.display = 'none';
+              if (data.success) {
+                alert('Payment successful! Your account has been upgraded to Premium.');
+                window.location.href = '/flipbook/create';
+              } else {
+                alert('Payment successful but verification failed. Please contact support.');
+              }
+            })
+            .catch(err => {
+              loadingOverlay.style.display = 'none';
+              console.error('Upgrade error:', err);
+              alert('Something went wrong. Please contact support.');
+            });
+          },
+          onClose: function() {
+            console.log('Payment window closed');
+            loadingOverlay.style.display = 'none';
+          }
         });
         
-        async function checkUserStatus() {
-            const emailInput = document.getElementById('userEmail');
-            if (!emailInput) return;
-            
-            const email = emailInput.value.trim();
-            if (!email || !email.includes('@')) {
-                document.getElementById('statusDisplay').innerHTML = '';
-                return;
-            }
-
-            currentUserEmail = email;
-            localStorage.setItem('flipbook_user_email', email);
-            document.getElementById('statusDisplay').innerHTML = '<div class="status-badge status-free">Checking...</div>';
-
-            try {
-                const response = await fetch('/api/check-user', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ email })
-                });
-                const data = await response.json();
-
-                isPremium = data.isPremium || false;
-
-                if (isPremium) {
-                    document.getElementById('statusDisplay').innerHTML = `
-                        <div class="status-badge status-premium">
-                            ✨ Premium Account • Unlimited flipbooks
-                        </div>
-                    `;
-                    document.getElementById('currentPlanBtn').textContent = 'Your Plan';
-                    
-                    const monthlyBtn = document.getElementById('payMonthlyBtn');
-                    const yearlyBtn = document.getElementById('payYearlyBtn');
-                    
-                    if (monthlyBtn) {
-                        monthlyBtn.textContent = 'Already Premium';
-                        monthlyBtn.disabled = true;
-                    }
-                    if (yearlyBtn) {
-                        yearlyBtn.textContent = 'Already Premium';
-                        yearlyBtn.disabled = true;
-                    }
-                } else {
-                    document.getElementById('statusDisplay').innerHTML = `
-                        <div class="status-badge status-free">
-                            📄 Free Account • ${data.remainingUploads || 3} uploads remaining
-                        </div>
-                    `;
-                    
-                    const monthlyBtn = document.getElementById('payMonthlyBtn');
-                    const yearlyBtn = document.getElementById('payYearlyBtn');
-                    
-                    if (monthlyBtn) {
-                        monthlyBtn.disabled = false;
-                        monthlyBtn.textContent = 'Upgrade to Premium →';
-                    }
-                    if (yearlyBtn) {
-                        yearlyBtn.disabled = false;
-                        yearlyBtn.textContent = 'Upgrade to Premium →';
-                    }
-                }
-            } catch (err) {
-                console.error('Status check failed:', err);
-                document.getElementById('statusDisplay').innerHTML = '<div class="status-badge status-free">Unable to check status</div>';
-            }
-        }
-
-        // Initialize Paystack payment
-        function initializePayment(plan, amount, planName) {
-            console.log('initializePayment called with:', plan, amount, planName);
-            
-            if (!currentUserEmail) {
-                showToast('Please enter your email address first');
-                document.getElementById('userEmail')?.focus();
-                return;
-            }
-
-            if (isPremium) {
-                showToast('You are already a premium user!');
-                return;
-            }
-            
-            if (!PAYSTACK_PUBLIC_KEY || PAYSTACK_PUBLIC_KEY === 'pk_live_135bc22afe817f240cf8027b58af14428fda30dd') {
-                showToast('Payment system is not configured. Please contact support.');
-                console.error('Invalid Paystack public key');
-                return;
-            }
-
-            console.log('Opening Paystack popup...');
-            
-            const handler = PaystackPop.setup({
-                key: PAYSTACK_PUBLIC_KEY,
-                email: currentUserEmail,
-                amount: amount * 100, // Paystack uses kobo
-                currency: 'NGN',
-                ref: 'FLIPBOOK_' + Math.random().toString(36).substring(2, 15).toUpperCase(),
-                metadata: {
-                    custom_fields: [
-                        {
-                            display_name: "Plan",
-                            variable_name: "plan",
-                            value: plan
-                        },
-                        {
-                            display_name: "Product",
-                            variable_name: "product_name",
-                            value: `Flipbook Premium - ${planName}`
-                        },
-                        {
-                            display_name: "Category",
-                            variable_name: "category",
-                            value: "flipbook_premium"
-                        },
-                        {
-                            display_name: "Product ID",
-                            variable_name: "product_id",
-                            value: plan === 'monthly' ? 'FLIPBOOK_PRO_MONTHLY' : 'FLIPBOOK_PRO_YEARLY'
-                        }
-                    ]
-                },
-                callback: function(response) {
-                    console.log('Payment success:', response);
-                    showToast('Payment successful! Upgrading your account...');
-                    verifyAndUpgrade(response.reference, plan);
-                },
-                onClose: function() {
-                    console.log('Payment window closed');
-                    showToast('Payment cancelled');
-                    hideLoading();
-                }
-            });
-
-            handler.openIframe();
-            showLoading();
-        }
-
-        async function verifyAndUpgrade(reference, plan) {
-            try {
-                const response = await fetch('/api/verify-payment', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        reference: reference,
-                        email: currentUserEmail,
-                        plan: plan
-                    })
-                });
-
-                const result = await response.json();
-                hideLoading();
-
-                if (result.success) {
-                    showToast('Account upgraded to Premium! Redirecting...');
-                    setTimeout(() => {
-                        window.location.href = '/flipbook/upload.html';
-                    }, 2000);
-                } else {
-                    showToast('Upgrade failed. Please contact support.');
-                }
-            } catch (err) {
-                hideLoading();
-                showToast('Verification failed. Please contact support.');
-                console.error(err);
-            }
-        }
-
-        function showLoading() {
-            const overlay = document.getElementById('loadingOverlay');
-            if (overlay) overlay.style.display = 'flex';
-        }
-
-        function hideLoading() {
-            const overlay = document.getElementById('loadingOverlay');
-            if (overlay) overlay.style.display = 'none';
-        }
-
-        function showToast(message) {
-            const toast = document.getElementById('toast');
-            if (!toast) return;
-            toast.textContent = message;
-            toast.style.display = 'block';
-            setTimeout(() => {
-                toast.style.display = 'none';
-            }, 4000);
-        }
-    </script>
-</body>
-</html>
+        handler.openIframe();
+        loadingOverlay.style.display = 'flex';
+      }
+      
+      // Attach click event
+      payBtn.onclick = function(e) {
+        e.preventDefault();
+        console.log('Button clicked!');
+        startPayment();
+      };
+      
+      console.log('Event handler attached');
+    }
+    
+    // Run when DOM is ready
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initPricing);
+    } else {
+      initPricing();
+    }
+  </script>
+</Layout>
