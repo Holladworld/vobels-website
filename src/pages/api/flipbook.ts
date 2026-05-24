@@ -1,4 +1,14 @@
+import 'dotenv/config';
 import type { APIRoute } from 'astro';
+
+function getEnv(key: string): string | undefined {
+
+    if (typeof (globalThis as any).env !== 'undefined') {
+        return (globalThis as any).env[key];
+    }
+
+    return import.meta.env?.[key];
+}
 
 
 // ========================================
@@ -55,7 +65,7 @@ async function fetchWithRetry(
 // POST - UPLOAD FLIPBOOK
 // ========================================
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
 
     try {
 
@@ -107,7 +117,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 
         // CHECK ENV
         const sheetUrl =
-            locals.runtime.env.GOOGLE_SHEET_URL;
+            getEnv('GOOGLE_SHEET_URL');
 
         if (!sheetUrl) {
 
@@ -256,7 +266,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 // GET FLIPBOOK
 // ========================================
 
-export const GET: APIRoute = async ({ url, locals }) => {
+export const GET: APIRoute = async ({ url }) => {
 
     try {
 
@@ -291,7 +301,7 @@ export const GET: APIRoute = async ({ url, locals }) => {
         }
 
         const sheetUrl =
-            locals.runtime.env.GOOGLE_SHEET_URL;
+            getEnv('GOOGLE_SHEET_URL');
 
         if (!sheetUrl) {
 
