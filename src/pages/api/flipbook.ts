@@ -1,15 +1,27 @@
-import 'dotenv/config';
 import type { APIRoute } from 'astro';
 
-function getEnv(key: string): string | undefined {
+// ========================================
+// GET ENVIRONMENT VARIABLE (Works on Local + Cloudflare)
+// ========================================
 
-    if (typeof (globalThis as any).env !== 'undefined') {
+function getEnv(key: string): string | undefined {
+    // For Cloudflare Workers (production)
+    if (typeof (globalThis as any).env !== 'undefined' && (globalThis as any).env[key]) {
         return (globalThis as any).env[key];
     }
-
-    return import.meta.env?.[key];
+    
+    // For Node.js / Local development
+    if (typeof process !== 'undefined' && process.env && process.env[key]) {
+        return process.env[key];
+    }
+    
+    // For Astro local development fallback
+    if (import.meta.env && import.meta.env[key]) {
+        return import.meta.env[key];
+    }
+    
+    return undefined;
 }
-
 
 // ========================================
 // FETCH WITH RETRY
@@ -119,6 +131,12 @@ export const POST: APIRoute = async ({ request }) => {
         const sheetUrl =
             getEnv('GOOGLE_SHEET_URL');
 
+        console.log('=== DEBUG ENV ===');
+        console.log('Sheet URL exists:', !!sheetUrl);
+        console.log('Has globalThis.env:', typeof (globalThis as any).env !== 'undefined');
+        console.log('Has process.env:', typeof process !== 'undefined');
+        console.log('Has import.meta.env:', !!import.meta.env);
+        
         if (!sheetUrl) {
 
             console.error(
@@ -128,7 +146,7 @@ export const POST: APIRoute = async ({ request }) => {
             return new Response(
                 JSON.stringify({
                     success: false,
-                    error: 'Server configuration error'
+                    error: 'Server configuration error: GOOGLE_SHEET_URL not set in Cloudflare secrets'
                 }),
                 {
                     status: 500,
@@ -476,7 +494,6 @@ export const OPTIONS: APIRoute = async () => {
         headers: {
             'Access-Control-Allow-Origin': '*',
             'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
-      
             'Access-Control-Allow-Headers': 'Content-Type',
             'Access-Control-Max-Age': '86400'
         }
