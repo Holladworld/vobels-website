@@ -1,14 +1,5 @@
 import type { APIRoute } from 'astro';
 
-function getEnv(key: string): string | undefined {
-
-    if (typeof (globalThis as any).env !== 'undefined') {
-        return (globalThis as any).env[key];
-    }
-
-    return import.meta.env?.[key];
-}
-
 
 // ========================================
 // FETCH WITH RETRY
@@ -300,7 +291,7 @@ export const GET: APIRoute = async ({ url, locals }) => {
         }
 
         const sheetUrl =
-            getEnv('GOOGLE_SHEET_URL');
+            locals.runtime.env.GOOGLE_SHEET_URL;
 
         if (!sheetUrl) {
 
