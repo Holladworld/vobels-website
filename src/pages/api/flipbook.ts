@@ -1,18 +1,28 @@
 import type { APIRoute } from 'astro';
 
 // ========================================
-// GET ENVIRONMENT VARIABLE (Works on Local + Cloudflare)
+// GET ENVIRONMENT VARIABLE (Works everywhere)
 // ========================================
 
-function getEnv(key: string): string | undefined {
-    // For Node.js / Local development
-    if (typeof process !== 'undefined' && process.env && process.env[key]) {
-        return process.env[key];
+async function getSheetUrl(): Promise<string | undefined> {
+    // Try to import cloudflare:workers dynamically (only works in Cloudflare)
+    try {
+        const { env } = await import('cloudflare:workers');
+        if (env && env.GOOGLE_SHEET_URL) {
+            console.log('Using Cloudflare env');
+            return env.GOOGLE_SHEET_URL;
+        }
+    } catch (e) {
+        console.log('Not in Cloudflare environment, using local env');
     }
     
-    // For Astro local development fallback
-    if (import.meta.env && import.meta.env[key]) {
-        return import.meta.env[key];
+    // Fallback for local development
+    if (typeof process !== 'undefined' && process.env && process.env.GOOGLE_SHEET_URL) {
+        return process.env.GOOGLE_SHEET_URL;
+    }
+    
+    if (import.meta.env && import.meta.env.GOOGLE_SHEET_URL) {
+        return import.meta.env.GOOGLE_SHEET_URL;
     }
     
     return undefined;
@@ -72,7 +82,7 @@ async function fetchWithRetry(
 // POST - UPLOAD FLIPBOOK
 // ========================================
 
-export const POST: APIRoute = async ({ request, locals }) => {
+export const POST: APIRoute = async ({ request }) => {
 
     try {
 
@@ -122,25 +132,12 @@ export const POST: APIRoute = async ({ request, locals }) => {
             );
         }
 
-        // CHECK ENV - IMPORTANT: For Cloudflare, use locals.runtime.env
-        let sheetUrl: string | undefined;
-        
-        // Check if we're in Cloudflare (has locals.runtime.env)
-        if (locals && locals.runtime && locals.runtime.env) {
-            sheetUrl = locals.runtime.env.GOOGLE_SHEET_URL;
-            console.log('Using Cloudflare env');
-        } else {
-            // Local development
-            sheetUrl = getEnv('GOOGLE_SHEET_URL');
-            console.log('Using local env');
-        }
+        // CHECK ENV
+        const sheetUrl = await getSheetUrl();
 
         console.log('=== DEBUG ENV ===');
         console.log('Sheet URL exists:', !!sheetUrl);
-        console.log('Has locals:', !!locals);
-        console.log('Has locals.runtime:', !!(locals && locals.runtime));
-        console.log('Has locals.runtime.env:', !!(locals && locals.runtime && locals.runtime.env));
-        
+
         if (!sheetUrl) {
 
             console.error(
@@ -150,7 +147,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
             return new Response(
                 JSON.stringify({
                     success: false,
-                    error: 'Server configuration error: GOOGLE_SHEET_URL not accessible'
+                    error: 'Server configuration error'
                 }),
                 {
                     status: 500,
@@ -288,7 +285,7 @@ export const POST: APIRoute = async ({ request, locals }) => {
 // GET FLIPBOOK
 // ========================================
 
-export const GET: APIRoute = async ({ url, locals }) => {
+export const GET: APIRoute = async ({ url }) => {
 
     try {
 
@@ -322,18 +319,8 @@ export const GET: APIRoute = async ({ url, locals }) => {
             );
         }
 
-        // CHECK ENV - IMPORTANT: For Cloudflare, use locals.runtime.env
-        let sheetUrl: string | undefined;
-        
-        // Check if we're in Cloudflare (has locals.runtime.env)
-        if (locals && locals.runtime && locals.runtime.env) {
-            sheetUrl = locals.runtime.env.GOOGLE_SHEET_URL;
-            console.log('Using Cloudflare env for GET');
-        } else {
-            // Local development
-            sheetUrl = getEnv('GOOGLE_SHEET_URL');
-            console.log('Using local env for GET');
-        }
+        // CHECK ENV
+        const sheetUrl = await getSheetUrl();
 
         if (!sheetUrl) {
 
