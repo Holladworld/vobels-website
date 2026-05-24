@@ -5,11 +5,6 @@ import type { APIRoute } from 'astro';
 // ========================================
 
 function getEnv(key: string): string | undefined {
-    // For Cloudflare Workers (production)
-    if (typeof (globalThis as any).env !== 'undefined' && (globalThis as any).env[key]) {
-        return (globalThis as any).env[key];
-    }
-    
     // For Node.js / Local development
     if (typeof process !== 'undefined' && process.env && process.env[key]) {
         return process.env[key];
@@ -77,7 +72,7 @@ async function fetchWithRetry(
 // POST - UPLOAD FLIPBOOK
 // ========================================
 
-export const POST: APIRoute = async ({ request }) => {
+export const POST: APIRoute = async ({ request, locals }) => {
 
     try {
 
@@ -127,15 +122,24 @@ export const POST: APIRoute = async ({ request }) => {
             );
         }
 
-        // CHECK ENV
-        const sheetUrl =
-            getEnv('GOOGLE_SHEET_URL');
+        // CHECK ENV - IMPORTANT: For Cloudflare, use locals.runtime.env
+        let sheetUrl: string | undefined;
+        
+        // Check if we're in Cloudflare (has locals.runtime.env)
+        if (locals && locals.runtime && locals.runtime.env) {
+            sheetUrl = locals.runtime.env.GOOGLE_SHEET_URL;
+            console.log('Using Cloudflare env');
+        } else {
+            // Local development
+            sheetUrl = getEnv('GOOGLE_SHEET_URL');
+            console.log('Using local env');
+        }
 
         console.log('=== DEBUG ENV ===');
         console.log('Sheet URL exists:', !!sheetUrl);
-        console.log('Has globalThis.env:', typeof (globalThis as any).env !== 'undefined');
-        console.log('Has process.env:', typeof process !== 'undefined');
-        console.log('Has import.meta.env:', !!import.meta.env);
+        console.log('Has locals:', !!locals);
+        console.log('Has locals.runtime:', !!(locals && locals.runtime));
+        console.log('Has locals.runtime.env:', !!(locals && locals.runtime && locals.runtime.env));
         
         if (!sheetUrl) {
 
@@ -146,7 +150,7 @@ export const POST: APIRoute = async ({ request }) => {
             return new Response(
                 JSON.stringify({
                     success: false,
-                    error: 'Server configuration error: GOOGLE_SHEET_URL not set in Cloudflare secrets'
+                    error: 'Server configuration error: GOOGLE_SHEET_URL not accessible'
                 }),
                 {
                     status: 500,
@@ -284,7 +288,7 @@ export const POST: APIRoute = async ({ request }) => {
 // GET FLIPBOOK
 // ========================================
 
-export const GET: APIRoute = async ({ url }) => {
+export const GET: APIRoute = async ({ url, locals }) => {
 
     try {
 
@@ -318,8 +322,18 @@ export const GET: APIRoute = async ({ url }) => {
             );
         }
 
-        const sheetUrl =
-            getEnv('GOOGLE_SHEET_URL');
+        // CHECK ENV - IMPORTANT: For Cloudflare, use locals.runtime.env
+        let sheetUrl: string | undefined;
+        
+        // Check if we're in Cloudflare (has locals.runtime.env)
+        if (locals && locals.runtime && locals.runtime.env) {
+            sheetUrl = locals.runtime.env.GOOGLE_SHEET_URL;
+            console.log('Using Cloudflare env for GET');
+        } else {
+            // Local development
+            sheetUrl = getEnv('GOOGLE_SHEET_URL');
+            console.log('Using local env for GET');
+        }
 
         if (!sheetUrl) {
 
