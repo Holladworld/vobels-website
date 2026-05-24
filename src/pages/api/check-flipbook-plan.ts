@@ -1,4 +1,3 @@
-// src/pages/api/check-flipbook-plan.ts
 import type { APIRoute } from 'astro';
 
 function getEnv(key: string): string | undefined {
@@ -13,10 +12,10 @@ export const GET: APIRoute = async ({ url }) => {
     const bookId = url.searchParams.get('id');
 
     if (!bookId) {
-      return new Response(JSON.stringify({ error: 'Book ID required' }), {
-        status: 400,
-        headers: { 'Content-Type': 'application/json' }
-      });
+      return new Response(
+        JSON.stringify({ error: 'Book ID required', isPremium: false }),
+        { status: 400, headers: { 'Content-Type': 'application/json' } }
+      );
     }
 
     const sheetUrl = getEnv('GOOGLE_SHEET_URL');
@@ -27,18 +26,22 @@ export const GET: APIRoute = async ({ url }) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         action: 'CHECK_FLIPBOOK_PLAN',
-        payload: { bookId }
+        payload: { bookId: bookId }
       })
     });
 
     const result = await response.json();
 
-    return new Response(JSON.stringify(result), {
+    return new Response(JSON.stringify({
+      isPremium: result.isPremium || false,
+      bookId: bookId
+    }), {
       status: 200,
       headers: { 'Content-Type': 'application/json' }
     });
 
   } catch (error: any) {
+    console.error("CHECK FLIPBOOK PLAN ERROR:", error);
     return new Response(JSON.stringify({ error: error.message, isPremium: false }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' }
