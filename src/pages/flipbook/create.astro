@@ -7,9 +7,13 @@ import { Icon } from "astro-icon/components";
 <Layout title="Create Flipbook | Vobels" description="Upload your PDF and create a stunning flipbook">
   <Container>
     <div class="mt-10 max-w-3xl mx-auto">
-      <!-- Header -->
+      <!-- Header with Navigation -->
       <div class="text-center mb-8">
-        <h1 class="text-3xl md:text-4xl font-bold text-black">Create a Flipbook</h1>
+        <div class="flex justify-between items-center mb-4">
+          <a href="/flipbook" class="text-zinc-500 hover:text-black text-sm">← Back</a>
+          <a href="/flipbook/my-books" class="text-zinc-500 hover:text-black text-sm"> My Books →</a>
+        </div>
+        <h1 class="text-3xl md:text-3xl font-bold text-black">Create a Flipbook</h1>
         <p class="text-zinc-500 mt-2">Transform your PDF into an elegant, shareable digital publication</p>
       </div>
 
@@ -47,6 +51,9 @@ import { Icon } from "astro-icon/components";
           <input type="text" id="shareUrl" class="flex-1 px-3 py-2 border border-zinc-300 rounded-lg text-sm" readonly />
           <button id="copyBtn" class="bg-black text-white px-4 py-2 rounded-lg text-sm hover:bg-zinc-800">Copy</button>
           <a id="viewLink" href="#" target="_blank" class="bg-zinc-100 text-black px-4 py-2 rounded-lg text-sm hover:bg-zinc-200">View</a>
+        </div>
+        <div class="mt-4">
+          <a href="/flipbook/create" class="text-green-700 text-sm hover:underline">+ Create another flipbook</a>
         </div>
       </div>
 
@@ -281,15 +288,22 @@ import { Icon } from "astro-icon/components";
               if (fileInput) fileInput.value = '';
               uploadBtn.disabled = true;
               checkUserStatus();
-            } else {
-              if (data.limitReached) {
-                showToast('Free limit reached. Upgrade to premium for unlimited uploads.', 'warning');
-                setTimeout(() => {
-                  window.location.href = '/flipbook/pricing';
-                }, 2000);
-              } else {
-                showToast(data.error || 'Upload failed', 'error');
-              }
+            } 
+            else if (data.error === "DUPLICATE_FILE") {
+              showToast(data.message || 'This file already exists! Check your "My Books" page.', 'warning');
+              // Reset the form
+              selectedFile = null;
+              if (fileSelected) fileSelected.classList.add('hidden');
+              if (fileInput) fileInput.value = '';
+            }
+            else if (data.limitReached) {
+              showToast('Free limit reached. Upgrade to premium for unlimited uploads.', 'warning');
+              setTimeout(() => {
+                window.location.href = '/flipbook/pricing';
+              }, 2000);
+            } 
+            else {
+              showToast(data.error || 'Upload failed', 'error');
             }
           } catch (err) {
             console.error('Upload error:', err);
