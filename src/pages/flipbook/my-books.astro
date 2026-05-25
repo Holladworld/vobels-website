@@ -1,0 +1,204 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import Container from "@/components/container.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Layout title="My Flipbooks | Vobels" description="View all your created flipbooks">
+  <Container>
+    <div class="mt-10 max-w-4xl mx-auto">
+      <!-- Header -->
+      <div class="text-center mb-8">
+        <div class="flex items-center justify-between mb-4">
+          <a href="/flipbook/create" class="text-black hover:underline text-sm">← Back to Create</a>
+          <h1 class="text-3xl md:text-4xl font-bold text-black">My Flipbooks</h1>
+          <div style="width: 80px;"></div>
+        </div>
+        <p class="text-zinc-500 mt-2">View and share all your digital publications</p>
+      </div>
+
+      <!-- Email Section -->
+      <div class="bg-white border border-zinc-200 rounded-xl p-6 mb-6">
+        <label class="block text-sm font-medium text-black mb-2">Your Email *</label>
+        <input
+          type="email"
+          id="userEmail"
+          class="w-full px-4 py-2 border border-zinc-300 rounded-lg focus:ring-2 focus:ring-black outline-none"
+          placeholder="you@example.com"
+        />
+        <div id="limitInfo" class="text-sm mt-2"></div>
+      </div>
+
+      <!-- Loading -->
+      <div id="loadingIndicator" class="hidden text-center py-8">
+        <div class="inline-block w-8 h-8 border-2 border-zinc-300 border-t-black rounded-full animate-spin"></div>
+        <p class="text-zinc-500 mt-2">Loading your flipbooks...</p>
+      </div>
+
+      <!-- Flipbooks List -->
+      <div id="flipbooksSection" class="hidden">
+        <div class="bg-white border border-zinc-200 rounded-xl p-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="font-bold text-black text-lg">Your Publications</h3>
+            <button id="refreshBtn" class="text-xs text-zinc-500 hover:text-black">Refresh ↻</button>
+          </div>
+          <div id="flipbooksList" class="space-y-3 max-h-96 overflow-y-auto">
+            <!-- Books will appear here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Empty State -->
+      <div id="emptyState" class="hidden bg-white border border-zinc-200 rounded-xl p-12 text-center">
+        <Icon name="bx:book-open" class="w-16 h-16 text-zinc-300 mx-auto mb-4" />
+        <h3 class="font-bold text-black text-lg mb-2">No flipbooks yet</h3>
+        <p class="text-zinc-500 mb-4">You haven't created any flipbooks yet.</p>
+        <a href="/flipbook/create" class="bg-black text-white px-6 py-2 rounded-lg inline-block hover:bg-zinc-800">Create Your First Flipbook →</a>
+      </div>
+
+      <!-- Info Note -->
+      <div class="mt-8 bg-zinc-50 rounded-lg p-4 text-center text-s text-zinc-500">
+        <p>Free: 3 flipbooks • 3-day expiry • Watermarked</p>
+        <p class="mt-1">Premium: Unlimited • No watermark • Permanent storage</p>
+        <a href="/flipbook/pricing" class="text-black font-medium underline mt-2 inline-block">Upgrade to Premium →</a>
+      </div>
+    </div>
+  </Container>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden">
+    <div class="flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg bg-white border">
+      <span id="toast-icon"></span>
+      <span id="toast-message" class="text-sm font-medium"></span>
+    </div>
+  </div>
+
+  <style is:inline>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .animate-spin { animation: spin 1s linear infinite; }
+  </style>
+
+  <script>
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastIcon = document.getElementById('toast-icon');
+      const toastMessage = document.getElementById('toast-message');
+      const toastDiv = toast.querySelector('div');
+
+      toastDiv.classList.remove('border-green-200', 'bg-green-50', 'border-red-200', 'bg-red-50', 'border-amber-200', 'bg-amber-50');
+      toastMessage.classList.remove('text-green-800', 'text-red-800', 'text-amber-800');
+
+      if (type === 'success') {
+        toastIcon.innerHTML = '<svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+        toastDiv.classList.add('border-green-200', 'bg-green-50');
+        toastMessage.classList.add('text-green-800');
+      } else if (type === 'error') {
+        toastIcon.innerHTML = '<svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+        toastDiv.classList.add('border-red-200', 'bg-red-50');
+        toastMessage.classList.add('text-red-800');
+      } else {
+        toastIcon.innerHTML = '<svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>';
+        toastDiv.classList.add('border-amber-200', 'bg-amber-50');
+        toastMessage.classList.add('text-amber-800');
+      }
+
+      toastMessage.textContent = message;
+      toast.classList.remove('hidden');
+
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const emailInput = document.getElementById('userEmail');
+      const loadingIndicator = document.getElementById('loadingIndicator');
+      const flipbooksSection = document.getElementById('flipbooksSection');
+      const flipbooksList = document.getElementById('flipbooksList');
+      const emptyState = document.getElementById('emptyState');
+      const limitInfo = document.getElementById('limitInfo');
+      const refreshBtn = document.getElementById('refreshBtn');
+
+      const savedEmail = localStorage.getItem('flipbook_user_email');
+      if (savedEmail && emailInput) {
+        emailInput.value = savedEmail;
+      }
+
+      let emailTimeout;
+      if (emailInput) {
+        emailInput.addEventListener('input', function() {
+          clearTimeout(emailTimeout);
+          emailTimeout = setTimeout(loadFlipbooks, 500);
+          localStorage.setItem('flipbook_user_email', emailInput.value);
+        });
+      }
+
+      async function loadFlipbooks() {
+        const email = emailInput?.value.trim();
+
+        if (!email || !email.includes('@')) {
+          if (limitInfo) limitInfo.innerHTML = '<span class="text-zinc-500">Enter email to view your flipbooks</span>';
+          if (flipbooksSection) flipbooksSection.classList.add('hidden');
+          if (emptyState) emptyState.classList.add('hidden');
+          return;
+        }
+
+        if (limitInfo) limitInfo.innerHTML = '<span class="text-zinc-500">Loading your books...</span>';
+        if (loadingIndicator) loadingIndicator.classList.remove('hidden');
+        if (flipbooksSection) flipbooksSection.classList.add('hidden');
+        if (emptyState) emptyState.classList.add('hidden');
+
+        try {
+          const response = await fetch(`/api/user-flipbooks?email=${encodeURIComponent(email)}`);
+          const data = await response.json();
+
+          if (data.success && data.flipbooks && data.flipbooks.length > 0) {
+            flipbooksList.innerHTML = data.flipbooks.map(book => `
+              <div class="flex items-center justify-between p-4 bg-zinc-50 rounded-lg border border-zinc-100 hover:border-zinc-300 transition-all">
+                <div class="flex-1 min-w-0">
+                  <p class="font-medium text-black text-base truncate">${(book.fileName || 'Untitled').replace(/[&<>]/g, function(m) {
+                    if (m === '&') return '&amp;';
+                    if (m === '<') return '&lt;';
+                    if (m === '>') return '&gt;';
+                    return m;
+                  })}</p>
+                  <div class="flex gap-4 text-xs text-zinc-500 mt-1">
+                    <span>📄 ${book.views || 0} views</span>
+                    <span>📅 ${new Date(book.createdAt).toLocaleDateString()}</span>
+                  </div>
+                </div>
+                <div class="flex gap-2 ml-3">
+                  <a href="/flipbook/view?id=${book.id}" target="_blank" class="bg-black text-white px-3 py-1.5 rounded-lg text-sm hover:bg-zinc-800 transition-all">Read →</a>
+                  <button onclick="copyBookLink('${window.location.origin}/flipbook/view?id=${book.id}')" class="bg-zinc-200 text-black px-3 py-1.5 rounded-lg text-sm hover:bg-zinc-300 transition-all">Copy Link</button>
+                </div>
+              </div>
+            `).join('');
+            
+            if (limitInfo) limitInfo.innerHTML = `<span class="text-green-600">✓ ${data.flipbooks.length} flipbook${data.flipbooks.length !== 1 ? 's' : ''} found</span>`;
+            if (flipbooksSection) flipbooksSection.classList.remove('hidden');
+          } else {
+            if (limitInfo) limitInfo.innerHTML = '<span class="text-amber-600">No flipbooks found for this email</span>';
+            if (emptyState) emptyState.classList.remove('hidden');
+          }
+        } catch (err) {
+          console.error('Failed to load flipbooks:', err);
+          if (limitInfo) limitInfo.innerHTML = '<span class="text-red-500">Error loading flipbooks. Please try again.</span>';
+          showToast('Failed to load your flipbooks', 'error');
+        } finally {
+          if (loadingIndicator) loadingIndicator.classList.add('hidden');
+        }
+      }
+
+      window.copyBookLink = function(url) {
+        navigator.clipboard.writeText(url);
+        showToast('Link copied to clipboard!', 'success');
+      };
+
+      refreshBtn?.addEventListener('click', loadFlipbooks);
+
+      if (savedEmail) {
+        loadFlipbooks();
+      }
+    });
+  </script>
+</Layout>
