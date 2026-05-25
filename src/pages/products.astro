@@ -152,8 +152,8 @@ const products = [
           
           {product.status === 'coming' && (
             <button 
-              onclick="notifyForProduct('{product.name}')"
-              class="block w-full bg-zinc-100 text-black py-3 rounded-lg font-medium hover:bg-zinc-200 transition-all"
+              data-product={product.name}
+              class="notify-btn block w-full bg-zinc-100 text-black py-3 rounded-lg font-medium hover:bg-zinc-200 transition-all"
             >
               {product.cta}
             </button>
@@ -222,11 +222,96 @@ const products = [
     </div>
   </Container>
 
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden">
+    <div class="flex items-center gap-3 px-5 py-3 rounded-xl shadow-lg bg-white border">
+      <span id="toast-icon"></span>
+      <span id="toast-message" class="text-sm font-medium"></span>
+    </div>
+  </div>
+
+  <!-- Modal for Email Collection -->
+  <div id="emailModal" class="fixed inset-0 bg-black/50 z-50 hidden items-center justify-center">
+    <div class="bg-white rounded-2xl p-6 max-w-md w-full mx-4">
+      <div class="flex justify-between items-center mb-4">
+        <h3 class="text-xl font-bold text-black">Get Notified</h3>
+        <button id="closeModalBtn" class="text-zinc-400 hover:text-black">&times;</button>
+      </div>
+      <p id="modalProductName" class="text-zinc-600 mb-4">Enter your email to be notified when this product launches.</p>
+      <input type="email" id="modalEmail" placeholder="you@example.com" class="w-full px-4 py-2 border border-zinc-300 rounded-lg mb-4 focus:outline-none focus:ring-2 focus:ring-black" />
+      <button id="submitNotifyBtn" class="w-full bg-black text-white py-3 rounded-lg font-medium hover:bg-zinc-800 transition-all">Notify Me</button>
+    </div>
+  </div>
+
+  <style is:inline>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .animate-spin { animation: spin 1s linear infinite; }
+  </style>
+
   <script is:inline>
-    window.notifyForProduct = function(productName) {
-      const email = prompt("Enter your email to be notified when " + productName + " launches:");
-      if (email && email.includes('@')) {
-        fetch('/api/capture-lead', {
+    // Toast notification function
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastIcon = document.getElementById('toast-icon');
+      const toastMessage = document.getElementById('toast-message');
+      const toastDiv = toast.querySelector('div');
+
+      toastDiv.classList.remove('border-green-200', 'bg-green-50', 'border-red-200', 'bg-red-50', 'border-amber-200', 'bg-amber-50');
+      toastMessage.classList.remove('text-green-800', 'text-red-800', 'text-amber-800');
+
+      if (type === 'success') {
+        toastIcon.innerHTML = '<svg class="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>';
+        toastDiv.classList.add('border-green-200', 'bg-green-50');
+        toastMessage.classList.add('text-green-800');
+      } else if (type === 'error') {
+        toastIcon.innerHTML = '<svg class="w-5 h-5 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>';
+        toastDiv.classList.add('border-red-200', 'bg-red-50');
+        toastMessage.classList.add('text-red-800');
+      } else {
+        toastIcon.innerHTML = '<svg class="w-5 h-5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>';
+        toastDiv.classList.add('border-amber-200', 'bg-amber-50');
+        toastMessage.classList.add('text-amber-800');
+      }
+
+      toastMessage.textContent = message;
+      toast.classList.remove('hidden');
+
+      setTimeout(() => {
+        toast.classList.add('hidden');
+      }, 3000);
+    }
+
+    // Modal handling
+    let currentProduct = '';
+    const modal = document.getElementById('emailModal');
+    const modalProductName = document.getElementById('modalProductName');
+    const modalEmail = document.getElementById('modalEmail');
+    const submitBtn = document.getElementById('submitNotifyBtn');
+    const closeModalBtn = document.getElementById('closeModalBtn');
+
+    function openModal(productName) {
+      currentProduct = productName;
+      modalProductName.textContent = `Enter your email to be notified when ${productName} launches.`;
+      modalEmail.value = '';
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      modalEmail.focus();
+    }
+
+    function closeModal() {
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    closeModalBtn?.addEventListener('click', closeModal);
+    modal?.addEventListener('click', (e) => {
+      if (e.target === modal) closeModal();
+    });
+
+    // Handle notification submission
+    async function submitNotification(email, productName) {
+      try {
+        const response = await fetch('/api/capture-lead', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
@@ -237,10 +322,53 @@ const products = [
             timestamp: new Date().toISOString()
           })
         });
-        alert("Thank you! We'll notify you when this product launches.");
-      } else if (email) {
-        alert("Please enter a valid email address.");
+
+        const data = await response.json();
+        
+        if (response.ok && data.success) {
+          showToast(`Thanks! We'll notify you when ${productName} launches.`, 'success');
+          closeModal();
+        } else {
+          showToast(data.error || 'Something went wrong. Please try again.', 'error');
+        }
+      } catch (err) {
+        console.error('Error:', err);
+        showToast('Network error. Please try again.', 'error');
       }
-    };
+    }
+
+    // Attach click handlers to all notify buttons
+    document.querySelectorAll('.notify-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const productName = btn.getAttribute('data-product');
+        openModal(productName);
+      });
+    });
+
+    // Handle submit
+    submitBtn?.addEventListener('click', async () => {
+      const email = modalEmail.value.trim();
+      
+      if (!email) {
+        showToast('Please enter your email address.', 'warning');
+        modalEmail.focus();
+        return;
+      }
+      
+      if (!email.includes('@') || !email.includes('.')) {
+        showToast('Please enter a valid email address.', 'warning');
+        modalEmail.focus();
+        return;
+      }
+      
+      await submitNotification(email, currentProduct);
+    });
+
+    // Allow Enter key to submit
+    modalEmail?.addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        submitBtn.click();
+      }
+    });
   </script>
 </Layout>
