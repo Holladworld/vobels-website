@@ -603,18 +603,23 @@
             return urlParams.get('id');
         }
         
+        // ✅ FIXED: Calculate optimal scale with actual navbar and toolbar heights
         function calculateOptimalScale() {
             const container = document.getElementById('flipbook-container');
+            const toolbar = document.querySelector('.toolbar');
+            const navbar = document.querySelector('.navbar');
+            
+            const toolbarHeight = toolbar ? toolbar.offsetHeight : 50;
+            const navbarHeight = navbar ? navbar.offsetHeight : 50;
+            const totalTopHeight = navbarHeight + toolbarHeight;
+            
             const maxWidth = window.innerWidth - (isMobile ? 20 : 60);
-            const maxHeight = window.innerHeight - (isMobile ? 180 : 200);
+            const maxHeight = window.innerHeight - totalTopHeight - (isMobile ? 20 : 40);
             
             const scaleByWidth = maxWidth / originalWidth;
             const scaleByHeight = maxHeight / originalHeight;
             
-            const fitScale = isMobile 
-                ? Math.min(scaleByWidth, scaleByHeight, 0.9)
-                : Math.min(scaleByWidth, scaleByHeight, 1.2);
-            
+            const fitScale = Math.min(scaleByWidth, scaleByHeight, 1.2);
             return Math.max(fitScale, 0.5);
         }
         
@@ -799,6 +804,7 @@
             });
         }
         
+        // ✅ FIXED: Better centering with proper scroll calculations
         function centerFlipbook() {
             const flipbook = document.getElementById('flipbook');
             const container = document.getElementById('flipbook-container');
@@ -807,11 +813,11 @@
                 const containerRect = container.getBoundingClientRect();
                 const flipbookRect = flipbook.getBoundingClientRect();
                 
-                const scrollLeft = (flipbookRect.width - containerRect.width) / 2;
-                const scrollTop = (flipbookRect.height - containerRect.height) / 2;
+                const scrollLeft = Math.max(0, (flipbookRect.width - containerRect.width) / 2);
+                const scrollTop = Math.max(0, (flipbookRect.height - containerRect.height) / 2);
                 
-                container.scrollLeft = Math.max(0, scrollLeft);
-                container.scrollTop = Math.max(0, scrollTop);
+                container.scrollLeft = scrollLeft;
+                container.scrollTop = scrollTop;
             }
         }
         
@@ -1028,7 +1034,6 @@
     </script>
 </body>
 </html>
-
 
 <!-- <script>
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
