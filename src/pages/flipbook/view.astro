@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Vobels Flipbook | Digital Publication</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
     <link rel="shortcut icon" href="/favicon.svg">
@@ -16,66 +16,90 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
+            touch-action: pan-x pan-y; /* Enable touch gestures */
         }
         
         .navbar {
-            padding: 0.75rem 2rem;
+            padding: 0.5rem 1rem;
             background: #1f1e1c;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 1rem;
+            gap: 0.5rem;
             z-index: 10;
         }
         
         .brand {
             font-family: 'Playfair Display', Georgia, serif;
-            font-size: 1.25rem;
+            font-size: 1rem;
             font-weight: 400;
             color: #e8e5df;
             text-decoration: none;
         }
         
-        .toolbar {
+        .nav-links {
             display: flex;
             gap: 0.5rem;
+        }
+        
+        .nav-links a {
+            background: transparent;
+            color: #a09d96;
+            text-decoration: none;
+            padding: 0.3rem 0.7rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            transition: all 0.2s;
+            border: 1px solid #5a5852;
+        }
+        
+        .nav-links a:first-child {
+            background: #5a5852;
+            color: #e8e5df;
+            border: none;
+        }
+        
+        .toolbar {
+            display: flex;
+            gap: 0.3rem;
             align-items: center;
             flex-wrap: wrap;
+            justify-content: center;
         }
         
         .toolbar button {
             background: #3d3c38;
             border: none;
-            padding: 0.5rem 1rem;
-            font-size: 0.8rem;
+            padding: 0.4rem 0.7rem;
+            font-size: 0.7rem;
             font-weight: 450;
             cursor: pointer;
             color: #e8e5df;
             transition: all 0.2s;
             border-radius: 4px;
+            touch-action: manipulation;
         }
         
-        .toolbar button:hover {
+        .toolbar button:active {
             background: #5a5852;
+            transform: scale(0.95);
         }
         
         .page-info {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             color: #a09d96;
-            margin: 0 0.5rem;
+            margin: 0 0.3rem;
         }
         
         .zoom-controls {
             display: flex;
-            gap: 0.25rem;
-            margin-left: 0.5rem;
-            padding-left: 0.5rem;
+            gap: 0.2rem;
         }
         
         .zoom-controls button {
-            padding: 0.5rem 0.75rem;
-            font-size: 0.8rem;
+            padding: 0.4rem 0.6rem;
+            font-size: 0.7rem;
         }
         
         #flipbook-container {
@@ -83,14 +107,11 @@
             position: relative;
             overflow: auto;
             background: #2c2b28;
-
             display: flex;
-
-            align-items: flex-start;
-
+            align-items: center;
             justify-content: center;
-
-            padding: 20px;
+            padding: 10px;
+            -webkit-overflow-scrolling: touch;
         }
         
         #flipbook {
@@ -112,9 +133,9 @@
             height: 100%;
             object-fit: contain;
             display: block;
+            pointer-events: none; /* Allow touch events to pass through for turning */
         }
         
-        /* For proper display of double pages */
         #flipbook .double {
             background: white;
         }
@@ -147,56 +168,104 @@
         
         .loading-overlay p {
             color: #a09d96;
+            font-size: 0.9rem;
         }
         
         .instruction {
             position: fixed;
-            bottom: 30px;
+            bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.85);
             color: white;
-            padding: 8px 20px;
+            padding: 8px 16px;
             border-radius: 30px;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             pointer-events: none;
             z-index: 20;
             opacity: 0;
-            transition: opacity 0.5s;
+            transition: opacity 0.3s;
             white-space: nowrap;
+            backdrop-filter: blur(10px);
         }
         
+        /* Mobile-specific styles */
         @media (max-width: 768px) {
-            .navbar { padding: 0.5rem 1rem; }
-            .toolbar button { padding: 0.4rem 0.75rem; font-size: 0.7rem; }
-            .instruction { font-size: 0.7rem; bottom: 20px; white-space: nowrap; }
-            #flipbook-container { padding: 10px; }
+            .navbar {
+                padding: 0.5rem;
+            }
+            
+            .brand {
+                font-size: 0.9rem;
+            }
+            
+            .toolbar button {
+                padding: 0.35rem 0.6rem;
+                font-size: 0.65rem;
+            }
+            
+            .page-info {
+                font-size: 0.65rem;
+            }
+            
+            .instruction {
+                font-size: 0.6rem;
+                bottom: 15px;
+                white-space: nowrap;
+            }
+            
+            #flipbook-container {
+                padding: 5px;
+            }
         }
         
-        @media (max-width: 600px) {
-            .navbar { flex-direction: column; align-items: stretch; }
-            .toolbar { justify-content: center; }
-            .instruction { font-size: 0.6rem; white-space: normal; text-align: center; width: 90%; }
+        @media (max-width: 480px) {
+            .toolbar {
+                gap: 0.2rem;
+            }
+            
+            .toolbar button {
+                padding: 0.3rem 0.5rem;
+                font-size: 0.6rem;
+            }
+            
+            .nav-links a {
+                padding: 0.25rem 0.5rem;
+                font-size: 0.65rem;
+            }
+        }
+        
+        /* Hide scrollbar on mobile but keep functionality */
+        @media (max-width: 768px) {
+            #flipbook-container::-webkit-scrollbar {
+                width: 0;
+                background: transparent;
+            }
         }
     </style>
 </head>
 <body>
     <div class="navbar">
         <a href="/" class="brand">Vobels Flipbook</a>
-        <div class="toolbar">
-            <button id="prev-page">← Previous</button>
-            <span class="page-info">
-                <span id="current-page">1</span> / <span id="total-pages">...</span>
-            </span>
-            <button id="next-page">Next →</button>
-            <button id="fullscreen-btn">Fullscreen</button>
-            <button id="download-btn">Download</button>
-            <button id="share-btn">Share</button>
-            <div class="zoom-controls">
-                <button id="zoom-out" title="Zoom out">−</button>
-                <button id="zoom-reset" title="Reset zoom">Fit</button>
-                <button id="zoom-in" title="Zoom in">+</button>
-            </div>
+        <div class="nav-links">
+            <a href="/flipbook/create">+ New</a>
+            <a href="/flipbook/my-books">📚 My Books</a>
+        </div>
+    </div>
+    
+    <div class="toolbar">
+        <button id="prev-page">← Prev</button>
+        <span class="page-info">
+            <span id="current-page">1</span> / <span id="total-pages">...</span>
+        </span>
+        <button id="next-page">Next →</button>
+        <button id="fullscreen-btn">Full</button>
+        <button id="download-btn">Download</button>
+        <button id="share-btn">Share</button>
+        <div class="zoom-controls">
+            <button id="zoom-out" title="Zoom out">−</button>
+            <button id="zoom-reset" title="Reset zoom">Fit</button>
+            <button id="zoom-in" title="Zoom in">+</button>
         </div>
     </div>
     
@@ -204,12 +273,12 @@
         <div id="flipbook">
             <div class="loading-overlay">
                 <div class="spinner"></div>
-                <p>Loading publication...</p>
+                <p>Loading your publication...</p>
             </div>
         </div>
     </div>
     
-    <div class="instruction" id="instruction">Click left or right edge of page to flip</div>
+    <div class="instruction" id="instruction">Swipe or tap edges to flip</div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -227,10 +296,30 @@
     let originalHeight = 0;
     let currentScale = 1.0;
     let turnInstance = null;
+    let touchStartX = 0;
+    let touchEndX = 0;
+    let isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
     
     function getBookId() {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get('id');
+    }
+    
+    // Calculate optimal scale for current screen
+    function calculateOptimalScale() {
+        const container = document.getElementById('flipbook-container');
+        const maxWidth = window.innerWidth - (isMobile ? 20 : 60);
+        const maxHeight = window.innerHeight - (isMobile ? 180 : 200);
+        
+        const scaleByWidth = maxWidth / originalWidth;
+        const scaleByHeight = maxHeight / originalHeight;
+        
+        // On mobile, use a more aggressive fit (85% of available space)
+        const fitScale = isMobile 
+            ? Math.min(scaleByWidth, scaleByHeight, 0.9)
+            : Math.min(scaleByWidth, scaleByHeight, 1.2);
+        
+        return Math.max(fitScale, 0.5);
     }
     
     async function loadPDF() {
@@ -238,13 +327,9 @@
         const urlParams = new URLSearchParams(window.location.search);
         const directPdfUrl = urlParams.get('pdf');
         
-        // ========== DEBUG LOGGING ==========
         console.log("=== FLIPBOOK DEBUG INFO ===");
         console.log("Book ID from URL:", bookId);
-        console.log("Direct PDF URL:", directPdfUrl);
-        console.log("Full URL:", window.location.href);
-        console.log("API URL:", `/api/flipbook?id=${bookId}`);
-        // ===================================
+        console.log("Is Mobile:", isMobile);
         
         if (directPdfUrl) {
             console.log("Loading direct PDF from:", directPdfUrl);
@@ -264,12 +349,10 @@
         }
         
         if (!bookId) {
-            console.error("No book ID found in URL - check your link format");
+            console.error("No book ID found in URL");
             document.getElementById('flipbook').innerHTML = `
                 <div class="loading-overlay">
                     <p>No publication specified</p>
-                    <p style="font-size: 0.8rem; color: #a09d96; margin-top: 10px;">URL should contain ?id=BOOK_ID</p>
-                    <p style="font-size: 0.7rem; color: #a09d96;">Example: /flipbook/view.?id=abc123</p>
                     <a href="/flipbook/create" style="color: #8b7e6b; margin-top: 1rem;">Create a flipbook →</a>
                 </div>
             `;
@@ -281,13 +364,9 @@
         try {
             console.log("Fetching from API...");
             const response = await fetch(`/api/flipbook?id=${bookId}`);
-            console.log("API Response status:", response.status);
-            
             const data = await response.json();
-            console.log("API Response data:", JSON.stringify(data, null, 2));
             
             if (data.success && data.pdfUrl) {
-                console.log("PDF URL received:", data.pdfUrl);
                 console.log("Loading PDF from URL...");
                 const loadingTask = pdfjsLib.getDocument(data.pdfUrl);
                 pdfDoc = await loadingTask.promise;
@@ -295,18 +374,15 @@
                 document.getElementById('total-pages').textContent = pageCount;
                 await getAndSetBookDimensions();
                 await convertPagesToImages();
-                console.log("PDF loaded successfully!");
             } else {
-                console.error("API returned error or no pdfUrl:", data.error);
-                throw new Error(data.error || 'Unable to load flipbook - no PDF URL returned');
+                throw new Error(data.error || 'Unable to load flipbook');
             }
         } catch (error) {
-            console.error("Load error - full details:", error);
+            console.error("Load error:", error);
             showError(error);
         }
     }
     
-    // Get actual PDF dimensions and calculate optimal display size
     async function getAndSetBookDimensions() {
         const firstPage = await pdfDoc.getPage(1);
         const viewport = firstPage.getViewport({ scale: 1 });
@@ -314,29 +390,17 @@
         originalWidth = viewport.width;
         originalHeight = viewport.height;
         
-        // Calculate optimal display size (max 1000px width, 80% of viewport height)
-        const container = document.getElementById('flipbook-container');
-        const maxWidth = Math.min(1000, window.innerWidth - 100);
-        const maxHeight = window.innerHeight - 150;
+        currentScale = calculateOptimalScale();
         
-        // Calculate scale to fit within viewport
-        const scaleByWidth = maxWidth / originalWidth;
-        const scaleByHeight = maxHeight / originalHeight;
-        const fitScale = Math.min(scaleByWidth, scaleByHeight, 1.2); // Cap at 120% max
-        
-        currentScale = fitScale;
-        
-        console.log(`Book dimensions: ${originalWidth}x${originalHeight}, Scale: ${currentScale}`);
+        console.log(`Book dimensions: ${originalWidth}x${originalHeight}, Scale: ${currentScale}, Mobile: ${isMobile}`);
     }
     
     async function convertPagesToImages() {
         const flipbookDiv = document.getElementById('flipbook');
-        flipbookDiv.innerHTML = '<div class="loading-overlay"><div class="spinner"></div><p>Preparing pages...</p></div>';
+        flipbookDiv.innerHTML = '<div class="loading-overlay"><div class="spinner"></div><p>Preparing the pages...</p></div>';
         
         pagesData = [];
-        
-        // Use higher quality for better resolution
-        const renderScale = 2.0;
+        const renderScale = isMobile ? 1.5 : 2.0; // Lower quality on mobile for performance
         
         for (let i = 1; i <= pageCount; i++) {
             console.log(`Converting page ${i}/${pageCount}...`);
@@ -348,9 +412,8 @@
             const context = canvas.getContext('2d');
             
             await page.render({ canvasContext: context, viewport }).promise;
-            pagesData.push(canvas.toDataURL('image/jpeg', 0.92));
+            pagesData.push(canvas.toDataURL('image/jpeg', isMobile ? 0.85 : 0.92));
             
-            // Update progress
             if (i % 5 === 0 || i === pageCount) {
                 flipbookDiv.innerHTML = `<div class="loading-overlay"><div class="spinner"></div><p>Loading page ${i}/${pageCount}...</p></div>`;
             }
@@ -362,7 +425,6 @@
     
     function createFlipbook() {
         const flipbookDiv = document.getElementById('flipbook');
-        const container = document.getElementById('flipbook-container');
         
         // Build HTML with proper page divs
         let html = '';
@@ -375,22 +437,13 @@
         }
         flipbookDiv.innerHTML = html;
         
-        // Set the flipbook size based on original dimensions and scale
-        const viewportWidth = window.innerWidth - 80;
-        const viewportHeight = window.innerHeight - 160;
-
-        const scaleX = viewportWidth / originalWidth;
-        const scaleY = viewportHeight / originalHeight;
-
-        currentScale = 0.6;
-
         const displayWidth = originalWidth * currentScale;
         const displayHeight = originalHeight * currentScale;
-
+        
         flipbookDiv.style.width = displayWidth + 'px';
         flipbookDiv.style.height = displayHeight + 'px';
         
-        // Initialize turn.js
+        // Initialize turn.js with mobile-friendly settings
         $(flipbookDiv).turn({
             width: displayWidth,
             height: displayHeight,
@@ -398,20 +451,20 @@
             display: 'single',
             acceleration: true,
             gradients: false,
-            elevation: 30,
+            elevation: isMobile ? 20 : 30,
             when: {
                 turned: function(e, page) {
                     currentPage = page;
                     document.getElementById('current-page').textContent = currentPage;
                     updateButtons();
-                },
-                start: function(e, page, view) {
-                    // Optional: Add page turn sound here
                 }
             }
         });
         
-        // Add click detection for page edges
+        // Add touch/swipe support for mobile
+        setupTouchControls(flipbookDiv);
+        
+        // Add click detection for page edges (works on both desktop and mobile)
         $(flipbookDiv).off('click').on('click', function(e) {
             const width = $(this).width();
             const clickX = e.clientX - $(this).offset().left;
@@ -425,18 +478,49 @@
             }
         });
         
-        // Center the flipbook in container
         centerFlipbook();
-        
-        // Show instruction briefly
-        showInstruction('Click left or right edges to flip pages', 2500);
+        showInstruction(isMobile ? 'Swipe or tap edges to flip' : 'Click left or right edges to flip pages', 2500);
         updateButtons();
         
-        // Store turn instance reference
         turnInstance = flipbookDiv;
-        
-        // Check and add watermark for free users
         checkAndAddWatermark();
+    }
+    
+    // Setup touch swipe gestures for mobile
+    function setupTouchControls(element) {
+        let touchStartX = 0;
+        let touchEndX = 0;
+        let touchStartY = 0;
+        let touchEndY = 0;
+        
+        element.addEventListener('touchstart', function(e) {
+            touchStartX = e.changedTouches[0].screenX;
+            touchStartY = e.changedTouches[0].screenY;
+        }, { passive: false });
+        
+        element.addEventListener('touchend', function(e) {
+            touchEndX = e.changedTouches[0].screenX;
+            touchEndY = e.changedTouches[0].screenY;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            const deltaX = touchEndX - touchStartX;
+            const deltaY = touchEndY - touchStartY;
+            
+            // Horizontal swipe (left/right)
+            if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > 50) {
+                if (deltaX < 0) {
+                    // Swipe left - next page
+                    $(element).turn('next');
+                    showInstruction('Next page →', 500);
+                } else {
+                    // Swipe right - previous page
+                    $(element).turn('previous');
+                    showInstruction('← Previous page', 500);
+                }
+            }
+        }
     }
     
     function centerFlipbook() {
@@ -467,32 +551,26 @@
         turnInstance.style.width = displayWidth + 'px';
         turnInstance.style.height = displayHeight + 'px';
         
-        // Update zoom button text
         document.getElementById('zoom-reset').textContent = Math.round(currentScale * 100) + '%';
-        
-        // Re-center after zoom
         centerFlipbook();
     }
     
     function zoomIn() {
-        currentScale = Math.min(currentScale + 0.1, 2.0);
+        currentScale = Math.min(currentScale + 0.1, (isMobile ? 1.5 : 2.0));
         applyZoom();
         showInstruction('Zoom: ' + Math.round(currentScale * 100) + '%', 500);
     }
     
     function zoomOut() {
-        currentScale = Math.max(currentScale - 0.1, 0.5);
+        currentScale = Math.max(currentScale - 0.1, 0.4);
         applyZoom();
         showInstruction('Zoom: ' + Math.round(currentScale * 100) + '%', 500);
     }
     
     function fitToScreen() {
-
-        currentScale = 0.6;
-
+        currentScale = calculateOptimalScale();
         applyZoom();
-
-        showInstruction('Fit: 60%', 500);
+        showInstruction(isMobile ? 'Fit to screen' : 'Fit: ' + Math.round(currentScale * 100) + '%', 500);
     }
     
     function updateButtons() {
@@ -520,7 +598,10 @@
         const container = document.getElementById('flipbook-container');
         if (!document.fullscreenElement) {
             container.requestFullscreen().then(() => {
-                setTimeout(() => centerFlipbook(), 100);
+                setTimeout(() => {
+                    fitToScreen();
+                    centerFlipbook();
+                }, 100);
             });
         } else {
             document.exitFullscreen();
@@ -537,7 +618,7 @@
     
     function copyShareLink() {
         navigator.clipboard.writeText(window.location.href);
-        showInstruction('✓ Link copied to clipboard!', 1500);
+        showInstruction('✓ Link copied!', 1500);
     }
     
     function showInstruction(message, duration) {
@@ -549,77 +630,72 @@
         }, duration);
     }
     
-    // WATERMARK FUNCTION - Shows watermark for free users only
     async function checkAndAddWatermark() {
         const bookId = getBookId();
         if (!bookId) return;
     
         try {
-            console.log("Checking watermark status for book:", bookId);
             const response = await fetch(`/api/check-flipbook-plan?id=${bookId}`);
             const data = await response.json();
-            console.log("Watermark check response:", data);
     
-            // If not premium, add watermark
             if (!data.isPremium) {
-                console.log("Free user - adding watermark");
                 const watermark = document.createElement('div');
                 watermark.id = 'vobels-watermark';
                 watermark.innerHTML = `
                     <div style="
                         position: fixed;
-                        bottom: 20px;
-                        right: 20px;
+                        bottom: 10px;
+                        right: 10px;
                         z-index: 9999;
-                        opacity: 0.35;
+                        opacity: 0.3;
                         font-family: 'Playfair Display', serif;
-                        font-size: 11px;
+                        font-size: ${isMobile ? '8px' : '11px'};
                         color: #888;
-                        background: rgba(0,0,0,0.03);
-                        padding: 4px 12px;
+                        background: rgba(0,0,0,0.05);
+                        padding: 4px 10px;
                         border-radius: 20px;
                         pointer-events: none;
                     ">
-                        Created with Vobels Flipbook
+                        Vobels Flipbook
                     </div>
                 `;
                 document.body.appendChild(watermark);
-            } else {
-                console.log("Premium user - no watermark");
             }
         } catch (err) {
             console.error('Watermark check failed:', err);
-            // Add watermark anyway on error (fail safe - free users get watermark)
-            const watermark = document.createElement('div');
-            watermark.id = 'vobels-watermark';
-            watermark.innerHTML = `<div style="position:fixed;bottom:20px;right:20px;z-index:9999;opacity:0.3;font-size:11px;background:rgba(0,0,0,0.03);padding:4px12px;border-radius:20px;">Vobels Flipbook</div>`;
-            document.body.appendChild(watermark);
         }
     }
     
     function showError(error) {
-        console.error("SHOWING ERROR:", error.message);
         document.getElementById('flipbook').innerHTML = `
             <div class="loading-overlay">
-                <p style="color: #e8e5df;">Unable to load this publication</p>
-                <p style="font-size: 0.8rem; color: #a09d96; margin-top: 10px;">Error: ${error.message}</p>
-                <p style="font-size: 0.7rem; color: #a09d96; margin-top: 10px;">Book ID: ${currentBookId || 'none'}</p>
-                <p style="font-size: 0.7rem; color: #a09d96;">Check browser console (F12) for details</p>
-                <a href="/flipbook/upload.html" style="color: #e8e5df; margin-top: 1rem;">Create new flipbook →</a>
+                <p>Unable to load this publication</p>
+                <p style="font-size: 0.8rem; margin-top: 10px;">${error.message}</p>
+                <a href="/flipbook/create" style="color: #8b7e6b; margin-top: 1rem;">Create new flipbook →</a>
             </div>
         `;
     }
     
-    // Handle window resize
+    // Handle window resize and orientation change
     let resizeTimeout;
     window.addEventListener('resize', () => {
         clearTimeout(resizeTimeout);
         resizeTimeout = setTimeout(() => {
-            if (turnInstance) {
+            if (turnInstance && originalWidth) {
+                currentScale = calculateOptimalScale();
                 fitToScreen();
             }
-            centerFlipbook();
         }, 250);
+    });
+    
+    // Orientation change detection for mobile
+    window.addEventListener('orientationchange', function() {
+        setTimeout(() => {
+            if (turnInstance && originalWidth) {
+                currentScale = calculateOptimalScale();
+                fitToScreen();
+            }
+        }, 100);
     });
     
     // Event listeners
@@ -632,7 +708,7 @@
     document.getElementById('zoom-out')?.addEventListener('click', zoomOut);
     document.getElementById('zoom-reset')?.addEventListener('click', fitToScreen);
     
-    // Keyboard navigation
+    // Keyboard navigation (desktop only)
     document.addEventListener('keydown', (e) => {
         if (e.key === 'ArrowLeft') goToPrevPage();
         if (e.key === 'ArrowRight') goToNextPage();
@@ -643,7 +719,6 @@
     });
     
     // Start
-    console.log("Viewer initialized - starting loadPDF()");
     loadPDF();
 </script>
 </body>
