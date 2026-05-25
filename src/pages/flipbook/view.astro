@@ -604,9 +604,8 @@
         }
         
         // ✅ FIXED: Calculate optimal scale with actual navbar and toolbar heights
-        // ORIGINAL PERFECT CENTERING - RESTORED
+        
         function calculateOptimalScale() {
-            const container = document.getElementById('flipbook-container');
             const maxWidth = window.innerWidth - (isMobile ? 20 : 60);
             const maxHeight = window.innerHeight - (isMobile ? 180 : 200);
             
