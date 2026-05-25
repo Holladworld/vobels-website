@@ -76,6 +76,36 @@ import { Icon } from "astro-icon/components";
   <style is:inline>
     @keyframes spin { to { transform: rotate(360deg); } }
     .animate-spin { animation: spin 1s linear infinite; }
+    
+    /* Mobile responsive styles for My Books */
+    @media (max-width: 640px) {
+      /* Stack book items vertically on mobile */
+      #flipbooksList > div {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 0.75rem !important;
+      }
+      
+      /* Make buttons full width on mobile */
+      #flipbooksList .flex.gap-2 {
+        width: 100%;
+      }
+      
+      #flipbooksList a,
+      #flipbooksList button {
+        flex: 1;
+        text-align: center;
+      }
+      
+      /* Better spacing */
+      .p-6 {
+        padding: 1rem !important;
+      }
+      
+      .p-4 {
+        padding: 0.875rem !important;
+      }
+    }
   </style>
 
   <script>
@@ -154,31 +184,33 @@ import { Icon } from "astro-icon/components";
 
           if (data.success && data.flipbooks && data.flipbooks.length > 0) {
             flipbooksList.innerHTML = data.flipbooks.map(book => `
-              <div class="flex items-center justify-between p-4 bg-zinc-50 rounded-lg border border-zinc-100 hover:border-zinc-300 transition-all">
+              <div class="flex flex-col sm:flex-row sm:items-center justify-between p-4 bg-zinc-50 rounded-lg border border-zinc-100 hover:border-zinc-300 transition-all gap-3">
                 <div class="flex-1 min-w-0">
-                  <p class="font-medium text-black text-base truncate">${(book.fileName || 'Untitled').replace(/[&<>]/g, function(m) {
+                  <p class="font-medium text-black text-base break-words">${(book.fileName || 'Untitled').replace(/[&<>]/g, function(m) {
                     if (m === '&') return '&amp;';
                     if (m === '<') return '&lt;';
                     if (m === '>') return '&gt;';
                     return m;
                   })}</p>
-                  <div class="flex gap-4 text-xs text-zinc-500 mt-1">
+                  <div class="flex flex-wrap gap-3 text-xs text-zinc-500 mt-1">
                     <span>📄 ${book.views || 0} views</span>
                     <span>📅 ${new Date(book.createdAt).toLocaleDateString()}</span>
                   </div>
                 </div>
-                <div class="flex gap-2 ml-3">
-                  <a href="/flipbook/view?id=${book.id}" target="_blank" class="bg-black text-white px-3 py-1.5 rounded-lg text-sm hover:bg-zinc-800 transition-all">Read →</a>
-                  <button onclick="copyBookLink('${window.location.origin}/flipbook/view?id=${book.id}')" class="bg-zinc-200 text-black px-3 py-1.5 rounded-lg text-sm hover:bg-zinc-300 transition-all">Copy Link</button>
+                <div class="flex gap-2 flex-shrink-0">
+                  <a href="/flipbook/view?id=${book.id}" target="_blank" class="bg-black text-white px-3 py-1.5 rounded-lg text-sm hover:bg-zinc-800 transition-all whitespace-nowrap">Read →</a>
+                  <button onclick="copyBookLink('${window.location.origin}/flipbook/view?id=${book.id}')" class="bg-zinc-200 text-black px-3 py-1.5 rounded-lg text-sm hover:bg-zinc-300 transition-all whitespace-nowrap">Copy Link</button>
                 </div>
               </div>
             `).join('');
             
             if (limitInfo) limitInfo.innerHTML = `<span class="text-green-600">✓ ${data.flipbooks.length} flipbook${data.flipbooks.length !== 1 ? 's' : ''} found</span>`;
             if (flipbooksSection) flipbooksSection.classList.remove('hidden');
+            if (emptyState) emptyState.classList.add('hidden');
           } else {
             if (limitInfo) limitInfo.innerHTML = '<span class="text-amber-600">No flipbooks found for this email</span>';
             if (emptyState) emptyState.classList.remove('hidden');
+            if (flipbooksSection) flipbooksSection.classList.add('hidden');
           }
         } catch (err) {
           console.error('Failed to load flipbooks:', err);
