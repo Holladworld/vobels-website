@@ -141,9 +141,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 10px;
+            padding: 0; /* Remove padding - let content control spacing */
             -webkit-overflow-scrolling: touch;
             transition: background 0.3s ease;
+            min-height: 0; /* Important for flex children */
         }
         
         #flipbook {
@@ -291,7 +292,7 @@
             .toolbar button { padding: 0.35rem 0.6rem; font-size: 0.65rem; }
             .page-info { font-size: 0.65rem; }
             .instruction { font-size: 0.6rem; bottom: 15px; white-space: nowrap; }
-            #flipbook-container { padding: 5px; }
+            #flipbook-container { padding: 0; }
             .floating-theme-btn { bottom: 15px; left: 15px; width: 40px; height: 40px; font-size: 18px; }
             #custom-notification { bottom: 70px; font-size: 12px; }
         }
@@ -392,7 +393,7 @@
             };
             
             localStorage.setItem(getStorageKey(), JSON.stringify(progressData));
-            console.log(`📖 Progress saved: Page ${currentPage}/${pageCount}`);
+            console.log(`Progress saved: Page ${currentPage}/${pageCount}`);
         }
         
         // Load saved progress
@@ -403,7 +404,7 @@
             try {
                 const progress = JSON.parse(saved);
                 if (progress.bookId === currentBookId && progress.page > 1 && progress.page <= pageCount) {
-                    console.log(`📚 Found saved progress: Page ${progress.page}`);
+                    console.log(`Found saved progress: Page ${progress.page}`);
                     return progress.page;
                 }
             } catch (e) {
@@ -428,13 +429,13 @@
         // Go to first page
         function goToFirstPage() {
             goToPage(1);
-            showNotification('📖 Starting from beginning', 1000);
+            showNotification('Starting from beginning', 1000);
         }
         
         // Go to last page
         function goToLastPage() {
             goToPage(pageCount);
-            showNotification('📖 End of book', 1000);
+            showNotification('End of book', 1000);
         }
         
         // Create custom page selector modal
@@ -604,19 +605,50 @@
         }
         
         // ✅ FIXED: Calculate optimal scale with actual navbar and toolbar heights
-        
+        // REPLACE calculateOptimalScale with this:
         function calculateOptimalScale() {
-            const maxWidth = window.innerWidth - (isMobile ? 20 : 60);
-            const maxHeight = window.innerHeight - (isMobile ? 180 : 200);
+            const navbar = document.querySelector('.navbar');
+            const toolbar = document.querySelector('.toolbar');
+            
+            const navbarHeight = navbar ? navbar.offsetHeight : 50;
+            const toolbarHeight = toolbar ? toolbar.offsetHeight : 50;
+            const totalTopHeight = navbarHeight + toolbarHeight;
+            
+            const maxWidth = window.innerWidth - 40;
+            const maxHeight = window.innerHeight - totalTopHeight - 30;
             
             const scaleByWidth = maxWidth / originalWidth;
             const scaleByHeight = maxHeight / originalHeight;
             
-            const fitScale = isMobile 
-                ? Math.min(scaleByWidth, scaleByHeight, 0.9)
-                : Math.min(scaleByWidth, scaleByHeight, 1.2);
+            const fitScale = Math.min(scaleByWidth, scaleByHeight, 1.0);
+            return Math.max(fitScale, 0.4);
+        }
+
+
+        function centerFlipbook() {
+            const flipbook = document.getElementById('flipbook');
+            const container = document.getElementById('flipbook-container');
             
-            return Math.max(fitScale, 0.5);
+            if (flipbook && container) {
+                const containerRect = container.getBoundingClientRect();
+                const flipbookRect = flipbook.getBoundingClientRect();
+                
+                // Center horizontally
+                const scrollLeft = Math.max(0, (flipbookRect.width - containerRect.width) / 2);
+                
+                // Center vertically - book in middle of available space
+                let scrollTop = (flipbookRect.height - containerRect.height) / 2;
+                
+                // If book is smaller than container, center it perfectly
+                if (flipbookRect.height <= containerRect.height) {
+                    scrollTop = Math.max(0, scrollTop);
+                } else {
+                    scrollTop = 0;
+                }
+                
+                container.scrollLeft = scrollLeft;
+                container.scrollTop = scrollTop;
+            }
         }
         
         async function loadPDF() {
@@ -800,23 +832,7 @@
             });
         }
         
-        // ✅ FIXED: Better centering with proper scroll calculations
-        // ORIGINAL CENTERING - RESTORED
-        function centerFlipbook() {
-            const flipbook = document.getElementById('flipbook');
-            const container = document.getElementById('flipbook-container');
-            
-            if (flipbook && container) {
-                const containerRect = container.getBoundingClientRect();
-                const flipbookRect = flipbook.getBoundingClientRect();
-                
-                const scrollLeft = (flipbookRect.width - containerRect.width) / 2;
-                const scrollTop = (flipbookRect.height - containerRect.height) / 2;
-                
-                container.scrollLeft = Math.max(0, scrollLeft);
-                container.scrollTop = Math.max(0, scrollTop);
-            }
-        }
+        
         
         function applyZoom() {
             if (!turnInstance) return;
