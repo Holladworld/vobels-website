@@ -78,42 +78,61 @@ const serviceCategories = [
 ---
 
 <Layout title="Services | Vobels Limited" description="Explore Vobels business services and HostSuite website, hosting and digital operations support.">
-  <main class="services-page">
-    <section class="services-hero">
-      <Container>
-        <div class="services-hero__inner">
-          <p class="eyebrow">HOW WE HELP</p>
-          <h1>Build the business.<br /><span>Run it with confidence.</span></h1>
-          <p class="services-hero__copy">From setting up and structuring your business to keeping its digital presence running, find the support you need at every stage.</p>
-          <div class="services-hero__actions">
-            <a class="button button--primary" href="#business">Explore business services <span aria-hidden="true">↘</span></a>
-            <a class="text-link" href="#hostsuite">Discover HostSuite <span aria-hidden="true">→</span></a>
+  <div class="vobels-services-page">
+    <Container>
+      <section class="vobels-services-hero" aria-labelledby="services-title">
+        <div class="vobels-services-hero__copy">
+          <p class="vobels-eyebrow"><span></span> Services from Vobels</p>
+          <h1 id="services-title">Build with clarity.<br /><em>Move with confidence.</em></h1>
+          <p class="vobels-services-hero__lead">From getting your business properly set up to keeping its digital operations running, find practical support for your next step.</p>
+          <div class="vobels-services-hero__actions">
+            <a class="vobels-button vobels-button--dark" href="#business">Explore business services <span aria-hidden="true">↘</span></a>
+            <a class="vobels-text-link" href="#hostsuite">Explore HostSuite <span aria-hidden="true">→</span></a>
           </div>
-          <div class="services-hero__index"><span>01 / BUSINESS SERVICES</span><span>02 / DIGITAL OPERATIONS</span></div>
+          <div class="vobels-services-hero__index"><span>01 / BUSINESS SERVICES</span><span>02 / DIGITAL OPERATIONS</span></div>
         </div>
-      </Container>
-    </section>
+        <aside class="vobels-services-guide" aria-label="Explore Vobels services">
+          <span class="vobels-services-guide__label">FIND YOUR STARTING POINT</span>
+          <ol>
+            <li><b>01</b><span><strong>Build your business</strong><small>Registration, identity, operations and growth.</small></span></li>
+            <li><b>02</b><span><strong>Estimate the cost</strong><small>Explore fees before deciding how to proceed.</small></span></li>
+            <li><b>03</b><span><strong>Manage your digital presence</strong><small>Website, hosting, domains and ongoing support.</small></span></li>
+          </ol>
+        </aside>
+      </section>
+    </Container>
 
-    <section id="business" class="business-section">
+    <section id="business" class="vobels-business-section">
       <Container>
-        <div class="section-heading">
-          <div><p class="eyebrow">01 — BUSINESS SERVICES</p><h2>Make your next<br /><span>business move count.</span></h2></div>
+        <div class="vobels-section-heading">
+          <div><p class="vobels-eyebrow"><span></span> 01 — Business services</p><h2>Make your next<br /><em>business move count.</em></h2></div>
           <p>Practical support for the work behind a stronger business — from registration and identity to operations, technology and expansion.</p>
         </div>
-        <div class="service-list">
+
+        <a class="vobels-estimator-link" href="/ai-assistant">
+          <span class="vobels-estimator-link__mark" aria-hidden="true">₦</span>
+          <span class="vobels-estimator-link__copy">
+            <small>VOBELS BUSINESS COST CALCULATOR</small>
+            <strong>Know what it could cost. Before you commit.</strong>
+            <span>Explore estimates for registration, intellectual property, compliance and international business services.</span>
+          </span>
+          <span class="vobels-estimator-link__action">Open calculator <b aria-hidden="true">↗</b></span>
+        </a>
+
+        <div class="vobels-service-list">
           {serviceCategories.map((service, index) => (
-            <article id={service.id} class:list={["service-row", index % 2 === 1 && "service-row--reverse"]}>
-              <a class="service-row__image" href={service.ctaLink} aria-label={service.title}>
+            <article id={service.id} class:list={["vobels-service-row", index % 2 === 1 && "vobels-service-row--reverse"]}>
+              <a class="vobels-service-row__image" href={service.ctaLink} aria-label={service.title}>
                 <img src={service.image} alt={service.imageAlt} loading="lazy" />
-                <span class="service-row__number">{String(index + 1).padStart(2, "0")}</span>
+                <span class="vobels-service-row__number">{String(index + 1).padStart(2, "0")}</span>
               </a>
-              <div class="service-row__content">
-                {service.isNew && <span class="service-tag">New service</span>}
-                <p class="service-kicker">BUSINESS SUPPORT / {String(index + 1).padStart(2, "0")}</p>
+              <div class="vobels-service-row__content">
+                {service.isNew && <span class="vobels-service-tag">New service</span>}
+                <p class="vobels-service-kicker">BUSINESS SUPPORT / {String(index + 1).padStart(2, "0")}</p>
                 <h3>{service.title}</h3>
-                <p class="service-description">{service.description}</p>
+                <p class="vobels-service-description">{service.description}</p>
                 <ul>{service.features.map((feature) => <li><span aria-hidden="true">↗</span>{feature}</li>)}</ul>
-                <a class="service-cta" href={service.ctaLink}>{service.ctaText}<span aria-hidden="true">→</span></a>
+                <a class="vobels-service-cta" href={service.ctaLink}>{service.ctaText}<span aria-hidden="true">→</span></a>
               </div>
             </article>
           ))}
@@ -121,107 +140,124 @@ const serviceCategories = [
       </Container>
     </section>
 
-    <section id="hostsuite" class="hostsuite-section">
-      <div class="hostsuite-section__image" role="img" aria-label="Modern digital workspace with screens and technology"></div>
-      <div class="hostsuite-section__shade"></div>
+    <section id="hostsuite" class="vobels-hostsuite-section">
+      <div class="vobels-hostsuite-section__image" role="img" aria-label="Modern digital workspace with screens and technology"></div>
+      <div class="vobels-hostsuite-section__shade"></div>
       <Container>
-        <div class="hostsuite-section__content">
-          <p class="eyebrow eyebrow--light">02 — DIGITAL OPERATIONS / A VOBELS PRODUCT</p>
-          <p class="hostsuite-wordmark">HOST<span>SUITE</span></p>
+        <div class="vobels-hostsuite-section__content">
+          <p class="vobels-eyebrow vobels-eyebrow--light"><span></span> 02 — Digital operations / A Vobels product</p>
+          <p class="vobels-hostsuite-wordmark">HOST<span>SUITE</span></p>
           <h2>Your website is part<br />of your business. <em>Manage it that way.</em></h2>
-          <p class="hostsuite-section__copy">Websites, hosting, domains and business email can become difficult to manage — especially when the person who built them is no longer available. HostSuite helps bring those moving parts into one place, with support when you need it.</p>
-          <div class="hostsuite-points">
+          <p class="vobels-hostsuite-section__copy">Websites, hosting, domains and business email can become difficult to manage — especially when the person who built them is no longer available. HostSuite helps bring those moving parts into one place, with support when you need it.</p>
+          <div class="vobels-hostsuite-points">
             <span>Website & hosting</span><span>Domains & email</span><span>Diagnosis & support</span><span>Ongoing management</span>
           </div>
-          <div class="hostsuite-actions">
-            <a class="button button--light" href="https://hostsuite.vobels.com.ng">Explore HostSuite <span aria-hidden="true">↗</span></a>
-            <a class="hostsuite-diagnostic" href="https://hostsuite.vobels.com.ng/#diagnostic">Start with a website diagnostic <span aria-hidden="true">→</span></a>
+          <div class="vobels-hostsuite-actions">
+            <a class="vobels-button vobels-button--light" href="https://hostsuite.vobels.com.ng">Explore HostSuite <span aria-hidden="true">↗</span></a>
+            <a class="vobels-hostsuite-diagnostic" href="https://hostsuite.vobels.com.ng/#diagnostic">Start with a website diagnostic <span aria-hidden="true">→</span></a>
           </div>
         </div>
       </Container>
     </section>
 
-    <section class="services-close">
+    <section class="vobels-services-close">
       <Container>
-        <div class="services-close__inner">
-          <div><p class="eyebrow">LET'S FIND THE RIGHT STARTING POINT</p><h2>Not sure what your business needs next?</h2><p>Tell us where you are and what you are trying to achieve. We’ll help you identify a practical next step.</p></div>
-          <a class="button button--primary" href="/contact">Talk to Vobels <span aria-hidden="true">→</span></a>
+        <div class="vobels-services-close__inner">
+          <div><p class="vobels-eyebrow"><span></span> Let's find the right starting point</p><h2>Not sure what your business needs next?</h2><p>Tell us where you are and what you are trying to achieve. We’ll help you identify a practical next step.</p></div>
+          <a class="vobels-button vobels-button--dark" href="/contact">Talk to Vobels <span aria-hidden="true">→</span></a>
         </div>
       </Container>
     </section>
-  </main>
+  </div>
 </Layout>
 
 <style>
-  .services-page { color:#211b27; background:#fff; }
-  .services-page .eyebrow { margin:0 0 18px; color:#5D2A86; font-size:10px; font-weight:800; letter-spacing:.19em; }
-  .services-hero { padding:92px 0 38px; background:linear-gradient(115deg,#f7f4f9 0%,#fff 62%); }
-  .services-hero__inner { max-width:1040px; margin:auto; }
-  .services-hero h1 { max-width:900px; margin:0; font-size:clamp(48px,8vw,96px); line-height:.98; letter-spacing:-.075em; font-weight:800; }
-  .services-hero h1 span,.section-heading h2 span { color:#76509a; }
-  .services-hero__copy { max-width:610px; margin:27px 0 0; color:#625b68; font-size:17px; line-height:1.8; }
-  .services-hero__actions { display:flex; align-items:center; flex-wrap:wrap; gap:28px; margin-top:30px; }
-  .button { display:inline-flex; align-items:center; justify-content:center; gap:20px; min-height:50px; padding:0 21px; font-size:12px; font-weight:700; text-decoration:none; transition:transform .2s,background .2s; }
-  .button:hover { transform:translateY(-2px); }
-  .button--primary { color:#fff; background:#5D2A86; }
-  .button--primary:hover { background:#452064; }
-  .text-link { color:#302638; font-size:12px; font-weight:700; text-decoration:none; }
-  .services-hero__index { display:flex; gap:34px; flex-wrap:wrap; padding-top:70px; color:#8a8290; font-size:9px; font-weight:700; letter-spacing:.15em; }
-  .business-section { padding:100px 0 110px; }
-  .section-heading { display:grid; grid-template-columns:1.2fr .8fr; align-items:end; gap:50px; margin-bottom:58px; }
-  .section-heading h2 { margin:0; font-size:clamp(38px,5.5vw,65px); line-height:1.02; letter-spacing:-.065em; font-weight:800; }
-  .section-heading > p { max-width:430px; margin:0 0 5px; color:#716a79; font-size:15px; line-height:1.8; }
-  .service-list { border-top:1px solid #e9e4ed; }
-  .service-row { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:clamp(34px,7vw,100px); padding:54px 0; border-bottom:1px solid #e9e4ed; }
-  .service-row--reverse .service-row__image { order:2; }
-  .service-row--reverse .service-row__content { order:1; }
-  .service-row__image { position:relative; display:block; min-height:300px; overflow:hidden; background:#eee9f2; }
-  .service-row__image img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s; }
-  .service-row__image:hover img { transform:scale(1.04); }
-  .service-row__number { position:absolute; left:18px; bottom:18px; padding:10px 13px; color:#fff; background:#5D2A86; font-size:11px; font-weight:800; }
-  .service-kicker { margin:0 0 14px; color:#8b8192; font-size:9px; font-weight:800; letter-spacing:.16em; }
-  .service-row h3 { margin:0; color:#211b27; font-size:clamp(27px,3vw,39px); line-height:1.08; letter-spacing:-.045em; font-weight:800; }
-  .service-description { max-width:480px; margin:17px 0 22px; color:#716a79; font-size:14px; line-height:1.8; }
-  .service-row ul { display:grid; grid-template-columns:1fr 1fr; gap:11px 18px; margin:0 0 27px; padding:0; list-style:none; }
-  .service-row li { display:flex; gap:8px; color:#514b59; font-size:11px; line-height:1.5; }
-  .service-row li span { color:#5D2A86; font-weight:800; }
-  .service-cta { display:inline-flex; align-items:center; gap:22px; padding-bottom:7px; border-bottom:1px solid #5D2A86; color:#5D2A86; font-size:12px; font-weight:800; text-decoration:none; }
-  .service-tag { display:inline-block; margin-bottom:13px; padding:6px 9px; color:#5D2A86; background:#f1eaf6; font-size:9px; font-weight:800; text-transform:uppercase; letter-spacing:.1em; }
-  .hostsuite-section { position:relative; isolation:isolate; overflow:hidden; padding:105px 0 110px; color:#fff; background:#17121c; }
-  .hostsuite-section__image,.hostsuite-section__shade { position:absolute; inset:0; z-index:-1; }
-  .hostsuite-section__image { background-image:url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=2000&h=1300&fit=crop"); background-size:cover; background-position:center; opacity:.58; }
-  .hostsuite-section__shade { background:linear-gradient(90deg,rgba(18,13,23,.96) 0%,rgba(24,17,31,.88) 52%,rgba(24,17,31,.48) 100%); }
-  .hostsuite-section__content { max-width:780px; }
-  .eyebrow--light { color:#d6bce9 !important; }
-  .hostsuite-wordmark { margin:0 0 24px; color:#fff; font-size:13px; font-weight:900; letter-spacing:.18em; }
-  .hostsuite-wordmark span { color:#c6a5df; }
-  .hostsuite-section h2 { margin:0; font-size:clamp(39px,6vw,70px); line-height:1.02; letter-spacing:-.065em; font-weight:800; }
-  .hostsuite-section h2 em { color:#d4b6e8; font-style:normal; }
-  .hostsuite-section__copy { max-width:640px; margin:23px 0 0; color:#e2dce7; font-size:15px; line-height:1.85; }
-  .hostsuite-points { display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:28px; color:#f0eaf4; font-size:11px; }
-  .hostsuite-points span:before { content:"↗"; margin-right:8px; color:#c6a5df; }
-  .hostsuite-actions { display:flex; flex-wrap:wrap; align-items:center; gap:24px; margin-top:34px; }
-  .button--light { color:#24192c; background:#fff; }
-  .button--light:hover { background:#eee5f4; }
-  .hostsuite-diagnostic { color:#fff; font-size:12px; font-weight:700; text-decoration:none; }
-  .services-close { padding:75px 0; background:#f7f4f9; }
-  .services-close__inner { display:flex; align-items:center; justify-content:space-between; gap:35px; }
-  .services-close h2 { max-width:620px; margin:0; font-size:clamp(29px,4vw,43px); line-height:1.08; letter-spacing:-.05em; }
-  .services-close p:not(.eyebrow) { max-width:570px; margin:14px 0 0; color:#716a79; font-size:13px; line-height:1.8; }
+  .vobels-services-page { color:#211b27; background:#fff; }
+  .vobels-services-page .vobels-eyebrow { display:flex; align-items:center; gap:11px; margin:0; color:#5D2A86; font:700 10px/1.4 var(--font-sans); letter-spacing:.19em; text-transform:uppercase; }
+  .vobels-services-page .vobels-eyebrow > span { width:27px; height:1px; background:currentColor; }
+  .vobels-services-hero { display:grid; grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr); gap:clamp(30px,6vw,80px); align-items:end; padding:clamp(38px,6vw,76px) 0 clamp(48px,6vw,72px); }
+  .vobels-services-hero__copy { max-width:760px; }
+  .vobels-services-hero h1 { margin:22px 0 0; color:#211b27; font:600 clamp(2.8rem,6vw,5.5rem)/.99 var(--font-display); letter-spacing:-.075em; }
+  .vobels-services-hero h1 em,.vobels-section-heading h2 em { color:#5D2A86; font-style:normal; }
+  .vobels-services-hero__lead { max-width:650px; margin:24px 0 0; color:#716a79; font-size:clamp(15px,1.5vw,18px); line-height:1.8; }
+  .vobels-services-hero__actions { display:flex; align-items:center; flex-wrap:wrap; gap:18px; margin-top:30px; }
+  .vobels-services-hero__index { display:flex; gap:26px; flex-wrap:wrap; padding-top:45px; color:#81798a; font:600 9px/1.4 var(--font-sans); letter-spacing:.15em; }
+  .vobels-services-guide { padding:24px 26px; border:1px solid #e2d8eb; background:#f4eff8; }
+  .vobels-services-guide__label { color:#5D2A86; font:700 9px/1.4 var(--font-sans); letter-spacing:.17em; }
+  .vobels-services-guide ol { display:grid; gap:20px; margin:20px 0 0; padding:0; list-style:none; }
+  .vobels-services-guide li { display:grid; grid-template-columns:30px 1fr; gap:12px; align-items:start; }
+  .vobels-services-guide li>b { color:#5D2A86; font:700 11px/1.5 var(--font-sans); }
+  .vobels-services-guide li span { display:grid; gap:3px; }
+  .vobels-services-guide strong { color:#211b27; font-size:12px; }
+  .vobels-services-guide small { color:#716a79; font-size:11px; line-height:1.5; }
+  .vobels-business-section { padding:clamp(62px,8vw,100px) 0 clamp(76px,9vw,110px); border-top:1px solid #e6deed; }
+  .vobels-section-heading { display:grid; grid-template-columns:1.2fr .8fr; align-items:end; gap:50px; margin-bottom:38px; }
+  .vobels-section-heading h2 { margin:22px 0 0; color:#211b27; font:600 clamp(2.6rem,4.5vw,4.5rem)/1.02 var(--font-display); letter-spacing:-.075em; }
+  .vobels-section-heading>p { max-width:430px; margin:0 0 5px; color:#716a79; font-size:14px; line-height:1.8; }
+  .vobels-estimator-link { display:grid; grid-template-columns:54px minmax(0,1fr) auto; gap:20px; align-items:center; margin:0 0 44px; padding:23px 25px; border:1px solid #e2d8eb; border-left:3px solid #5D2A86; background:#f4eff8; color:inherit; text-decoration:none; transition:background .2s,transform .2s; }
+  .vobels-estimator-link:hover { background:#eee6f4; transform:translateY(-2px); }
+  .vobels-estimator-link__mark { display:grid; place-items:center; width:48px; height:48px; background:#5D2A86; color:white; font:600 22px/1 var(--font-display); }
+  .vobels-estimator-link__copy { display:grid; gap:5px; }
+  .vobels-estimator-link__copy small { color:#5D2A86; font:700 9px/1.4 var(--font-sans); letter-spacing:.16em; }
+  .vobels-estimator-link__copy strong { color:#211b27; font:600 clamp(1.2rem,2.2vw,1.7rem)/1.2 var(--font-display); letter-spacing:-.04em; }
+  .vobels-estimator-link__copy>span { color:#716a79; font-size:12px; line-height:1.6; }
+  .vobels-estimator-link__action { display:inline-flex; align-items:center; gap:14px; padding:13px 17px; background:#5D2A86; color:#fff; font:700 11px/1.2 var(--font-sans); white-space:nowrap; }
+  .vobels-service-list { border-top:1px solid #e6deed; }
+  .vobels-service-row { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:clamp(34px,7vw,100px); padding:54px 0; border-bottom:1px solid #e6deed; }
+  .vobels-service-row--reverse .vobels-service-row__image { order:2; }
+  .vobels-service-row--reverse .vobels-service-row__content { order:1; }
+  .vobels-service-row__image { position:relative; display:block; min-height:300px; overflow:hidden; background:#eee9f2; }
+  .vobels-service-row__image img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; transition:transform .6s; }
+  .vobels-service-row__image:hover img { transform:scale(1.04); }
+  .vobels-service-row__number { position:absolute; left:18px; bottom:18px; padding:10px 13px; color:#fff; background:#5D2A86; font:700 11px/1 var(--font-sans); }
+  .vobels-service-kicker { margin:0 0 14px; color:#81798a; font:700 9px/1.4 var(--font-sans); letter-spacing:.16em; }
+  .vobels-service-row h3 { margin:0; color:#211b27; font:600 clamp(1.45rem,2.2vw,1.9rem)/1.2 var(--font-display); letter-spacing:-.05em; }
+  .vobels-service-description { max-width:480px; margin:17px 0 22px; color:#716a79; font-size:13px; line-height:1.8; }
+  .vobels-service-row ul { display:grid; grid-template-columns:1fr 1fr; gap:11px 18px; margin:0 0 27px; padding:0; list-style:none; }
+  .vobels-service-row li { display:flex; gap:8px; color:#514b59; font-size:11px; line-height:1.5; }
+  .vobels-service-row li span { color:#5D2A86; font-weight:800; }
+  .vobels-service-cta { display:inline-flex; align-items:center; gap:22px; padding-bottom:7px; border-bottom:1px solid #5D2A86; color:#5D2A86; font:700 12px/1.4 var(--font-sans); text-decoration:none; }
+  .vobels-service-tag { display:inline-block; margin-bottom:13px; padding:6px 9px; color:#5D2A86; background:#f1eaf6; font:700 9px/1.4 var(--font-sans); text-transform:uppercase; letter-spacing:.1em; }
+  .vobels-hostsuite-section { position:relative; isolation:isolate; overflow:hidden; padding:clamp(76px,9vw,105px) 0; color:#fff; background:#17121c; }
+  .vobels-hostsuite-section__image,.vobels-hostsuite-section__shade { position:absolute; inset:0; z-index:-1; }
+  .vobels-hostsuite-section__image { background-image:url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=2000&h=1300&fit=crop"); background-size:cover; background-position:center; opacity:.58; }
+  .vobels-hostsuite-section__shade { background:linear-gradient(90deg,rgba(18,13,23,.96) 0%,rgba(24,17,31,.88) 52%,rgba(24,17,31,.48) 100%); }
+  .vobels-hostsuite-section__content { max-width:780px; }
+  .vobels-services-page .vobels-eyebrow--light { color:#d6bce9; }
+  .vobels-hostsuite-wordmark { margin:24px 0; color:#fff; font:700 13px/1.4 var(--font-sans); letter-spacing:.18em; }
+  .vobels-hostsuite-wordmark span { color:#c6a5df; }
+  .vobels-hostsuite-section h2 { margin:0; color:#fff; font:600 clamp(2.5rem,5.5vw,4.6rem)/1.02 var(--font-display); letter-spacing:-.075em; }
+  .vobels-hostsuite-section h2 em { color:#d4b6e8; font-style:normal; }
+  .vobels-hostsuite-section__copy { max-width:640px; margin:23px 0 0; color:#e2dce7; font-size:14px; line-height:1.85; }
+  .vobels-hostsuite-points { display:flex; flex-wrap:wrap; gap:10px 24px; margin-top:28px; color:#f0eaf4; font-size:11px; }
+  .vobels-hostsuite-points span:before { content:"↗"; margin-right:8px; color:#c6a5df; }
+  .vobels-hostsuite-actions { display:flex; flex-wrap:wrap; align-items:center; gap:24px; margin-top:34px; }
+  .vobels-hostsuite-diagnostic { display:inline-flex; align-items:center; min-height:44px; color:#fff; font:700 12px/1.4 var(--font-sans); text-decoration:none; }
+  .vobels-services-close { padding:clamp(54px,7vw,75px) 0; background:#f4eff8; }
+  .vobels-services-close__inner { display:flex; align-items:center; justify-content:space-between; gap:35px; }
+  .vobels-services-close h2 { max-width:620px; margin:22px 0 0; color:#211b27; font:600 clamp(1.8rem,3.5vw,2.7rem)/1.08 var(--font-display); letter-spacing:-.05em; }
+  .vobels-services-close p:not(.vobels-eyebrow) { max-width:570px; margin:14px 0 0; color:#716a79; font-size:13px; line-height:1.8; }
+  .vobels-services-page .vobels-button { display:inline-flex; align-items:center; justify-content:center; gap:14px; min-height:52px; padding:0 22px; font:700 12px/1 var(--font-sans); text-decoration:none; transition:transform .25s,background .25s; }
+  .vobels-services-page .vobels-button:hover { transform:translateY(-2px); }
+  .vobels-services-page .vobels-button--dark { border:1px solid #5D2A86; background:#5D2A86; color:#fff; }
+  .vobels-services-page .vobels-button--dark:hover { border-color:#43205f; background:#43205f; }
+  .vobels-services-page .vobels-button--light { border:1px solid #fff; background:#fff; color:#24192c; }
+  .vobels-services-page .vobels-text-link { display:inline-flex; align-items:center; gap:12px; color:#5D2A86; font:700 12px/1.4 var(--font-sans); text-decoration:none; }
   @media(max-width:760px) {
-    .services-hero { padding:65px 0 30px; }
-    .services-hero__copy { font-size:15px; }
-    .services-hero__index { padding-top:48px; gap:13px 22px; }
-    .business-section { padding:68px 0 75px; }
-    .section-heading { grid-template-columns:1fr; gap:18px; margin-bottom:32px; }
-    .service-row { grid-template-columns:1fr; gap:25px; padding:34px 0; }
-    .service-row--reverse .service-row__image,.service-row--reverse .service-row__content { order:initial; }
-    .service-row__image { min-height:240px; }
-    .service-row ul { gap:10px 12px; }
-    .hostsuite-section { padding:75px 0; }
-    .hostsuite-section__shade { background:rgba(18,13,23,.82); }
-    .hostsuite-actions { align-items:flex-start; flex-direction:column; gap:19px; }
-    .services-close { padding:58px 0; }
-    .services-close__inner { align-items:flex-start; flex-direction:column; }
+    .vobels-services-hero { grid-template-columns:1fr; gap:28px; padding-top:44px; }
+    .vobels-services-hero h1 { font-size:clamp(2.8rem,12vw,4.4rem); }
+    .vobels-services-hero__index { padding-top:32px; gap:13px 20px; }
+    .vobels-business-section { padding-top:64px; }
+    .vobels-section-heading { grid-template-columns:1fr; gap:18px; margin-bottom:28px; }
+    .vobels-estimator-link { grid-template-columns:44px 1fr; gap:14px; padding:18px; }
+    .vobels-estimator-link__mark { width:42px; height:42px; }
+    .vobels-estimator-link__action { grid-column:2; justify-content:center; }
+    .vobels-service-row { grid-template-columns:1fr; gap:25px; padding:34px 0; }
+    .vobels-service-row--reverse .vobels-service-row__image,.vobels-service-row--reverse .vobels-service-row__content { order:initial; }
+    .vobels-service-row__image { min-height:240px; }
+    .vobels-service-row ul { gap:10px 12px; }
+    .vobels-hostsuite-section__shade { background:rgba(18,13,23,.84); }
+    .vobels-hostsuite-actions { align-items:flex-start; flex-direction:column; gap:12px; }
+    .vobels-services-close__inner { align-items:flex-start; flex-direction:column; }
   }
 </style>
