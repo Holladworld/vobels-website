@@ -38,7 +38,7 @@ Vobels provides end-to-end business enablement services including:
 
 ```bash
 # Clone the repository
-git clone https://github.com/YOUR_USERNAME/vobels-website.git
+git clone https://github.com/holladworld/vobels-website.git
 cd vobels-website
 
 # Install dependencies
