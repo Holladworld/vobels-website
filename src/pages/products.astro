@@ -410,5 +410,34 @@ const products = [
     .products-contact { padding:58px 0; }
     .products-contact__inner { align-items:flex-start; flex-direction:column; }
   }
+
+  /* Shared Vobels typography and visual language — aligned with the business calculator. */
+  .products-page { color:#211b27; background:#fff; }
+  .products-page .eyebrow { display:flex; align-items:center; gap:11px; color:#5D2A86; font:700 10px/1.4 var(--font-sans); letter-spacing:.19em; text-transform:uppercase; }
+  .products-page .eyebrow:before { content:""; width:27px; height:1px; background:currentColor; }
+  .products-hero { padding:clamp(38px,6vw,76px) 0 35px; background:linear-gradient(115deg,#f4eff8 0%,#fff 68%); }
+  .products-hero h1 { margin:22px 0 0; color:#211b27; font:600 clamp(2.8rem,6vw,5.5rem)/.99 var(--font-display); letter-spacing:-.075em; }
+  .products-hero h1 span,.product-lineup h2 span { color:#5D2A86; }
+  .products-hero__copy { max-width:650px; margin:24px 0 26px; color:#716a79; font-size:clamp(15px,1.5vw,18px); line-height:1.8; }
+  .products-hero__link { display:inline-flex; align-items:center; gap:16px; color:#5D2A86; font:700 12px/1.4 var(--font-sans); text-decoration:none; }
+  .featured-product__content h2,.product-lineup h2,.flipbook-feature__content h2,.products-contact h2 { font-family:var(--font-display); font-weight:600; letter-spacing:-.065em; line-height:1.04; }
+  .featured-product__content h2 { font-size:clamp(2.3rem,4.5vw,3.6rem); }
+  .product-lineup h2 { font-size:clamp(2.5rem,4.5vw,4rem); }
+  .flipbook-feature__content h2 { font-size:clamp(2.3rem,4.3vw,3.5rem); }
+  .products-contact h2 { font-size:clamp(2rem,3.8vw,2.9rem); }
+  .featured-product__brand { font:700 13px/1.4 var(--font-sans); letter-spacing:.18em; }
+  .featured-product__brand span { color:#5D2A86; }
+  .product-card h3 { font:600 1.35rem/1.15 var(--font-display); letter-spacing:-.045em; }
+  .product-lineup { background:#f7f3fb; }
+  .product-grid { border-color:#e2d8eb; }
+  .product-card { border-color:#e2d8eb; }
+  .product-card__cta,.product-button { font-family:var(--font-sans); font-weight:700; }
+  .flipbook-feature__visual { background:#f4eff8; }
+  .products-contact { background:#211827; }
+  @media(max-width:700px) {
+    .products-hero { padding-top:44px; }
+    .products-hero h1 { font-size:clamp(2.8rem,12vw,4.4rem); }
+  }
+
 </style>
 </Layout>
