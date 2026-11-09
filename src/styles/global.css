@@ -222,7 +222,7 @@
 .vobels-process {
   display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.2fr);
   gap: clamp(42px, 8vw, 120px); padding: clamp(76px, 10vw, 132px) 0;
-  background: var(--vobels-dark); color: #ffffff;
+  background: linear-gradient(90deg, rgba(28,20,35,.94) 0%, rgba(28,20,35,.84) 58%, rgba(28,20,35,.72) 100%), url('https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=2200&q=85') center/cover; color: #ffffff;
   margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
   padding-left: max(24px, calc((100vw - 1180px) / 2)); padding-right: max(24px, calc((100vw - 1180px) / 2));
 }
