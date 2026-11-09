@@ -2,16 +2,16 @@
 // Complete Business Services Cost Calculator - All services included
 ---
 
-<div class="bg-white rounded-2xl border border-zinc-200 p-6 shadow-sm" id="calculator-container">
-  <div class="text-center mb-6">
-    <h3 class="text-2xl font-bold text-black">Business Services Cost Calculator</h3>
-    <p class="text-sm text-zinc-500 mt-1">Estimate costs for registration, IP, global access, and compliance services</p>
+<div class="vobels-calculator" id="calculator-container">
+  <div class="vobels-calculator__heading">
+    <div><span class="vobels-calculator__step">YOUR ESTIMATE / 01</span><h2>What would you like to calculate?</h2><p>Start by choosing a service. We will show only the options relevant to that service.</p></div>
+    <span class="vobels-calculator__estimate-mark">₦ / $</span>
   </div>
 
   <div class="space-y-5">
     <!-- Service Category Selection -->
     <div>
-      <label class="block text-sm font-bold text-black mb-2">Service Category</label>
+      <label class="vobels-calculator__field-label">01 — Choose a service category</label>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
         <button type="button" data-category="registration" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all bg-black text-white border-black text-sm">Registration</button>
         <button type="button" data-category="trademark" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Trademark</button>
@@ -21,6 +21,7 @@
         <button type="button" data-category="global" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Global Access</button>
         <button type="button" data-category="foreign" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Foreign Reg</button>
       </div>
+      <p id="category-description" class="vobels-calculator__hint">Estimate the cost of registering a new business in Nigeria. Choose a business structure to get started.</p>
     </div>
 
     <!-- REGISTRATION SECTION -->
@@ -221,8 +222,8 @@
     </div>
 
     <!-- Results Section -->
-    <div id="results" class="hidden mt-4 p-5 bg-zinc-50 rounded-xl border border-zinc-200">
-      <h4 class="font-bold text-black mb-3">Vobels Complete Package Price</h4>
+    <div id="results" class="vobels-calculator__results hidden">
+      <div class="vobels-calculator__results-head"><span>YOUR ESTIMATE</span><h3>Estimated service breakdown</h3><p id="price-note">Includes official fees and Vobels service fees.</p></div>
       <div class="space-y-2 text-sm">
         <div class="flex justify-between">
           <span class="text-zinc-600">Government/Official Fee:</span>
@@ -236,12 +237,12 @@
           <span class="font-bold text-black text-base">Total (All Inclusive):</span>
           <span class="font-bold text-black text-lg" id="total">₦0</span>
         </div>
-        <p class="text-[10px] text-zinc-400 text-center mt-2" id="price-note">* Includes filing, documentation, and support</p>
+
       </div>
       
       <!-- Lead Capture -->
       <div id="lead-capture" class="mt-5 pt-4 border-t border-zinc-200">
-        <p class="text-sm font-medium text-black mb-2">Get this breakdown as PDF + Free Consultation</p>
+        <p class="text-sm font-medium text-black mb-2">Want help with this estimate?</p><p class="text-xs text-zinc-500 mb-3">Leave your email and our team can follow up with the details and next steps.</p>
         <div class="flex gap-2">
           <input type="email" id="lead-email" placeholder="Your email address" class="flex-1 px-3 py-2 border border-zinc-200 rounded-lg text-sm">
           <button id="submit-lead" class="px-4 py-2 bg-black text-white rounded-lg text-sm font-medium hover:bg-zinc-800">Send</button>
@@ -411,6 +412,16 @@
       document.getElementById('results').classList.remove('hidden');
     }
     
+    const categoryDescriptions = {
+      registration: "Estimate the cost of registering a new business in Nigeria. Choose a business structure to get started.",
+      trademark: "Compare trademark filing options to protect your business name, logo or brand identity.",
+      copyright: "Estimate copyright protection costs for eligible creative and original work.",
+      patent: "Review local and international patent filing estimates for an invention.",
+      nafdac: "Choose your product category to estimate NAFDAC registration and service costs.",
+      global: "Explore estimates for international business identity and company registration services.",
+      foreign: "Estimate support costs for foreign company registration and related permits in Nigeria."
+    };
+
     // Category switching
     const catBtns = document.querySelectorAll('.cat-btn');
     const sections = {
@@ -432,6 +443,7 @@
         btn.classList.add('bg-black', 'text-white', 'border-black');
         
         currentCategory = btn.getAttribute('data-category');
+        document.getElementById('category-description').innerText = categoryDescriptions[currentCategory] || '';
         
         Object.values(sections).forEach(section => {
           if (section) section.classList.add('hidden');
@@ -544,3 +556,35 @@
     updateUI();
   })();
 </script>
+<style>
+  .vobels-calculator { padding:clamp(22px,3vw,38px); border:1px solid #e2d8eb; background:#fffdfa; box-shadow:0 18px 55px rgba(33,25,31,.07); }
+  .vobels-calculator__heading { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; padding-bottom:26px; border-bottom:1px solid #e6deed; }
+  .vobels-calculator__step { color:#5D2A86; font-size:9px; font-weight:700; letter-spacing:.16em; }
+  .vobels-calculator__heading h2 { margin:9px 0 0; color:#211b27; font:600 clamp(1.55rem,3vw,2.25rem)/1.1 var(--font-display); letter-spacing:-.055em; }
+  .vobels-calculator__heading p { margin:8px 0 0; color:#716a79; font-size:12px; }
+  .vobels-calculator__estimate-mark { display:flex; align-items:center; justify-content:center; min-width:64px; height:64px; background:#f4eff8; color:#5D2A86; font:700 14px/1 var(--font-sans); }
+  .vobels-calculator .space-y-5 { display:grid; gap:28px; margin-top:28px; }
+  .vobels-calculator__field-label { display:block; margin-bottom:13px; color:#211b27; font-size:12px; font-weight:700; }
+  .vobels-calculator .grid { gap:10px; }
+  .vobels-calculator .cat-btn, .vobels-calculator .type-btn { min-height:48px; padding:12px 14px; border:1px solid #e2d8eb; border-radius:0; background:#f7f3fb; color:#514a4f; font:700 11px/1.35 var(--font-sans); transition:all .18s ease; }
+  .vobels-calculator .cat-btn:hover, .vobels-calculator .type-btn:hover { border-color:#5D2A86; color:#5D2A86; }
+  .vobels-calculator .cat-btn.bg-black, .vobels-calculator .type-btn.bg-black { border-color:#5D2A86; background:#5D2A86; color:#fff; }
+  .vobels-calculator .cat-btn:focus-visible, .vobels-calculator .type-btn:focus-visible { outline:3px solid rgba(93,42,134,.25); outline-offset:2px; }
+  .vobels-calculator__hint { margin:13px 0 0; padding:12px 14px; border-left:2px solid #5D2A86; background:#f7f3fb; color:#716a79; font-size:11px; line-height:1.6; }
+  .vobels-calculator label.block { color:#211b27; }
+  .vobels-calculator label.flex { padding:16px; border-color:#e1d9cf; border-radius:0; background:#fff; transition:border-color .18s ease, background .18s ease; }
+  .vobels-calculator label.flex:hover { border-color:#5D2A86; background:#faf7fc; }
+  .vobels-calculator input:not([type=checkbox]):not([type=radio]), .vobels-calculator select { min-height:48px; border:1px solid #e2d8eb; border-radius:0; background:#fff; color:#211b27; }
+  .vobels-calculator input:focus, .vobels-calculator select:focus { outline:2px solid rgba(93,42,134,.2); border-color:#5D2A86; }
+  .vobels-calculator input[type=checkbox], .vobels-calculator input[type=radio] { accent-color:#5D2A86; }
+  .vobels-calculator #calculate-btn, .vobels-calculator #submit-lead { min-height:48px; border-radius:0; background:#5D2A86; color:#fff; font-weight:700; }
+  .vobels-calculator #calculate-btn:hover, .vobels-calculator #submit-lead:hover { background:#43205f; }
+  .vobels-calculator__results { margin-top:30px; padding:clamp(20px,3vw,30px); border:1px solid #5D2A86; background:#f7f3fb; }
+  .vobels-calculator__results-head { margin-bottom:22px; }
+  .vobels-calculator__results-head > span { color:#5D2A86; font-size:9px; font-weight:700; letter-spacing:.16em; }
+  .vobels-calculator__results-head h3 { margin:8px 0 0; color:#211b27; font:600 1.5rem/1.1 var(--font-display); letter-spacing:-.04em; }
+  .vobels-calculator__results-head p { margin:7px 0 0; color:#716a79; font-size:11px; }
+  .vobels-calculator #total { color:#5D2A86; font-size:1.4rem; }
+  .vobels-calculator #lead-capture { border-color:#e2d8eb; }
+  @media(max-width:640px) { .vobels-calculator { padding:18px; } .vobels-calculator__heading { align-items:flex-start; } .vobels-calculator__estimate-mark { min-width:48px; height:48px; font-size:11px; } .vobels-calculator .cat-btn { padding:10px 8px; font-size:10px; } .vobels-calculator__results .flex { gap:12px; } }
+</style>

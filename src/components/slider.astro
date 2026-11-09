@@ -3,22 +3,30 @@ const slides = [
   {
     kicker: "01 / START WITH CLARITY",
     title: "A stronger foundation for what comes next.",
-    description: "From business formation and structure to a clear direction for growth."
+    description: "From business formation and structure to a clear direction for growth.",
+    image: "https://images.unsplash.com/photo-1521737711867-e3b97375f902?auto=format&fit=crop&w=2000&q=85",
+    alt: "A team collaborating around a table"
   },
   {
     kicker: "02 / BUILD WHAT MATTERS",
     title: "The right identity, systems and tools.",
-    description: "Bring your brand, operations and digital presence together."
+    description: "Bring your brand, operations and digital presence together.",
+    image: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=2000&q=85",
+    alt: "A thoughtfully designed modern workspace"
   },
   {
     kicker: "03 / MANAGE WITH INTENTION",
     title: "Make the day-to-day work better.",
-    description: "Practical support to help your business run with greater confidence."
+    description: "Practical support to help your business run with greater confidence.",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=2000&q=85",
+    alt: "Colleagues planning and working together"
   },
   {
     kicker: "04 / GROW WITH PURPOSE",
     title: "Turn progress into lasting momentum.",
-    description: "Prepare for new opportunities, stronger markets and the next stage."
+    description: "Prepare for new opportunities, stronger markets and the next stage.",
+    image: "https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=2000&q=85",
+    alt: "A diverse team collaborating in a bright office"
   }
 ];
 ---
@@ -30,7 +38,8 @@ const slides = [
   </div>
   <div class="vobels-banner__slides" id="vobels-banner-slides">
     {slides.map((slide, index) => (
-      <article class:list={["vobels-banner__slide", index === 0 && "is-active"]} aria-hidden={index === 0 ? "false" : "true"}>
+      <article class:list={["vobels-banner__slide", index === 0 && "is-active"]} aria-hidden={index === 0 ? "false" : "true"} style={`--banner-image: url("${slide.image}")`}>
+        <img class="vobels-banner__image" src={slide.image} alt="" aria-hidden="true" loading={index === 0 ? "eager" : "lazy"} decoding="async" />
         <div class="vobels-banner__copy">
           <span class="vobels-banner__kicker">{slide.kicker}</span>
           <h2>{slide.title}</h2>
@@ -50,28 +59,34 @@ const slides = [
 </section>
 
 <style>
-  .vobels-banner { margin: 0 0 clamp(70px,9vw,116px); padding: 22px clamp(22px,4vw,48px) 20px; background: #21191f; color: #f4f0e9; }
-  .vobels-banner__top { display:flex; justify-content:space-between; gap:14px; color:rgba(244,240,233,.48); font:700 9px/1.4 var(--font-sans); letter-spacing:.16em; }
-  .vobels-banner__slides { position:relative; min-height:176px; }
-  .vobels-banner__slide { position:absolute; inset:0; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:24px; align-items:center; opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .45s ease, transform .45s ease, visibility .45s; }
+  .vobels-banner { margin: 0 0 clamp(70px,9vw,116px); padding: 22px clamp(22px,4vw,48px) 20px; background: #21191f; color: #fff; }
+  .vobels-banner__top { display:flex; justify-content:space-between; gap:14px; color:rgba(255,255,255,.62); font:700 9px/1.4 var(--font-sans); letter-spacing:.16em; }
+  .vobels-banner__slides { position:relative; min-height:290px; margin-top:12px; }
+  .vobels-banner__slide { position:absolute; inset:0; min-height:290px; background-image:var(--banner-image); background-position:center 45%; background-size:cover; background-repeat:no-repeat; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:24px; align-items:center; overflow:hidden; padding:clamp(28px,5vw,62px); opacity:0; visibility:hidden; transform:translateY(8px); transition:opacity .45s ease, transform .45s ease, visibility .45s; }
+  .vobels-banner__slide::after { position:absolute; inset:0; z-index:0; content:""; background:linear-gradient(90deg,rgba(20,14,23,.88) 0%,rgba(20,14,23,.72) 48%,rgba(20,14,23,.34) 100%),linear-gradient(0deg,rgba(93,42,134,.22),rgba(20,14,23,.08)); pointer-events:none; }
   .vobels-banner__slide.is-active { position:relative; opacity:1; visibility:visible; transform:translateY(0); }
-  .vobels-banner__kicker { color:#c5a7dc; font:700 9px/1.4 var(--font-sans); letter-spacing:.16em; }
-  .vobels-banner__slide h2 { max-width:760px; margin:10px 0 0; color:#f4f0e9; font:600 clamp(1.8rem,4vw,3.5rem)/1.03 var(--font-display); letter-spacing:-.065em; }
-  .vobels-banner__slide p { margin:10px 0 0; color:rgba(244,240,233,.62); font-size:12px; }
-  .vobels-banner__index { align-self:end; padding-bottom:10px; color:#c5a7dc; font:600 12px/1 var(--font-sans); }
-  .vobels-banner__index i { color:rgba(244,240,233,.38); font-style:normal; }
-  .vobels-banner__controls { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:12px; border-top:1px solid rgba(244,240,233,.16); }
-  .vobels-banner__progress { width:100%; height:2px; overflow:hidden; background:rgba(244,240,233,.16); }
-  .vobels-banner__progress span { display:block; width:0; height:100%; background:#c5a7dc; transition:width .12s linear; }
+  .vobels-banner__image { display:none; }
+  .vobels-banner__copy,.vobels-banner__index { position:relative; z-index:1; }
+  .vobels-banner__copy { max-width:760px; }
+  .vobels-banner__kicker { color:#dfc8f0; font:700 9px/1.4 var(--font-sans); letter-spacing:.16em; }
+  .vobels-banner__slide h2 { max-width:760px; margin:12px 0 0; color:#fff; font:600 clamp(1.9rem,4vw,3.6rem)/1.03 var(--font-display); letter-spacing:-.065em; text-wrap:balance; }
+  .vobels-banner__slide p { max-width:560px; margin:14px 0 0; color:rgba(255,255,255,.82); font-size:13px; }
+  .vobels-banner__index { align-self:end; padding-bottom:4px; color:#dfc8f0; font:600 12px/1 var(--font-sans); }
+  .vobels-banner__index i { color:rgba(255,255,255,.58); font-style:normal; }
+  .vobels-banner__controls { display:flex; align-items:center; justify-content:space-between; gap:20px; padding-top:12px; border-top:1px solid rgba(255,255,255,.2); }
+  .vobels-banner__progress { width:100%; height:2px; overflow:hidden; background:rgba(255,255,255,.2); }
+  .vobels-banner__progress span { display:block; width:0; height:100%; background:#d7b8ed; transition:width .12s linear; }
   .vobels-banner__navigation { display:flex; gap:7px; }
-  .vobels-banner__navigation button { display:flex; width:32px; min-width:32px; min-height:32px; height:32px; align-items:center; justify-content:center; border:1px solid rgba(244,240,233,.3); background:transparent; color:#f4f0e9; cursor:pointer; }
-  .vobels-banner__navigation button:hover { border-color:#c5a7dc; color:#c5a7dc; }
+  .vobels-banner__navigation button { display:flex; width:32px; min-width:32px; min-height:32px; height:32px; align-items:center; justify-content:center; border:1px solid rgba(255,255,255,.42); background:rgba(20,14,23,.24); color:#fff; cursor:pointer; }
+  .vobels-banner__navigation button:hover { border-color:#dfc8f0; color:#dfc8f0; }
   @media(max-width:640px) {
     .vobels-banner { margin-left:-20px; margin-right:-20px; padding:20px; }
-    .vobels-banner__slides { min-height:210px; }
-    .vobels-banner__slide { grid-template-columns:1fr; gap:8px; align-content:center; }
+    .vobels-banner__slides { min-height:270px; margin-top:10px; }
+    .vobels-banner__slide { min-height:270px; }
+    .vobels-banner__slide { grid-template-columns:1fr; gap:8px; align-content:center; padding:25px 20px; }
+    .vobels-banner__slide::after { background:linear-gradient(90deg,rgba(20,14,23,.86),rgba(20,14,23,.58)),linear-gradient(0deg,rgba(93,42,134,.2),transparent); }
     .vobels-banner__index { display:none; }
-    .vobels-banner__slide h2 { font-size:clamp(1.8rem,8vw,2.5rem); }
+    .vobels-banner__slide h2 { font-size:clamp(1.85rem,8vw,2.6rem); }
     .vobels-banner__top { font-size:8px; }
   }
   @media(prefers-reduced-motion:reduce) {
