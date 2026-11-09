@@ -1,0 +1,57 @@
+---
+import Link from "@/components/ui/link.astro";
+---
+
+<section class="vobels-estimator" aria-labelledby="estimator-heading">
+  <div class="vobels-estimator__intro">
+    <p class="vobels-eyebrow"><span></span> Make an informed decision</p>
+    <span class="vobels-estimator__index">VOBELS / COST PLANNER</span>
+  </div>
+  <div class="vobels-estimator__body">
+    <div class="vobels-estimator__copy">
+      <h2 id="estimator-heading">Know what it could cost.<br /><em>Before you commit.</em></h2>
+      <p>Explore estimated costs for business registration, intellectual property, compliance and global access. Choose what you need and see a clear breakdown before taking the next step.</p>
+      <div class="vobels-estimator__actions">
+        <Link href="/ai-assistant" class="vobels-button vobels-button--dark">Estimate your costs <span aria-hidden="true">→</span></Link>
+        <a href="/contact" class="vobels-estimator__secondary">Discuss ongoing support <span aria-hidden="true">↗</span></a>
+      </div>
+      <small>Estimates are a guide; final scope and fees are confirmed with our team.</small>
+    </div>
+    <a class="vobels-estimator__preview" href="/ai-assistant" aria-label="Open the Vobels business cost calculator">
+      <div class="vobels-estimator__preview-top"><span>YOUR BUSINESS ESTIMATE</span><span>01 — 03</span></div>
+      <div class="vobels-estimator__amount"><span>₦ / $</span><strong>Plan with clarity.</strong></div>
+      <div class="vobels-estimator__categories">
+        <span>Business registration <b>→</b></span>
+        <span>Trademarks &amp; IP <b>→</b></span>
+        <span>Compliance &amp; global access <b>→</b></span>
+      </div>
+      <div class="vobels-estimator__preview-bottom"><span>OPEN COST CALCULATOR</span><span aria-hidden="true">↗</span></div>
+    </a>
+  </div>
+</section>
+
+<style>
+  .vobels-estimator { margin:clamp(64px,9vw,112px) 0; padding:clamp(26px,4vw,48px); background:#f4eff8; border:1px solid #e6deed; }
+  .vobels-estimator__intro { display:flex; align-items:center; justify-content:space-between; gap:18px; }
+  .vobels-estimator__index { color:#716a79; font:700 9px/1.4 var(--font-sans); letter-spacing:.14em; }
+  .vobels-estimator__body { display:grid; grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr); gap:clamp(30px,6vw,76px); align-items:center; margin-top:28px; }
+  .vobels-estimator__copy h2 { margin:0; color:#211b27; font:600 clamp(2.1rem,4.5vw,4rem)/1.02 var(--font-display); letter-spacing:-.065em; }
+  .vobels-estimator__copy h2 em { color:#5D2A86; font-style:normal; }
+  .vobels-estimator__copy > p { max-width:590px; margin:20px 0 0; color:#716a79; font-size:14px; line-height:1.8; }
+  .vobels-estimator__actions { display:flex; flex-wrap:wrap; align-items:center; gap:18px; margin-top:26px; }
+  .vobels-estimator__secondary { color:#5D2A86; font-size:11px; font-weight:700; text-decoration:none; }
+  .vobels-estimator__secondary:hover { text-decoration:underline; }
+  .vobels-estimator__copy > small { display:block; margin-top:18px; color:#827a89; font-size:10px; line-height:1.6; }
+  .vobels-estimator__preview { display:block; padding:22px; background:#fff; border:1px solid #e6deed; color:inherit; text-decoration:none; box-shadow:0 18px 48px rgba(48,29,62,.07); transition:transform .2s ease,border-color .2s ease; }
+  .vobels-estimator__preview:hover { transform:translateY(-3px); border-color:#b99acb; }
+  .vobels-estimator__preview-top,.vobels-estimator__preview-bottom { display:flex; justify-content:space-between; gap:12px; color:#716a79; font:700 9px/1.4 var(--font-sans); letter-spacing:.12em; }
+  .vobels-estimator__amount { display:flex; align-items:baseline; gap:15px; padding:34px 0 26px; border-bottom:1px solid #eee8f2; }
+  .vobels-estimator__amount span { color:#5D2A86; font-size:12px; font-weight:700; }
+  .vobels-estimator__amount strong { color:#211b27; font:600 clamp(1.4rem,2.5vw,2rem)/1.1 var(--font-display); letter-spacing:-.04em; }
+  .vobels-estimator__categories { display:grid; gap:0; padding:8px 0 18px; }
+  .vobels-estimator__categories span { display:flex; justify-content:space-between; gap:12px; padding:13px 0; border-bottom:1px solid #f0ebf3; color:#514b59; font-size:11px; }
+  .vobels-estimator__categories b { color:#5D2A86; }
+  .vobels-estimator__preview-bottom { padding-top:16px; border-top:1px solid #e6deed; color:#5D2A86; }
+  @media(max-width:760px) { .vobels-estimator__intro { align-items:flex-start; flex-direction:column; } .vobels-estimator__body { grid-template-columns:1fr; } .vobels-estimator__preview { padding:18px; } }
+  @media(prefers-reduced-motion:reduce) { .vobels-estimator__preview { transition:none; } .vobels-estimator__preview:hover { transform:none; } }
+</style>
