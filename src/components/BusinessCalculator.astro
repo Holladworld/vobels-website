@@ -411,6 +411,16 @@
       document.getElementById('results').classList.remove('hidden');
     }
     
+    const categoryDescriptions = {
+      registration: "Estimate the cost of registering a new business in Nigeria. Choose a business structure to get started.",
+      trademark: "Compare trademark filing options to protect your business name, logo or brand identity.",
+      copyright: "Estimate copyright protection costs for eligible creative and original work.",
+      patent: "Review local and international patent filing estimates for an invention.",
+      nafdac: "Choose your product category to estimate NAFDAC registration and service costs.",
+      global: "Explore estimates for international business identity and company registration services.",
+      foreign: "Estimate support costs for foreign company registration and related permits in Nigeria."
+    };
+
     // Category switching
     const catBtns = document.querySelectorAll('.cat-btn');
     const sections = {
