@@ -349,21 +349,22 @@
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
 
-/* Homepage section rhythm: intentional breathing room between major stories. */
-.vobels-home .vobels-hero { margin-bottom:clamp(44px,6vw,82px); }
-.vobels-home .vobels-banner { margin-bottom:clamp(76px,9vw,116px); }
-.vobels-home .vobels-capabilities { margin-bottom:clamp(64px,8vw,104px); }
-.vobels-home .vobels-process { margin-top:clamp(40px,6vw,76px); margin-bottom:clamp(72px,9vw,112px); }
-.vobels-home .vobels-product { margin-block:clamp(76px,9vw,116px); }
-.vobels-home .vobels-packages { margin-block:clamp(54px,7vw,88px); }
-.vobels-home .vobels-tech { margin-top:clamp(54px,7vw,88px); }
-.vobels-home .vobels-cta { margin-top:clamp(42px,6vw,76px); }
+
+/* Homepage section rhythm: add measured separation without wasting vertical space. */
+.vobels-home .vobels-hero { margin-bottom:clamp(24px,3vw,42px); }
+.vobels-home .vobels-banner { margin-bottom:clamp(38px,5vw,58px); }
+.vobels-home .vobels-capabilities { margin-bottom:clamp(28px,4vw,46px); }
+.vobels-home .vobels-process { margin-top:clamp(20px,3vw,34px); margin-bottom:clamp(38px,5vw,58px); }
+.vobels-home .vobels-product { margin-block:clamp(48px,6vw,72px); }
+.vobels-home .vobels-packages { margin-block:clamp(30px,4vw,46px); }
+.vobels-home .vobels-tech { margin-top:clamp(32px,4vw,48px); }
+.vobels-home .vobels-cta { margin-top:clamp(28px,4vw,44px); }
 @media(max-width:640px) {
-  .vobels-home .vobels-hero { margin-bottom:42px; }
-  .vobels-home .vobels-capabilities { margin-bottom:48px; }
-  .vobels-home .vobels-process { margin-top:28px; margin-bottom:54px; }
-  .vobels-home .vobels-product { margin-block:58px; }
-  .vobels-home .vobels-packages { margin-block:44px; }
-  .vobels-home .vobels-tech { margin-top:44px; }
-  .vobels-home .vobels-cta { margin-top:32px; }
+  .vobels-home .vobels-hero { margin-bottom:24px; }
+  .vobels-home .vobels-capabilities { margin-bottom:26px; }
+  .vobels-home .vobels-process { margin-top:16px; margin-bottom:32px; }
+  .vobels-home .vobels-product { margin-block:42px; }
+  .vobels-home .vobels-packages { margin-block:26px; }
+  .vobels-home .vobels-tech { margin-top:28px; }
+  .vobels-home .vobels-cta { margin-top:24px; }
 }
