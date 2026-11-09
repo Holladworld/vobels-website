@@ -81,9 +81,24 @@
 }
 
 @layer base {
+  h1 { font-size: clamp(2rem, 6vw, 3.5rem); line-height: 1.2; font-weight: 700; letter-spacing: -.02em; }
+  h2 { font-size: clamp(1.75rem, 5vw, 2.5rem); line-height: 1.3; font-weight: 700; letter-spacing: -.01em; }
+  h3 { font-size: clamp(1.5rem, 4vw, 1.75rem); line-height: 1.4; font-weight: 600; }
+  h4 { font-size: clamp(1.25rem, 3vw, 1.5rem); line-height: 1.4; font-weight: 600; }
+  h5 { font-size: clamp(1.125rem, 2.5vw, 1.25rem); line-height: 1.4; font-weight: 600; }
+  h6 { font-size: clamp(1rem, 2vw, 1.125rem); line-height: 1.4; font-weight: 600; }
+  p, li, .prose p { font-size: clamp(1rem, 2.5vw, 1.125rem); line-height: 1.6; }
+  small, .text-small, .caption { font-size: clamp(.875rem, 2vw, 1rem); line-height: 1.5; }
+  label, .label { font-size: clamp(.875rem, 2vw, 1rem); font-weight: 500; }
+  p, h1, h2, h3, h4, h5, h6 { overflow-wrap: break-word; max-width: 100%; }
   section, .section { padding-top: clamp(2rem, 6vw, 4rem); padding-bottom: clamp(2rem, 6vw, 4rem); }
-  button, a, .clickable { min-height: 44px; }
+  button, a, .clickable { min-height: 44px; display: inline-flex; align-items: center; justify-content: center; }
   img, picture, video { display: block; }
+  .container { padding-left: clamp(1rem, 5vw, 2rem); padding-right: clamp(1rem, 5vw, 2rem); }
+  @media (max-width: 640px) {
+    .prose { font-size: 1rem; }
+    .prose p { margin-bottom: 1.25em; }
+  }
 }
 
 .vobels-eyebrow {
