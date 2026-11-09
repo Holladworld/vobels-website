@@ -1,0 +1,27 @@
+---
+const steps = [
+  { number: "01", title: "Establish the foundation", description: "We clarify the business, put the right structure in place and create a foundation that can support the next stage." },
+  { number: "02", title: "Build the operating system", description: "We bring together the identity, tools, processes and management discipline a business needs to operate well." },
+  { number: "03", title: "Create room to grow", description: "We help businesses reach new markets, strengthen performance and pursue opportunities with a clear plan." },
+];
+---
+
+<section class="vobels-process" aria-labelledby="process-heading">
+  <div class="vobels-process__intro">
+    <p class="vobels-eyebrow"><span></span> How we work</p>
+    <h2 id="process-heading">Progress is built.<br /><em>Not improvised.</em></h2>
+    <p>Every business is at a different stage. Our work starts by understanding where you are, then building what will move you forward.</p>
+  </div>
+  <div class="vobels-process__steps">
+    {steps.map((step) => (
+      <article class="vobels-process__step">
+        <span class="vobels-process__number">{step.number}</span>
+        <div>
+          <h3>{step.title}</h3>
+          <p>{step.description}</p>
+        </div>
+        <span class="vobels-process__arrow" aria-hidden="true">↗</span>
+      </article>
+    ))}
+  </div>
+</section>
