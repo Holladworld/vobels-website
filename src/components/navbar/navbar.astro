@@ -5,86 +5,87 @@ import Dropdown from "./dropdown.astro";
 import { Astronav, MenuItems, MenuIcon } from "astro-navbar";
 
 const menuitems = [
-  {
-    title: "Home",
-    path: "/",
-  },
+  { title: "Home", path: "/" },
   {
     title: "Services",
     path: "#",
     children: [
-      { title: "Products", path: "/pricing" },
+      { title: "Products", path: "/products" },
       { title: "Academy", path: "/academy" },
-      {
-        title: "Pricing",
-        path: "/business-pricing",
-      },
+      { title: "Pricing", path: "/business-pricing" },
       { title: "Calculator", path: "/ai-assistant", badge: true },
     ],
   },
-  {
-    title: "About",
-    path: "/about",
-  },
-  {
-    title: "Blog",
-    path: "/blog",
-  },
+  { title: "HostSuite", path: "https://hostsuite.vobels.com", accent: true },
+  { title: "About", path: "/about" },
+  { title: "Blog", path: "/blog" },
 ];
 ---
 
-<Container>
-  <header class="flex flex-col lg:flex-row justify-between items-center my-5">
-    <Astronav>
-      <div class="flex w-full lg:w-auto items-center justify-between">
-        <a href="/" class="text-lg"
-          ><span class="font-bold text-slate-800">VOBELS</span
-          ><span class="text-slate-500"> LIMITED</span>
-        </a>
-        <div class="block lg:hidden">
-          <MenuIcon class="w-4 h-4 text-gray-800" />
+<div class="vobels-nav">
+  <Container>
+    <header class="vobels-nav__inner">
+      <Astronav>
+        <div class="vobels-nav__brand-row">
+          <a href="/" class="vobels-wordmark" aria-label="Vobels Limited home">
+            <span>VOBELS</span><small>LIMITED</small>
+          </a>
+          <div class="vobels-nav__mobile-toggle"><MenuIcon class="w-5 h-5 text-current" /></div>
         </div>
-      </div>
-      <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
-        <ul class="flex flex-col lg:flex-row lg:gap-3">
-          {
-            menuitems.map((item, index) => (
+        <MenuItems class="hidden w-full lg:w-auto mt-2 lg:flex lg:mt-0">
+          <ul class="vobels-nav__links">
+            {menuitems.map((item, index) => (
               <>
                 {item.children && (
-                  <Dropdown
-                    title={item.title}
-                    children={item.children}
-                    lastItem={index === menuitems.length - 1}
-                  />
+                  <Dropdown title={item.title} children={item.children} lastItem={index === menuitems.length - 1} />
                 )}
-
                 {!item.children && (
                   <li>
                     <a
                       href={item.path}
-                      class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900">
-                      <span> {item.title}</span>
-                      {item.badge && (
-                        <span class="ml-1 px-2 py-0.5 text-[10px] animate-pulse font-semibold uppercase text-white bg-indigo-600 rounded-full">
-                          New
-                        </span>
-                      )}
+                      class:list={["vobels-nav__link", item.accent && "vobels-nav__link--accent"]}
+                      aria-label={item.accent ? "HostSuite, a Vobels product" : undefined}
+                    >
+                      {item.title}
+                      {item.badge && <span class="ml-1 px-2 py-0.5 text-[10px] animate-pulse font-semibold uppercase text-white bg-indigo-600 rounded-full">New</span>}
                     </a>
                   </li>
                 )}
               </>
-            ))
-          }
-        </ul>
-        <div class="lg:hidden flex items-center mt-3 gap-4">
-          <Link href="/contact" size="md" block>Contact</Link>
-        </div>
-      </MenuItems>
-    </Astronav>
-    <div>
-      <div class="hidden lg:flex items-center gap-4">
-        <Link href="/contact" size="md">Contact</Link>
+            ))}
+          </ul>
+          <div class="lg:hidden mt-4 pb-3">
+            <Link href="/contact" size="md" block>Contact</Link>
+          </div>
+        </MenuItems>
+      </Astronav>
+      <div class="vobels-nav__desktop-cta">
+        <Link href="/contact" size="md">Let's talk <span aria-hidden="true">↗</span></Link>
       </div>
-    </div>
-  </header>
-</Container>
+    </header>
+  </Container>
+</div>
+
+<style>
+  .vobels-nav { position: relative; z-index: 30; border-bottom: 1px solid #d8d0c5; background: rgba(244,240,233,.94); }
+  .vobels-nav__inner { display:flex; align-items:center; justify-content:space-between; gap:28px; min-height:82px; }
+  .vobels-wordmark { display:flex; align-items:baseline; gap:8px; color:#211d20; text-decoration:none; white-space:nowrap; }
+  .vobels-wordmark span { font:800 21px/1 var(--font-display); letter-spacing:-.075em; }
+  .vobels-wordmark small { color:#817974; font:600 8px/1 var(--font-sans); letter-spacing:.2em; }
+  .vobels-nav__links { display:flex; align-items:center; gap:clamp(12px,2vw,28px); margin:0; padding:0; list-style:none; }
+  .vobels-nav__link { display:inline-flex; align-items:center; color:#625c5a; font:600 11px/1.4 var(--font-sans); text-decoration:none; transition:color .2s ease; }
+  .vobels-nav__link:hover { color:#68438a; }
+  .vobels-nav__link--accent { color:#68438a; }
+  .vobels-nav__desktop-cta :global(a) { display:inline-flex; align-items:center; gap:12px; padding:0 18px; min-height:43px; background:#21191f; color:white; font-size:11px; text-decoration:none; }
+  .vobels-nav__desktop-cta :global(a:hover) { background:#68438a; }
+  .vobels-nav__mobile-toggle { display:none; }
+  @media(max-width:1023px) {
+    .vobels-nav__inner { display:block; padding:16px 0; }
+    .vobels-nav__brand-row { display:flex; justify-content:space-between; align-items:center; }
+    .vobels-nav__mobile-toggle { display:block; }
+    .vobels-nav__links { display:flex; flex-direction:column; align-items:stretch; gap:4px; padding-top:15px; }
+    .vobels-nav__links li, .vobels-nav__links a { width:100%; }
+    .vobels-nav__link { padding:10px 0; }
+    .vobels-nav__desktop-cta { display:none; }
+  }
+</style>

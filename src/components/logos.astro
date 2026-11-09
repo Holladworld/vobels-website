@@ -1,19 +1,28 @@
 ---
-// @ts-ignore
 import { Icon } from "astro-icon/components";
 ---
 
-<div class="mt-24">
-  <h2 class="text-center text-slate-500">
-    We use the best technologies</h2>
-  <div class="flex gap-8 md:gap-20 items-center justify-center mt-10 flex-wrap">
-
-    <Icon class="size-8 md:size-12" name="simple-icons:react" />
-    <Icon class="size-8 md:size-12" name="simple-icons:svelte" />
-    <Icon class="size-8 md:size-12" name="simple-icons:astro" />
-    <Icon class="size-8 md:size-16" name="simple-icons:tailwindcss" />
-    <Icon class="size-8 md:size-16" name="simple-icons:alpinedotjs" />
-    <Icon class="size-8 md:size-12" name="simple-icons:vercel" />
-
+<section class="vobels-tech" aria-label="Technology capabilities">
+  <div class="vobels-tech__heading">
+    <p class="vobels-eyebrow"><span></span> Thoughtful technology choices</p>
+    <h2>Tools should serve the work.</h2>
+    <p>We select practical technologies to build digital experiences and systems that support real business needs.</p>
   </div>
-</div>
+  <div class="vobels-tech__marks" aria-label="Technologies we work with">
+    <Icon name="simple-icons:react" />
+    <Icon name="simple-icons:svelte" />
+    <Icon name="simple-icons:astro" />
+    <Icon name="simple-icons:tailwindcss" />
+    <Icon name="simple-icons:alpinedotjs" />
+    <Icon name="simple-icons:vercel" />
+  </div>
+</section>
+
+<style>
+  .vobels-tech { display:grid; grid-template-columns:1fr 1fr; gap:30px; align-items:center; padding:52px 0; border-top:1px solid #d8d0c5; }
+  .vobels-tech__heading h2 { margin:14px 0 0; color:#211d20; font:600 clamp(1.6rem,2.8vw,2.4rem)/1.08 var(--font-display); letter-spacing:-.06em; }
+  .vobels-tech__heading > p:last-child { max-width:440px; margin:10px 0 0; color:#716b68; font-size:12px; }
+  .vobels-tech__marks { display:flex; flex-wrap:wrap; align-items:center; justify-content:flex-end; gap:clamp(20px,4vw,48px); color:#827a74; }
+  .vobels-tech__marks :global(svg) { width:clamp(25px,3vw,38px); height:clamp(25px,3vw,38px); opacity:.72; }
+  @media(max-width:640px) { .vobels-tech { grid-template-columns:1fr; gap:24px; padding:42px 0; } .vobels-tech__marks { justify-content:flex-start; } }
+</style>

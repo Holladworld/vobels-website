@@ -1,48 +1,41 @@
 ---
-import { Picture } from "astro:assets";
 import heroImage from "@/assets/hero.png";
 import Link from "@/components/ui/link.astro";
-import { Icon } from "astro-icon/components";
 ---
 
-<main
-  class="grid lg:grid-cols-2 place-items-center pt-16 pb-8 md:pt-12 md:pb-24">
-  <div class="py-6 md:order-1 hidden md:block">
-    <Picture
-      src={heroImage}
-      alt="Vobels Business Growth"
-      widths={[200, 400, 600]}
-      sizes="(max-width: 800px) 100vw, 620px"
-      loading="eager"
-      format="avif"
-    />
-  </div>
-  <div>
-    <h1
-      class="text-5xl lg:text-6xl xl:text-7xl font-bold lg:tracking-tight xl:tracking-tighter">
-      Building businesses from idea level to maturity.
-    </h1>
-    <p class="text-lg mt-4 text-slate-600 max-w-xl leading-relaxed">
-      Vobels is a full-service development and growth firm that builds, manages, 
-      and scales businesses. We are your partner in business enablement and strategic growth.
+<section class="vobels-hero" aria-labelledby="vobels-hero-title">
+  <div class="vobels-hero__copy">
+    <p class="vobels-eyebrow"><span></span> Business enablement · Strategic growth · Venture partnership</p>
+    <h1 id="vobels-hero-title">Build with intention.<br /><em>Grow with structure.</em></h1>
+    <p class="vobels-hero__lead">
+      We help businesses move from an idea to a well-run, growth-ready organisation — bringing together the strategy, structure, systems and support to make progress sustainable.
     </p>
-    <div class="mt-6 flex flex-col sm:flex-row gap-3">
-      <Link
-        href="/services"
-        class="flex gap-1 items-center justify-center"
-        rel="noopener">
-        Explore Services
-      </Link>
-      <Link
-        size="lg"
-        style="outline"
-        rel="noopener"
-        href="/products"
-        class="flex gap-1 items-center justify-center"
-        target="_blank">
-        <Icon class="text-black w-4 h-4" name="bx:bxs-grid-alt" />
-        View Products
-      </Link>
+    <div class="vobels-hero__actions">
+      <Link href="/services" class="vobels-button vobels-button--dark">Explore what we do <span aria-hidden="true">↗</span></Link>
+      <Link href="/contact" style="outline" class="vobels-button vobels-button--outline">Start a conversation</Link>
+    </div>
+    <div class="vobels-hero__note">
+      <span class="vobels-hero__note-line"></span>
+      <span>For founders, growing businesses and established organisations.</span>
     </div>
   </div>
-</main>
+
+  <div class="vobels-hero__visual">
+    <div class="vobels-hero__image">
+      <img
+        src={heroImage.src}
+        alt="A visual representation of business building and growth"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+    <div class="vobels-hero__image-caption">
+      <span>01 / THE BIG PICTURE</span>
+      <span>From foundation to maturity</span>
+    </div>
+    <div class="vobels-hero__stamp" aria-hidden="true">
+      <span>BUILD</span><span>·</span><span>MANAGE</span><span>·</span><span>SCALE</span>
+    </div>
+  </div>
+</section>

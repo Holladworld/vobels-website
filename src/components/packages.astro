@@ -84,66 +84,47 @@ const packages = [
 ];
 ---
 
-<div class="mt-32">
-  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
-    Integrated Solutions
-  </h2>
-  <p class="text-lg mt-4 text-slate-600 text-center max-w-3xl mx-auto">
-    We don't sell tasks. We deliver results through structured, high-impact packages designed for your business stage.
-  </p>
-</div>
+<section class="vobels-packages" id="packages" aria-labelledby="packages-heading">
+  <div class="vobels-packages__heading">
+    <div>
+      <p class="vobels-eyebrow"><span></span> Ways to work with us</p>
+      <h2 id="packages-heading">The right support<br /><em>for your next stage.</em></h2>
+    </div>
+    <p>Structured solutions for businesses at different points in their journey. Choose a starting point and we can take the conversation from there.</p>
+  </div>
 
-<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-  {
-    packages.map((item) => (
-      <div class={`flex flex-col p-8 rounded-2xl border relative ${item.featured ? 'border-black shadow-xl scale-105 md:scale-105' : 'border-slate-200 shadow-sm'} transition-all hover:shadow-md ${item.type === 'global' ? 'border-blue-200 bg-blue-50/20' : ''} ${item.type === 'foreign' ? 'border-emerald-200 bg-emerald-50/20' : ''}`}>
-        {item.isNew && (
-          <div class="absolute -top-3 left-4 bg-emerald-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-            New Service
+  <div class="vobels-packages__list">
+    {packages.map((item, index) => (
+      <article class:list={["vobels-package", item.featured && "vobels-package--featured"]}>
+        <div class="vobels-package__name">
+          <span class="vobels-package__index">{String(index + 1).padStart(2, "0")}</span>
+          <div>
+            {item.isNew && <span class="vobels-package__tag">New service</span>}
+            {item.type === "global" && <span class="vobels-package__tag">Global access</span>}
+            <h3>{item.name}</h3>
+            <p>{item.description}</p>
           </div>
-        )}
-        {item.type === 'global' && (
-          <div class="absolute -top-3 left-4 bg-blue-600 text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">
-            Global Access
-          </div>
-        )}
-        <h3 class="font-bold text-2xl">{item.name}</h3>
-        <p class="text-slate-500 mt-2 text-sm leading-relaxed">{item.description}</p>
-        
-        <ul class="mt-8 space-y-3 flex-1">
-          {item.features.map((feature) => (
-            <li class="flex items-center gap-2 text-slate-700">
-              <span class="text-black text-xs">●</span>
-              {feature}
-            </li>
-          ))}
+        </div>
+        <ul class="vobels-package__features">
+          {item.features.map((feature) => <li><span aria-hidden="true">+</span>{feature}</li>)}
         </ul>
-        
-        <a 
-          href={item.buttonLink} 
-          class={`mt-8 block text-center py-3 rounded-lg font-semibold transition-all ${item.featured ? 'bg-black text-white hover:bg-slate-800' : item.type === 'global' ? 'bg-blue-600 text-white hover:bg-blue-700' : item.type === 'foreign' ? 'bg-emerald-600 text-white hover:bg-emerald-700' : 'bg-slate-100 text-black hover:bg-slate-200'}`}
-        >
-          {item.button}
-        </a>
-      </div>
-    ))
-  }
-</div>
+        <a href={item.buttonLink} class="vobels-package__link">{item.button}<span aria-hidden="true">↗</span></a>
+      </article>
+    ))}
+  </div>
 
-<!-- Dual offering note -->
-<div class="mt-12 grid md:grid-cols-2 gap-6">
-  <div class="text-center p-5 bg-blue-50 rounded-2xl border border-blue-200">
-    <h3 class="font-bold text-black mb-2">Nigerian Business Going Global?</h3>
-    <p class="text-slate-600 text-sm mb-3">Get your DUNS Number & register abroad</p>
-    <a href="/service/global" class="text-blue-700 font-semibold text-sm underline underline-offset-4">
-      Explore Global Access →
-    </a>
+  <div class="vobels-packages__regional">
+    <div>
+      <span>01 / OUTBOUND</span>
+      <h3>Nigerian business going global?</h3>
+      <p>Get your DUNS Number &amp; register abroad.</p>
+      <a href="/service/global">Explore Global Access <span aria-hidden="true">↗</span></a>
+    </div>
+    <div>
+      <span>02 / INBOUND</span>
+      <h3>International agency entering Nigeria?</h3>
+      <p>We handle your company registration locally.</p>
+      <a href="/service/foreign-registration">Register in Nigeria <span aria-hidden="true">↗</span></a>
+    </div>
   </div>
-  <div class="text-center p-5 bg-emerald-50 rounded-2xl border border-emerald-200">
-    <h3 class="font-bold text-black mb-2">International Agency Entering Nigeria?</h3>
-    <p class="text-slate-600 text-sm mb-3">We handle your company registration locally</p>
-    <a href="/service/foreign-registration" class="text-emerald-700 font-semibold text-sm underline underline-offset-4">
-      Register in Nigeria →
-    </a>
-  </div>
-</div>
+</section>

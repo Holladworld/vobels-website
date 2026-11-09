@@ -1,76 +1,69 @@
 ---
-import { Icon } from "astro-icon/components";
-
 const features = [
   {
     title: "Business Formation & Structure",
     description: "Idea validation, business structure advisory, CAC registration, and regulatory compliance.",
-    icon: "bx:bxs-briefcase",
-    path: "/service/formation" 
+    path: "/service/formation",
+    label: "Start well"
   },
   {
     title: "Business Design & Identity",
     description: "Brand naming, positioning, logo identity, and business model design. Where ideas become real.",
-    icon: "bx:bxs-paint",
-    path: "/service/identity" 
+    path: "/service/identity",
+    label: "Define the business"
   },
   {
     title: "Operations & Management",
     description: "Business plans, financial statements, process setup, and ongoing management support.",
-    icon: "bx:bxs-component",
-    path: "/service/operations"
+    path: "/service/operations",
+    label: "Run with clarity"
   },
   {
     title: "Digital Presence & Tech",
     description: "Custom websites, business apps, internal tools, and CRM systems built for scale.",
-    icon: "bx:bxs-layer",
-    path: "/service/technology"
+    path: "/service/technology",
+    label: "Build the tools"
   },
   {
     title: "Growth & Expansion",
     description: "Marketing strategy, ads, and market entry support where real revenue scaling happens.",
-    icon: "bx:bxs-rocket",
-    path: "/service/expansion"
+    path: "/service/expansion",
+    label: "Move forward"
   },
-    {
+  {
     title: "Global Business Access",
     description: "DUNS Number registration, international business setup, and global platform access.",
-    icon: "bx:bxs-network-chart",
-    path: "/service/global" 
+    path: "/service/global",
+    label: "Reach further"
   },
   {
     title: "Vobels Venture Studio",
     description: "Selective end-to-end partnership and equity-based growth for high-potential ventures.",
-    icon: "bx:bxs-star",
-    path: "/contact" 
+    path: "/contact",
+    label: "Build together"
   },
 ];
 ---
 
-<div class="mt-24">
-  <h2 class="text-4xl lg:text-5xl font-bold lg:tracking-tight text-center">
-    Our Services
-  </h2>
-  <p class="text-lg mt-4 text-slate-600 text-center max-w-3xl mx-auto">
-    We don't sell tasks; we provide the structured ecosystem required to move 
-    from a raw concept to a market-leading institution.
-  </p>
-</div>
+<section class="vobels-capabilities" id="services" aria-labelledby="capabilities-heading">
+  <div class="vobels-capabilities__intro">
+    <p class="vobels-eyebrow"><span></span> What we bring together</p>
+    <h2 id="capabilities-heading">A business needs more than <em>one good idea.</em></h2>
+    <p>We connect the parts that help an organisation take shape, operate with confidence and grow into its potential.</p>
+    <a href="/services" class="vobels-text-link">Explore all services <span aria-hidden="true">↗</span></a>
+  </div>
 
-<div class="grid sm:grid-cols-2 md:grid-cols-3 mt-16 gap-16">
-  {
-    features.map((item) => (
-      /* Wrap the whole card in a link to the Pillar page */
-      <a href={item.path} class="group flex gap-4 items-start hover:bg-zinc-50 p-4 rounded-xl transition-all">
-        <div class="mt-1 bg-black rounded-full p-2 w-8 h-8 shrink-0 flex items-center justify-center group-hover:scale-110 transition-transform">
-          <Icon class="text-white w-5 h-5" name={item.icon} />
+  <div class="vobels-capabilities__list">
+    {features.map((item, index) => (
+      <a href={item.path} class="vobels-capability">
+        <span class="vobels-capability__index">{String(index + 1).padStart(2, "0")}</span>
+        <div class="vobels-capability__body">
+          <span class="vobels-capability__label">{item.label}</span>
+          <h3>{item.title}</h3>
+          <p>{item.description}</p>
         </div>
-        <div>
-          <h3 class="font-semibold text-lg group-hover:text-black">{item.title}</h3>
-          <p class="text-slate-500 mt-2 leading-relaxed">{item.description}</p>
-          <span class="text-xs font-bold uppercase tracking-widest mt-4 block text-zinc-400 group-hover:text-black transition-colors">Learn More →</span>
-        </div>
+        <span class="vobels-capability__arrow" aria-hidden="true">↗</span>
       </a>
-    ))
-  }
-</div>
+    ))}
+  </div>
+</section>
