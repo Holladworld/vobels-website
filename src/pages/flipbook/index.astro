@@ -5,24 +5,25 @@ import { Icon } from "astro-icon/components";
 ---
 
 <Layout title="Vobels Flipbook - Create Stunning Digital Publications" description="Transform your PDFs into elegant, shareable flipbooks. Free plan available.">
+  <div class="vobels-flipbook">
   <Container>
     <!-- Hero Section -->
-    <div class="mt-16 text-center max-w-3xl mx-auto">
-      <h1 class="text-4xl md:text-5xl font-bold text-black tracking-tighter">
-        Transform PDFs into Elegant Digital Flipbooks
+    <div class="vobels-flipbook__hero">
+      <h1 class="vobels-flipbook__title">
+        Turn your PDFs into<br /><em>beautiful publications.</em>
       </h1>
-      <p class="text-xl text-zinc-600 mt-4">
-        Create stunning, shareable publications that feel like a luxury magazine.
+      <p class="vobels-flipbook__lead">
+        Give your documents a more considered reading experience. Create, publish and share digital flipbooks with your audience.
       </p>
-      <div class="mt-8">
-        <a href="/flipbook/create" class="inline-block bg-black text-white px-8 py-3 rounded-lg font-medium hover:bg-zinc-800 transition-all">
+      <div class="vobels-flipbook__actions">
+        <a href="/flipbook/create" class="vobels-flipbook__button">
           Create Your First Flipbook →
         </a>
       </div>
     </div>
 
     <!-- How it works -->
-    <div class="grid md:grid-cols-3 gap-8 mt-20">
+    <div class="vobels-flipbook__steps">
       <div class="text-center">
         <div class="w-16 h-16 bg-black rounded-full flex items-center justify-center mx-auto mb-4">
           <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,9 +59,9 @@ import { Icon } from "astro-icon/components";
     </div>
 
     <!-- Features -->
-    <div class="mt-20">
-      <h2 class="text-2xl font-bold text-center mb-8">Why Choose Vobels Flipbook</h2>
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="vobels-flipbook__section">
+      <h2 class="vobels-flipbook__section-title">Why Choose Vobels Flipbook</h2>
+      <div class="vobels-flipbook__features">
         {[
           { title: "Simple Upload", desc: "Upload any PDF and get a shareable link in seconds" },
           { title: "Interactive Flipping", desc: "Realistic page-flipping experience" },
@@ -69,7 +70,7 @@ import { Icon } from "astro-icon/components";
           { title: "Fullscreen Mode", desc: "Immersive reading experience" },
           { title: "Premium Upgrades", desc: "Remove watermark, unlimited uploads" }
         ].map((feature) => (
-          <div class="bg-white border border-zinc-200 rounded-xl p-6 hover:shadow-lg transition-all">
+          <div class="vobels-flipbook__feature">
             <Icon name="bx:check-circle" class="w-8 h-8 text-green-600 mb-3" />
             <h3 class="font-bold text-black mb-2">{feature.title}</h3>
             <p class="text-zinc-500 text-sm">{feature.desc}</p>
@@ -81,8 +82,8 @@ import { Icon } from "astro-icon/components";
     <!-- Pricing -->
     <div class="mt-20">
       <h2 class="text-2xl font-bold text-center mb-8">Simple, Transparent Pricing</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="bg-white border border-zinc-200 rounded-xl p-6 text-center">
+      <div class="vobels-flipbook__pricing">
+        <div class="vobels-flipbook__plan">
           <h3 class="font-bold text-xl mb-2">Free</h3>
           <p class="text-3xl font-black mb-4">₦0<span class="text-sm font-normal">/month</span></p>
           <ul class="space-y-2 text-sm mb-6">
@@ -90,11 +91,11 @@ import { Icon } from "astro-icon/components";
             <li>✓ 3-day storage</li>
             <li>✗ Watermark</li>
           </ul>
-          <a href="/flipbook/create" class="block bg-zinc-100 text-black py-2 rounded-lg">Get Started</a>
+          <a href="/flipbook/create" class="vobels-flipbook__secondary">Get Started</a>
         </div>
         
-        <div class="bg-white border-2 border-black rounded-xl p-6 text-center relative">
-          <div class="absolute -top-3 left-1/2 -translate-x-1/2 bg-black text-white text-xs px-3 py-1 rounded-full">Popular</div>
+        <div class="vobels-flipbook__plan vobels-flipbook__plan--featured relative">
+          <div class="vobels-flipbook__popular">Popular</div>
           <h3 class="font-bold text-xl mb-2">Premium</h3>
           <p class="text-3xl font-black mb-4">₦3,000<span class="text-sm font-normal">/month</span></p>
           <ul class="space-y-2 text-sm mb-6">
@@ -102,7 +103,7 @@ import { Icon } from "astro-icon/components";
             <li>✓ Permanent storage</li>
             <li>✓ No watermark</li>
           </ul>
-          <a href="/flipbook/pricing" class="block bg-black text-white py-2 rounded-lg">Upgrade Now</a>
+          <a href="/flipbook/pricing" class="vobels-flipbook__primary">Upgrade Now</a>
         </div>
         
         <div class="bg-white border border-zinc-200 rounded-xl p-6 text-center">
@@ -119,12 +120,53 @@ import { Icon } from "astro-icon/components";
     </div>
 
     <!-- CTA -->
-    <div class="mt-20 mb-20 bg-black rounded-2xl p-12 text-center text-white">
-      <h2 class="text-2xl font-bold mb-4">Ready to Create Your First Flipbook?</h2>
+    <div class="vobels-flipbook__cta">
+      <h2 class="vobels-flipbook__cta-title">Ready to Create Your First Flipbook?</h2>
       <p class="mb-8">Join hundreds of businesses using Vobels Flipbook.</p>
-      <a href="/flipbook/create" class="inline-block bg-white text-black px-8 py-3 rounded-lg font-medium hover:bg-zinc-100 transition-all">
+      <a href="/flipbook/create" class="vobels-flipbook__cta-button">
         Start Creating Free →
       </a>
     </div>
   </Container>
+  </div>
 </Layout>
+<style>
+  .vobels-flipbook { padding:clamp(38px,6vw,76px) 0 20px; }
+  .vobels-flipbook__hero { max-width:930px; padding:0 0 clamp(54px,8vw,94px); }
+  .vobels-flipbook__hero:before { content:"VOBELS FLIPBOOK  /  DIGITAL PUBLICATIONS"; display:block; color:#5D2A86; font:700 10px/1.4 var(--font-sans); letter-spacing:.19em; }
+  .vobels-flipbook__title { margin:24px 0 0; color:#211b27; font:600 clamp(2.9rem,6.5vw,5.8rem)/.98 var(--font-display); letter-spacing:-.08em; }
+  .vobels-flipbook__title em { color:#5D2A86; font-style:normal; }
+  .vobels-flipbook__lead { max-width:620px; margin:24px 0 0; color:#716a79; font-size:clamp(15px,1.5vw,18px); line-height:1.8; }
+  .vobels-flipbook__button,.vobels-flipbook__primary { display:inline-flex; min-height:50px; align-items:center; justify-content:center; padding:0 22px; background:#5D2A86; color:#fff; font:700 12px/1.3 var(--font-sans); text-decoration:none; transition:background .2s ease,transform .2s ease; }
+  .vobels-flipbook__button:hover,.vobels-flipbook__primary:hover { background:#43205f; transform:translateY(-2px); }
+  .vobels-flipbook__steps { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; margin:0 0 clamp(70px,9vw,110px); border-top:1px solid #e6deed; border-bottom:1px solid #e6deed; }
+  .vobels-flipbook__steps>div { padding:27px 24px 29px 0; text-align:left; }
+  .vobels-flipbook__steps>div+div { padding-left:24px; border-left:1px solid #e6deed; }
+  .vobels-flipbook__steps>div>div { width:42px; height:42px; margin:0 0 20px; border-radius:0; background:#f4eff8; color:#5D2A86; }
+  .vobels-flipbook__steps svg { stroke:currentColor; }
+  .vobels-flipbook__steps h3 { margin:0 0 7px; color:#211b27; font:600 19px/1.2 var(--font-display); letter-spacing:-.045em; }
+  .vobels-flipbook__steps p { color:#716a79; font-size:13px; }
+  .vobels-flipbook__section { padding:clamp(48px,7vw,78px) 0; border-top:1px solid #e6deed; }
+  .vobels-flipbook__section-title { margin:0 0 30px; color:#211b27; text-align:left; font:600 clamp(2rem,4.5vw,3.6rem)/1.05 var(--font-display); letter-spacing:-.07em; }
+  .vobels-flipbook__features { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0; border-top:1px solid #e6deed; border-left:1px solid #e6deed; }
+  .vobels-flipbook__feature { padding:25px; border:0; border-right:1px solid #e6deed; border-bottom:1px solid #e6deed; border-radius:0; box-shadow:none; }
+  .vobels-flipbook__feature>svg { color:#5D2A86!important; }
+  .vobels-flipbook__feature h3 { margin:0 0 7px; color:#211b27; font:600 17px/1.25 var(--font-display); letter-spacing:-.04em; }
+  .vobels-flipbook__feature p { color:#716a79; font-size:12px; line-height:1.7; }
+  .vobels-flipbook__pricing { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px; }
+  .vobels-flipbook__plan { position:relative; padding:28px 24px; border:1px solid #e2d8eb; border-radius:0; background:#fff; text-align:left; }
+  .vobels-flipbook__plan--featured { border:1px solid #5D2A86; background:#f7f3fb; }
+  .vobels-flipbook__plan h3 { color:#211b27; font:600 22px/1.2 var(--font-display); letter-spacing:-.05em; }
+  .vobels-flipbook__plan p { color:#211b27; font-family:var(--font-display); font-size:30px; font-weight:600; letter-spacing:-.05em; }
+  .vobels-flipbook__plan p span { color:#716a79; font:500 11px/1.4 var(--font-sans); letter-spacing:0; }
+  .vobels-flipbook__plan ul { color:#716a79; font-size:12px; line-height:2; }
+  .vobels-flipbook__popular { position:absolute; top:0; right:0; left:auto; transform:none; padding:8px 12px; border-radius:0; background:#5D2A86; color:white; font:700 9px/1 var(--font-sans); letter-spacing:.1em; text-transform:uppercase; }
+  .vobels-flipbook__secondary { display:flex; min-height:44px; align-items:center; justify-content:center; padding:0 14px; background:#f4eff8; color:#5D2A86; font:700 11px/1.3 var(--font-sans); text-decoration:none; }
+  .vobels-flipbook__primary { display:flex; width:100%; }
+  .vobels-flipbook__cta { margin:clamp(54px,8vw,90px) 0 50px; padding:clamp(32px,6vw,64px); background:#211827; color:white; }
+  .vobels-flipbook__cta-title { margin:0 0 14px; color:white; font:600 clamp(2rem,4vw,3.4rem)/1.05 var(--font-display); letter-spacing:-.06em; }
+  .vobels-flipbook__cta p { color:rgba(255,255,255,.68); font-size:14px; }
+  .vobels-flipbook__cta-button { display:inline-flex; min-height:48px; align-items:center; justify-content:center; padding:0 22px; background:white; color:#211827; font:700 12px/1.3 var(--font-sans); text-decoration:none; }
+  @media(max-width:760px) { .vobels-flipbook__steps,.vobels-flipbook__pricing { grid-template-columns:1fr; } .vobels-flipbook__steps>div,.vobels-flipbook__steps>div+div { padding:22px 0; border-left:0; border-bottom:1px solid #e6deed; } .vobels-flipbook__features { grid-template-columns:repeat(2,minmax(0,1fr)); } .vobels-flipbook__feature { padding:18px; } }
+  @media(max-width:480px) { .vobels-flipbook__features { grid-template-columns:1fr; } }
+</style>
