@@ -348,3 +348,22 @@
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
 }
+
+/* Homepage section rhythm: intentional breathing room between major stories. */
+.vobels-home .vobels-hero { margin-bottom:clamp(44px,6vw,82px); }
+.vobels-home .vobels-banner { margin-bottom:clamp(76px,9vw,116px); }
+.vobels-home .vobels-capabilities { margin-bottom:clamp(64px,8vw,104px); }
+.vobels-home .vobels-process { margin-top:clamp(40px,6vw,76px); margin-bottom:clamp(72px,9vw,112px); }
+.vobels-home .vobels-product { margin-block:clamp(76px,9vw,116px); }
+.vobels-home .vobels-packages { margin-block:clamp(54px,7vw,88px); }
+.vobels-home .vobels-tech { margin-top:clamp(54px,7vw,88px); }
+.vobels-home .vobels-cta { margin-top:clamp(42px,6vw,76px); }
+@media(max-width:640px) {
+  .vobels-home .vobels-hero { margin-bottom:42px; }
+  .vobels-home .vobels-capabilities { margin-bottom:48px; }
+  .vobels-home .vobels-process { margin-top:28px; margin-bottom:54px; }
+  .vobels-home .vobels-product { margin-block:58px; }
+  .vobels-home .vobels-packages { margin-block:44px; }
+  .vobels-home .vobels-tech { margin-top:44px; }
+  .vobels-home .vobels-cta { margin-top:32px; }
+}
