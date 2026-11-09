@@ -1,8 +1,6 @@
 ---
-import { Picture } from "astro:assets";
 import heroImage from "@/assets/hero.png";
 import Link from "@/components/ui/link.astro";
-import { Icon } from "astro-icon/components";
 ---
 
 <section class="vobels-hero" aria-labelledby="vobels-hero-title">
@@ -24,13 +22,12 @@ import { Icon } from "astro-icon/components";
 
   <div class="vobels-hero__visual">
     <div class="vobels-hero__image">
-      <Picture
-        src={heroImage}
+      <img
+        src={heroImage.src}
         alt="A visual representation of business building and growth"
-        widths={[400, 600, 900]}
-        sizes="(max-width: 900px) 100vw, 48vw"
         loading="eager"
-        format="avif"
+        fetchpriority="high"
+        decoding="async"
       />
     </div>
     <div class="vobels-hero__image-caption">
