@@ -87,140 +87,98 @@ const products = [
 ];
 ---
 
-<Layout title="Products | Vobels Limited" description="Explore Vobels products including Flipbook, BizOS, and upcoming innovations.">
-  <Container>
-    <!-- Hero Section -->
-    <div class="mt-16 text-center max-w-3xl mx-auto">
-      <h1 class="text-4xl md:text-5xl font-bold text-black tracking-tighter">
-        Our Products
-      </h1>
-      <p class="text-xl text-zinc-600 mt-4">
-        Innovative solutions to transform your business operations
-      </p>
-    </div>
+<Layout title="Products | Vobels Limited" description="Explore digital products from Vobels, including HostSuite, Flipbook, BizOS and upcoming tools.">
+  <main class="products-page">
+    <section class="products-hero">
+      <Container>
+        <div class="products-hero__inner">
+          <p class="eyebrow">VOBELS / DIGITAL PRODUCTS</p>
+          <h1>Useful tools.<br /><span>Built for real work.</span></h1>
+          <p class="products-hero__copy">Explore the products we are building to help people create, manage and grow their businesses — from everyday digital tools to the infrastructure behind your online presence.</p>
+          <a href="#product-lineup" class="products-hero__link">Explore the product lineup <span aria-hidden="true">↓</span></a>
+        </div>
+        <div class="products-hero__note"><span>PRODUCTS THAT DO THE WORK</span><span>DESIGNED TO MAKE BUSINESS EASIER</span></div>
+      </Container>
+    </section>
 
-    <!-- Products Grid -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mt-16">
-      {products.map((product, index) => (
-        <div class={`bg-white border rounded-2xl p-6 hover:shadow-lg transition-all relative ${product.status === 'coming' ? 'border-zinc-200' : 'border-zinc-200'}`}>
-          
-          {product.status === 'available' && (
-            <span class="absolute top-4 right-4 bg-green-600 text-white text-xs font-bold px-3 py-1 rounded-full">
-              Available
-            </span>
-          )}
-          {product.status === 'coming' && (
-            <span class="absolute top-4 right-4 bg-zinc-500 text-white text-xs font-bold px-3 py-1 rounded-full">
-              Coming Soon
-            </span>
-          )}
-          
-          <div class="w-12 h-12 bg-black rounded-full flex items-center justify-center mb-4">
-            <Icon name={product.icon} class="w-6 h-6 text-white" />
+    <section class="featured-product">
+      <Container>
+        <div class="featured-product__layout">
+          <div class="featured-product__visual">
+            <div class="featured-product__photo" role="img" aria-label="Modern website management and digital workspace"></div>
+            <div class="featured-product__visual-label"><span>01</span><span>WEBSITE & DIGITAL OPERATIONS</span></div>
           </div>
-          
-          <h2 class="text-xl font-bold text-black mb-2">
-            {product.name}
-          </h2>
-          
-          <p class="text-zinc-500 text-sm leading-relaxed mb-4">
-            {product.description}
-          </p>
-          
-          <ul class="space-y-1 mb-6">
-            {product.features.slice(0, 4).map((feature) => (
-              <li class="flex items-center gap-2 text-sm text-zinc-600">
-                <svg class="w-3 h-3 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                </svg>
-                {feature}
-              </li>
-            ))}
-            {product.features.length > 4 && (
-              <li class="text-sm text-zinc-400">+ {product.features.length - 4} more features</li>
-            )}
-          </ul>
-          
-          {product.status === 'available' && (
-            <a 
-              href={product.link} 
-              class="block text-center bg-black text-white py-3 rounded-lg font-medium hover:bg-zinc-800 transition-all"
-            >
-              {product.cta}
-            </a>
-          )}
-          
-          {product.status === 'coming' && (
-            <button 
-              data-product={product.name}
-              class="notify-btn block w-full bg-zinc-100 text-black py-3 rounded-lg font-medium hover:bg-zinc-200 transition-all"
-            >
-              {product.cta}
-            </button>
-          )}
-        </div>
-      ))}
-    </div>
-
-    <!-- Flipbook Demo Section -->
-    <div class="mt-20 bg-zinc-50 rounded-2xl p-8 border border-zinc-200">
-      <div class="grid md:grid-cols-2 gap-12 items-center">
-        <div>
-          <h2 class="text-2xl font-bold text-black mb-4">See Flipbook in Action</h2>
-          <p class="text-zinc-600 mb-6">
-            Watch how your PDFs transform into beautiful, interactive flipbooks. Perfect for 
-            catalogs, portfolios, ebooks, and business proposals.
-          </p>
-          <ul class="space-y-2 mb-8">
-            <li class="flex items-center gap-2 text-sm">
-              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Upload PDF, get flipbook in minutes
-            </li>
-            <li class="flex items-center gap-2 text-sm">
-              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Share via link or embed on website
-            </li>
-            <li class="flex items-center gap-2 text-sm">
-              <svg class="w-4 h-4 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-              </svg>
-              Track views and engagement
-            </li>
-          </ul>
-          <a href="/flipbook" class="inline-block bg-black text-white px-6 py-3 rounded-lg font-medium hover:bg-zinc-800 transition-all">
-            Try Flipbook Free →
-          </a>
-        </div>
-        <div class="bg-black rounded-xl p-4 text-center">
-          <div class="bg-white rounded-lg p-8 text-center">
-            <Icon name="bx:book-open" class="w-16 h-16 text-black mx-auto mb-4" />
-            <p class="text-zinc-500 text-sm">Interactive Flipbook Preview</p>
-            <p class="text-zinc-400 text-xs mt-2">Click to see how it works →</p>
+          <div class="featured-product__content">
+            <p class="eyebrow">FEATURED PRODUCT / A VOBELS PRODUCT</p>
+            <p class="featured-product__brand">HOST<span>SUITE</span></p>
+            <h2>Your website shouldn't be hard to manage.</h2>
+            <p class="featured-product__copy">HostSuite helps bring your website, hosting, domains and business email into a more manageable experience — with diagnosis and human support when you need it.</p>
+            <ul class="featured-product__features">
+              <li>Website and hosting management</li>
+              <li>Domain and business email support</li>
+              <li>Website diagnosis and assessment</li>
+              <li>Ongoing management and maintenance</li>
+            </ul>
+            <div class="featured-product__actions">
+              <a class="product-button" href="https://hostsuite.vobels.com.ng">Explore HostSuite <span aria-hidden="true">↗</span></a>
+              <a class="featured-product__diagnostic" href="https://hostsuite.vobels.com.ng/#diagnostic">Start with a diagnostic <span aria-hidden="true">→</span></a>
+            </div>
           </div>
         </div>
-      </div>
-    </div>
+      </Container>
+    </section>
 
-    <!-- CTA Section -->
-    <div class="mt-20 mb-20 bg-black rounded-2xl p-12 text-center text-white">
-      <h2 class="text-2xl md:text-3xl font-bold mb-4">Ready to Transform Your Business?</h2>
-      <p class="text-zinc-300 mb-8 max-w-2xl mx-auto">
-        Get started with Vobels products today. Free trials available for all available products.
-      </p>
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/contact" class="inline-block bg-white text-black px-8 py-3 rounded-lg font-medium hover:bg-zinc-100 transition-all">
-          Contact Sales →
-        </a>
-        <a href="/flipbook" class="inline-block border border-white text-white px-8 py-3 rounded-lg font-medium hover:bg-white/10 transition-all">
-          Try Flipbook Free
-        </a>
-      </div>
-    </div>
-  </Container>
+    <section id="product-lineup" class="product-lineup">
+      <Container>
+        <div class="product-lineup__heading">
+          <div><p class="eyebrow">THE VOBELS PRODUCT LINEUP</p><h2>More ways to<br /><span>get things done.</span></h2></div>
+          <p>Explore our available tools and the products in development. Each is designed around a practical business need.</p>
+        </div>
+        <div class="product-grid">
+          {products.map((product, index) => (
+            <article class="product-card">
+              <div class="product-card__topline"><span>PRODUCT / {String(index + 2).padStart(2, "0")}</span>
+                {product.status === "available" ? <span class="product-status product-status--available">Available</span> : <span class="product-status">Coming soon</span>}
+              </div>
+              <div class="product-card__icon"><Icon name={product.icon} class="w-7 h-7" /></div>
+              <h3>{product.name}</h3>
+              <p class="product-card__description">{product.description}</p>
+              <ul>{product.features.slice(0, 4).map((feature) => <li><span aria-hidden="true">↗</span>{feature}</li>)}</ul>
+              <div class="product-card__bottom">
+                {product.status === "available" ? <a href={product.link} class="product-card__cta">{product.cta}</a> : <button data-product={product.name} class="notify-btn product-card__cta product-card__cta--muted">{product.cta}</button>}
+              </div>
+            </article>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <section class="flipbook-feature">
+      <Container>
+        <div class="flipbook-feature__layout">
+          <div class="flipbook-feature__content">
+            <p class="eyebrow">A CLOSER LOOK / VOBELS FLIPBOOK</p>
+            <h2>Give your PDFs<br />a better way to be read.</h2>
+            <p>Turn catalogs, portfolios, ebooks and proposals into interactive flipbooks that are easy to share and view across devices.</p>
+            <ul><li>Upload a PDF and create a flipbook</li><li>Share by link or embed on your website</li><li>Track views and engagement</li></ul>
+            <a href="/flipbook" class="product-button">Try Flipbook <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="flipbook-feature__visual">
+            <div class="flipbook-feature__screen"><Icon name="bx:book-open" class="w-14 h-14" /><span>VOBELS FLIPBOOK</span><small>Documents, made interactive.</small><div class="flipbook-feature__pages"><i></i><i></i></div></div>
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <section class="products-contact">
+      <Container>
+        <div class="products-contact__inner">
+          <div><p class="eyebrow">HAVE A NEED WE HAVEN'T COVERED?</p><h2>Let's build something useful.</h2><p>Talk to our team about the right product, a business challenge or a solution you have in mind.</p></div>
+          <a href="/contact" class="product-button product-button--light">Talk to Vobels <span aria-hidden="true">→</span></a>
+        </div>
+      </Container>
+    </section>
+  </main>
 
   <!-- Toast Notification -->
   <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 hidden">
@@ -371,4 +329,86 @@ const products = [
       }
     });
   </script>
+
+<style>
+  .products-page { background:#fff; color:#211b27; }
+  .products-page .eyebrow { margin:0 0 17px; color:#5D2A86; font-size:10px; font-weight:800; letter-spacing:.18em; }
+  .products-hero { padding:92px 0 35px; background:linear-gradient(115deg,#f7f4f9,#fff 68%); }
+  .products-hero__inner { max-width:1000px; }
+  .products-hero h1 { margin:0; font-size:clamp(50px,8vw,94px); line-height:.98; letter-spacing:-.075em; font-weight:800; }
+  .products-hero h1 span,.product-lineup h2 span { color:#76509a; }
+  .products-hero__copy { max-width:600px; margin:25px 0 26px; color:#716a79; font-size:16px; line-height:1.85; }
+  .products-hero__link { display:inline-flex; gap:25px; color:#5D2A86; font-size:12px; font-weight:800; text-decoration:none; }
+  .products-hero__note { display:flex; justify-content:space-between; gap:20px; margin-top:70px; padding-top:17px; border-top:1px solid #e6deed; color:#8a8290; font-size:9px; font-weight:800; letter-spacing:.14em; }
+  .featured-product { padding:90px 0 100px; }
+  .featured-product__layout { display:grid; grid-template-columns:1.05fr .95fr; align-items:center; gap:clamp(40px,7vw,100px); }
+  .featured-product__visual { position:relative; min-height:510px; background:#211b27; }
+  .featured-product__photo { position:absolute; inset:0; background-image:linear-gradient(180deg,rgba(25,17,32,.05),rgba(25,17,32,.55)),url("https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1400&h=1400&fit=crop"); background-size:cover; background-position:center; }
+  .featured-product__visual-label { position:absolute; right:0; bottom:0; left:0; display:flex; justify-content:space-between; padding:19px 22px; color:#fff; background:rgba(24,17,31,.72); font-size:9px; font-weight:800; letter-spacing:.13em; }
+  .featured-product__brand { margin:0 0 16px; color:#211b27; font-size:13px; font-weight:900; letter-spacing:.18em; }
+  .featured-product__brand span { color:#76509a; }
+  .featured-product__content h2 { max-width:540px; margin:0; font-size:clamp(37px,4.5vw,58px); line-height:1.02; letter-spacing:-.06em; font-weight:800; }
+  .featured-product__copy { margin:20px 0 23px; color:#716a79; font-size:14px; line-height:1.85; }
+  .featured-product__features,.flipbook-feature__content ul { display:grid; gap:12px; margin:0; padding:0; list-style:none; }
+  .featured-product__features li,.flipbook-feature__content li { color:#514b59; font-size:12px; }
+  .featured-product__features li:before,.flipbook-feature__content li:before { content:"↗"; margin-right:10px; color:#5D2A86; font-weight:800; }
+  .featured-product__actions { display:flex; flex-wrap:wrap; align-items:center; gap:24px; margin-top:30px; }
+  .product-button { display:inline-flex; align-items:center; justify-content:center; gap:22px; min-height:49px; padding:0 20px; color:#fff; background:#5D2A86; font-size:12px; font-weight:800; text-decoration:none; transition:transform .2s,background .2s; }
+  .product-button:hover { transform:translateY(-2px); background:#452064; }
+  .featured-product__diagnostic { color:#5D2A86; font-size:12px; font-weight:800; text-decoration:none; }
+  .product-lineup { padding:90px 0 105px; background:#f8f6fa; }
+  .product-lineup__heading { display:grid; grid-template-columns:1.1fr .9fr; align-items:end; gap:40px; margin-bottom:43px; }
+  .product-lineup h2 { margin:0; font-size:clamp(38px,5vw,62px); line-height:1.02; letter-spacing:-.065em; font-weight:800; }
+  .product-lineup__heading > p { max-width:420px; margin:0 0 4px; color:#716a79; font-size:14px; line-height:1.8; }
+  .product-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-top:1px solid #e4dce9; border-left:1px solid #e4dce9; }
+  .product-card { display:flex; flex-direction:column; min-height:390px; padding:25px; border-right:1px solid #e4dce9; border-bottom:1px solid #e4dce9; background:#fff; }
+  .product-card__topline { display:flex; justify-content:space-between; align-items:center; gap:10px; color:#918898; font-size:8px; font-weight:800; letter-spacing:.12em; }
+  .product-status { padding:6px 8px; color:#77707e; background:#f0edf2; font-size:8px; letter-spacing:.04em; text-transform:uppercase; }
+  .product-status--available { color:#4f286c; background:#f0e8f6; }
+  .product-card__icon { display:flex; align-items:center; justify-content:center; width:52px; height:52px; margin:30px 0 18px; color:#5D2A86; background:#f1eaf6; }
+  .product-card h3 { margin:0; color:#211b27; font-size:23px; line-height:1.1; letter-spacing:-.04em; font-weight:800; }
+  .product-card__description { margin:13px 0 17px; color:#716a79; font-size:12px; line-height:1.75; }
+  .product-card ul { display:grid; gap:8px; margin:0 0 24px; padding:0; list-style:none; }
+  .product-card li { color:#514b59; font-size:10px; }
+  .product-card li span { margin-right:8px; color:#5D2A86; }
+  .product-card__bottom { margin-top:auto; padding-top:10px; }
+  .product-card__cta { display:inline-flex; align-items:center; justify-content:center; width:100%; min-height:43px; padding:0 12px; border:1px solid #5D2A86; color:#5D2A86; background:#fff; font-size:11px; font-weight:800; text-decoration:none; cursor:pointer; }
+  .product-card__cta:hover { color:#fff; background:#5D2A86; }
+  .product-card__cta--muted { border-color:#e5dfea; color:#5e5665; background:#f8f6fa; }
+  .flipbook-feature { padding:100px 0; }
+  .flipbook-feature__layout { display:grid; grid-template-columns:1fr 1fr; align-items:center; gap:70px; }
+  .flipbook-feature__content h2 { margin:0; font-size:clamp(36px,4.5vw,55px); line-height:1.03; letter-spacing:-.06em; font-weight:800; }
+  .flipbook-feature__content > p:not(.eyebrow) { max-width:490px; margin:18px 0 22px; color:#716a79; font-size:13px; line-height:1.8; }
+  .flipbook-feature__content ul { margin-bottom:27px; }
+  .flipbook-feature__visual { display:flex; align-items:center; justify-content:center; min-height:370px; padding:40px; background:#f1eaf6; }
+  .flipbook-feature__screen { display:flex; flex-direction:column; align-items:center; justify-content:center; width:min(100%,390px); min-height:280px; padding:30px; color:#fff; background:#211b27; text-align:center; box-shadow:18px 18px 0 rgba(93,42,134,.18); }
+  .flipbook-feature__screen > span { margin-top:14px; font-size:11px; font-weight:900; letter-spacing:.16em; }
+  .flipbook-feature__screen small { margin-top:7px; color:#d5cbdc; font-size:10px; }
+  .flipbook-feature__pages { display:flex; width:100%; max-width:210px; height:58px; margin-top:24px; }
+  .flipbook-feature__pages i { flex:1; border:1px solid #d9cde3; background:linear-gradient(135deg,#fff,#e9e0ef); }
+  .flipbook-feature__pages i + i { background:linear-gradient(135deg,#d7c2e5,#fff); }
+  .products-contact { padding:72px 0; color:#fff; background:#211b27; }
+  .products-contact__inner { display:flex; align-items:center; justify-content:space-between; gap:35px; }
+  .products-contact .eyebrow { color:#d6bce9; }
+  .products-contact h2 { margin:0; font-size:clamp(30px,4vw,45px); line-height:1.05; letter-spacing:-.05em; }
+  .products-contact p:not(.eyebrow) { max-width:540px; margin:13px 0 0; color:#d2cbd7; font-size:13px; line-height:1.8; }
+  .product-button--light { flex-shrink:0; color:#24192c; background:#fff; }
+  .product-button--light:hover { background:#eee5f4; }
+  @media(max-width:850px) { .product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media(max-width:700px) {
+    .products-hero { padding:65px 0 28px; }
+    .products-hero__copy { font-size:14px; }
+    .products-hero__note { margin-top:48px; flex-direction:column; gap:10px; }
+    .featured-product,.flipbook-feature { padding:65px 0; }
+    .featured-product__layout,.product-lineup__heading,.flipbook-feature__layout { grid-template-columns:1fr; gap:30px; }
+    .featured-product__visual { min-height:300px; }
+    .product-lineup { padding:65px 0; }
+    .product-grid { grid-template-columns:1fr; }
+    .product-card { min-height:0; padding:22px; }
+    .product-card__icon { margin-top:22px; }
+    .flipbook-feature__visual { min-height:290px; padding:25px; }
+    .products-contact { padding:58px 0; }
+    .products-contact__inner { align-items:flex-start; flex-direction:column; }
+  }
+</style>
 </Layout>
