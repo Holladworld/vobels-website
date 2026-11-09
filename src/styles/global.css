@@ -207,7 +207,7 @@
   display: grid; grid-template-columns: minmax(240px, .8fr) minmax(0, 1.2fr);
   gap: clamp(42px, 8vw, 120px); padding: clamp(76px, 10vw, 132px) 0;
   background: var(--vobels-dark); color: #f4f0e9;
-  margin-left: calc((100vw - min(100vw, 1280px)) / -2); margin-right: calc((100vw - min(100vw, 1280px)) / -2);
+  margin-left: calc(50% - 50vw); margin-right: calc(50% - 50vw);
   padding-left: max(24px, calc((100vw - 1180px) / 2)); padding-right: max(24px, calc((100vw - 1180px) / 2));
 }
 .vobels-process .vobels-eyebrow { color: #c5a7dc; }
@@ -279,7 +279,7 @@
 .vobels-packages__regional p { margin: 7px 0 0; color: var(--vobels-muted); font-size: 12px; }
 .vobels-packages__regional a { display: inline-flex; gap: 12px; margin-top: 18px; color: var(--vobels-purple); font-size: 11px; font-weight: 700; text-decoration: none; }
 
-.vobels-cta { margin: 0 calc((100vw - min(100vw, 1280px)) / -2); padding: clamp(38px, 6vw, 76px) max(24px, calc((100vw - 1180px) / 2)); background: var(--vobels-purple); color: #fff; }
+.vobels-cta { margin: 0 calc(50% - 50vw); padding: clamp(38px, 6vw, 76px) max(24px, calc((100vw - 1180px) / 2)); background: var(--vobels-purple); color: #fff; }
 .vobels-cta__meta, .vobels-cta__rule { display: flex; justify-content: space-between; gap: 20px; color: rgba(255,255,255,.65); font: 600 9px/1.4 var(--font-sans); letter-spacing: .16em; }
 .vobels-cta__main { display: grid; grid-template-columns: 1fr .65fr; gap: 50px; align-items: end; padding: clamp(48px, 7vw, 88px) 0; }
 .vobels-cta h2 { margin: 0; color: white; font: 600 clamp(3rem, 6vw, 6rem)/.98 var(--font-display); letter-spacing: -.08em; }
