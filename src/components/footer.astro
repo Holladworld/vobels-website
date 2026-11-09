@@ -13,7 +13,15 @@ const socialLinks = [
 ---
 
 <footer class="my-20">
-  <!-- Social Icons Row -->
+  <div class="mb-8 flex flex-col items-center justify-center gap-2 text-center">
+    <a
+      href="https://hostsuite.vobels.com"
+      class="text-sm font-semibold text-zinc-700 transition hover:text-violet-700"
+    >
+      HostSuite <span class="font-normal text-zinc-500">· A Vobels product</span>
+    </a>
+  </div>
+
   <div class="flex justify-center gap-6 mb-6">
     {socialLinks.map((social) => (
       <a
@@ -27,8 +35,7 @@ const socialLinks = [
       </a>
     ))}
   </div>
-  
-  <!-- Copyright -->
+
   <p class="text-center text-sm text-zinc-500">
     Copyright © {currentYear} Vobels Limited. All rights reserved.
   </p>
