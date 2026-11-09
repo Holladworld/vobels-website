@@ -13,13 +13,13 @@
     <div>
       <label class="vobels-calculator__field-label">01 — Choose all the service categories you need</label>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-        <button type="button" data-category="registration" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all bg-black text-white border-black text-sm">Registration <span class="cat-btn__state">Selected</span></button>
-        <button type="button" data-category="trademark" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Trademark <span class="cat-btn__state">Add</span></button>
-        <button type="button" data-category="copyright" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Copyright <span class="cat-btn__state">Add</span></button>
-        <button type="button" data-category="patent" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Patent <span class="cat-btn__state">Add</span></button>
-        <button type="button" data-category="nafdac" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">NAFDAC <span class="cat-btn__state">Add</span></button>
-        <button type="button" data-category="global" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Global Access <span class="cat-btn__state">Add</span></button>
-        <button type="button" data-category="foreign" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Foreign Reg <span class="cat-btn__state">Add</span></button>
+        <button type="button" data-category="registration" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all bg-black text-white border-black text-sm">Registration<span class="cat-btn__state" aria-hidden="true"></span></button>
+        <button type="button" data-category="trademark" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Trademark<span class="cat-btn__state" aria-hidden="true"></span></button>
+        <button type="button" data-category="copyright" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Copyright<span class="cat-btn__state" aria-hidden="true"></span></button>
+        <button type="button" data-category="patent" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Patent<span class="cat-btn__state" aria-hidden="true"></span></button>
+        <button type="button" data-category="nafdac" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">NAFDAC<span class="cat-btn__state" aria-hidden="true"></span></button>
+        <button type="button" data-category="global" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Global Access<span class="cat-btn__state" aria-hidden="true"></span></button>
+        <button type="button" data-category="foreign" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Foreign Reg<span class="cat-btn__state" aria-hidden="true"></span></button>
       </div>
       <p id="category-description" class="vobels-calculator__hint">Select multiple categories to build one combined estimate.</p>
     </div>
@@ -260,15 +260,15 @@
       if(category==='foreign'){const o=document.querySelector('input[name="foreign-option"]:checked')?.value||'standard',p=foreignPrices[o];total=p.total;govFee=p.govFee;vobelsFee=p.vobelsFee;currency=p.currency;label=({standard:'Standard package',expat:'Expatriate support package','rep-office':'Representative office','permit-only':'Business permit only'})[o];}
       return {category,name:names[category],label,total,govFee,vobelsFee,currency};}
     function render(){const chosen=Array.from(selectedCategories).map(estimate),items=document.getElementById('estimate-items'),totals=document.getElementById('estimate-totals');
-      if(!chosen.length){items.innerHTML='<p class="vobels-calculator__empty">Select one or more categories above to see your estimate.</p>';totals.innerHTML='';document.getElementById('price-note').textContent='Your estimate will update as you add services.';return;}
-      items.innerHTML=chosen.map(x=>'<div class="vobels-calculator__estimate-item"><div><small>'+x.name+'</small><strong>'+x.label+'</strong><span>Official: '+money(x.govFee,x.currency)+' · Vobels: '+money(x.vobelsFee,x.currency)+'</span></div><b>'+money(x.total,x.currency)+'</b></div>').join('');
-      totals.innerHTML=['NGN','USD'].filter(c=>chosen.some(x=>x.currency===c)).map(c=>{const group=chosen.filter(x=>x.currency===c),sum=k=>group.reduce((n,x)=>n+x[k],0);return '<div class="vobels-calculator__currency-total"><span>'+(c==='USD'?'US DOLLAR TOTAL':'NAIRA TOTAL')+'</span><div><small>Official fees</small><b>'+money(sum('govFee'),c)+'</b></div><div><small>Vobels fees</small><b>'+money(sum('vobelsFee'),c)+'</b></div><div class="vobels-calculator__grand-total"><strong>Combined estimate</strong><strong>'+money(sum('total'),c)+'</strong></div></div>';}).join('');
-      document.getElementById('price-note').textContent=chosen.length+' service categor'+(chosen.length===1?'y':'ies')+' selected. Currency totals are grouped separately.';}
-    function update(){document.querySelectorAll('.cat-btn').forEach(btn=>{const on=selectedCategories.has(btn.dataset.category);btn.classList.toggle('bg-black',on);btn.classList.toggle('text-white',on);btn.classList.toggle('border-black',on);btn.classList.toggle('border-zinc-200',!on);btn.setAttribute('aria-pressed',String(on));const state=btn.querySelector('.cat-btn__state');if(state)state.textContent=on?'Selected':'Add';});
+      if(!chosen.length){items.innerHTML='<p class="vobels-calculator__empty">Choose a service category to see its estimate here.</p>';totals.innerHTML='';document.getElementById('price-note').textContent='Select the services you need. Your estimate will update as you configure them.';return;}
+      items.innerHTML=chosen.map((x,i)=>'<article class="vobels-calculator__estimate-item"><div class="vobels-calculator__estimate-item-head"><div class="vobels-calculator__estimate-item-title"><small>'+String(i+1).padStart(2,'0')+' / '+x.name+'</small><strong>'+x.label+'</strong></div><b>'+money(x.total,x.currency)+'</b></div><div class="vobels-calculator__fee-breakdown"><div><span>Official fees</span><strong>'+money(x.govFee,x.currency)+'</strong></div><div><span>Vobels service fee</span><strong>'+money(x.vobelsFee,x.currency)+'</strong></div></div></article>').join('');
+      totals.innerHTML=['NGN','USD'].filter(c=>chosen.some(x=>x.currency===c)).map(c=>{const group=chosen.filter(x=>x.currency===c),sum=k=>group.reduce((n,x)=>n+x[k],0);return '<section class="vobels-calculator__currency-total"><div class="vobels-calculator__currency-heading"><span>'+(c==='USD'?'NIGERIAN NAIRA':'US DOLLAR')+'</span><small>'+group.length+' service'+(group.length===1?'':'s')+'</small></div><div><span>Official fees subtotal</span><b>'+money(sum('govFee'),c)+'</b></div><div><span>Vobels fees subtotal</span><b>'+money(sum('vobelsFee'),c)+'</b></div><div class="vobels-calculator__grand-total"><strong>Combined '+(c==='USD'?'USD':'NGN')+' estimate</strong><strong>'+money(sum('total'),c)+'</strong></div></section>';}).join('');
+      document.getElementById('price-note').textContent=chosen.length+' selected service'+(chosen.length===1?'':'s')+'. Fees are itemised by service and totals are separated by currency.';}
+    function update(){document.querySelectorAll('.cat-btn').forEach(btn=>{const on=selectedCategories.has(btn.dataset.category);btn.classList.toggle('bg-black',on);btn.classList.toggle('text-white',on);btn.classList.toggle('border-black',on);btn.classList.toggle('border-zinc-200',!on);btn.setAttribute('aria-pressed',String(on));const state=btn.querySelector('.cat-btn__state');if(state)state.classList.toggle('is-selected',on);});
       Object.keys(sectionIds).forEach(k=>document.getElementById(sectionIds[k])?.classList.toggle('hidden',!selectedCategories.has(k)));
       document.getElementById('share-capital-group').classList.toggle('hidden',!['ltd','plc'].includes(currentType));
       document.getElementById('taxpromax-group').classList.toggle('hidden',currentType==='plc');
-      const labels=Array.from(selectedCategories).map(k=>names[k]);document.getElementById('category-description').textContent=labels.length?'Selected: '+labels.join(' · ')+'. Configure each selected service below.':'No categories selected. Add the services you need above.';render();}
+      const labels=Array.from(selectedCategories).map(k=>names[k]);document.getElementById('category-description').textContent=labels.length?labels.length+' categor'+(labels.length===1?'y':'ies')+' selected. Configure the options for each service below.':'No categories selected. Choose the categories you need above.';render();}
     document.querySelectorAll('.cat-btn').forEach(btn=>btn.addEventListener('click',()=>{const c=btn.dataset.category;if(selectedCategories.has(c))selectedCategories.delete(c);else selectedCategories.add(c);update();}));
     document.querySelectorAll('.type-btn').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.type-btn').forEach(b=>{b.classList.remove('bg-black','text-white','border-black');b.classList.add('border-zinc-200');});btn.classList.add('bg-black','text-white','border-black');currentType=btn.dataset.type;document.getElementById('share-capital-group').classList.toggle('hidden',!['ltd','plc'].includes(currentType));document.getElementById('taxpromax-group').classList.toggle('hidden',currentType==='plc');if(currentType==='plc'){includeTaxPromax=false;document.getElementById('include-taxpromax').checked=false;}update();}));
     document.getElementById('calculate-btn')?.addEventListener('click',()=>{let n=parseInt(document.getElementById('share-capital').value,10);if(!Number.isFinite(n)||n<1000000)n=1000000;currentShareCapital=n;document.getElementById('share-capital').value=n;update();});
@@ -353,5 +353,35 @@
     .vobels-calculator > .space-y-5 > #results { grid-column:1; }
     .vobels-calculator > .space-y-5 > #results { grid-row:2; position:static; }
   }
+
+
+  /* Clear category selection and readable multi-service estimate breakdown. */
+  .vobels-calculator .cat-btn { display:flex; align-items:center; justify-content:space-between; gap:8px; text-align:left; }
+  .vobels-calculator .cat-btn__state { display:inline-flex; flex:0 0 17px; width:17px; height:17px; margin:0; align-items:center; justify-content:center; border:1px solid #cfc3d9; border-radius:50%; background:#fff; color:transparent; font-size:0; opacity:1; }
+  .vobels-calculator .cat-btn__state.is-selected { border-color:#fff; background:#fff; color:#5D2A86; }
+  .vobels-calculator .cat-btn__state.is-selected:after { content:"✓"; font:800 11px/1 var(--font-sans); }
+  .vobels-calculator .cat-btn.bg-black { background:#5D2A86; border-color:#5D2A86; color:#fff; }
+  .vobels-calculator__estimate-items { display:grid; gap:0; border-top:1px solid #e6deed; }
+  .vobels-calculator__estimate-item { display:block; padding:17px 0; border-bottom:1px solid #e6deed; }
+  .vobels-calculator__estimate-item-head { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+  .vobels-calculator__estimate-item-title { display:grid; gap:5px; min-width:0; }
+  .vobels-calculator__estimate-item small { color:#5D2A86; font:700 9px/1.4 var(--font-sans); letter-spacing:.1em; text-transform:uppercase; }
+  .vobels-calculator__estimate-item-title strong { color:#211b27; font:600 14px/1.3 var(--font-display); }
+  .vobels-calculator__estimate-item-head>b { flex:none; color:#211b27; font:700 14px/1.3 var(--font-sans); white-space:nowrap; }
+  .vobels-calculator__fee-breakdown { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:12px; }
+  .vobels-calculator__fee-breakdown>div { display:flex; flex-direction:column; gap:4px; padding:9px 10px; background:#faf8fc; }
+  .vobels-calculator__fee-breakdown span { color:#817889; font:500 10px/1.4 var(--font-sans); }
+  .vobels-calculator__fee-breakdown strong { color:#37303d; font:700 11px/1.4 var(--font-sans); }
+  .vobels-calculator__currency-total { gap:10px; margin-top:14px; padding:16px; border:1px solid #e6deed; background:#f7f3fb; }
+  .vobels-calculator__currency-heading { display:flex!important; align-items:center; justify-content:space-between; padding-bottom:7px; border-bottom:1px solid #e6deed; }
+  .vobels-calculator__currency-heading>span { color:#5D2A86; font:800 10px/1.4 var(--font-sans); letter-spacing:.12em; }
+  .vobels-calculator__currency-heading>small { color:#817889; font-size:10px; }
+  .vobels-calculator__currency-total>div:not(.vobels-calculator__currency-heading) { display:flex; align-items:center; justify-content:space-between; gap:12px; }
+  .vobels-calculator__currency-total>div:not(.vobels-calculator__currency-heading)>span { color:#716a79; font-size:11px; }
+  .vobels-calculator__currency-total>div:not(.vobels-calculator__currency-heading)>b { color:#211b27; font-size:11px; white-space:nowrap; }
+  .vobels-calculator__currency-total .vobels-calculator__grand-total { margin-top:3px; padding-top:12px; border-top:1px solid #ded2e8; }
+  .vobels-calculator__grand-total strong:first-child { font:700 12px/1.4 var(--font-sans); }
+  .vobels-calculator__grand-total strong:last-child { font:700 18px/1.2 var(--font-sans); white-space:nowrap; }
+  @media(max-width:420px) { .vobels-calculator__fee-breakdown { grid-template-columns:1fr 1fr; gap:6px; } .vobels-calculator__fee-breakdown>div { padding:8px; } .vobels-calculator__fee-breakdown span { font-size:9px; } .vobels-calculator__fee-breakdown strong { font-size:10px; } }
 
 </style>
