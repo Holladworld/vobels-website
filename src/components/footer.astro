@@ -2,7 +2,6 @@
 import { Icon } from "astro-icon/components";
 
 const currentYear = new Date().getFullYear();
-
 const socialLinks = [
   { name: "X", url: "https://x.com/vobels_", icon: "bx:bxl-twitter" },
   { name: "Instagram", url: "https://instagram.com/vobels", icon: "bx:bxl-instagram" },
@@ -12,31 +11,55 @@ const socialLinks = [
 ];
 ---
 
-<footer class="my-20">
-  <div class="mb-8 flex flex-col items-center justify-center gap-2 text-center">
-    <a
-      href="https://hostsuite.vobels.com"
-      class="text-sm font-semibold text-zinc-700 transition hover:text-violet-700"
-    >
-      HostSuite <span class="font-normal text-zinc-500">· A Vobels product</span>
-    </a>
+<footer class="vobels-footer">
+  <div class="vobels-footer__top">
+    <div>
+      <a href="/" class="vobels-footer__wordmark">VOBELS<span>LIMITED</span></a>
+      <p>Business enablement.<br />Strategic growth. Venture partnership.</p>
+    </div>
+    <div class="vobels-footer__links">
+      <div>
+        <span class="vobels-footer__label">Explore</span>
+        <a href="/services">Services</a>
+        <a href="/about">About Vobels</a>
+        <a href="/contact">Contact</a>
+      </div>
+      <div>
+        <span class="vobels-footer__label">Our ecosystem</span>
+        <a href="https://hostsuite.vobels.com">HostSuite <small>A Vobels product ↗</small></a>
+        <a href="/products">Products</a>
+        <a href="/academy">Academy</a>
+      </div>
+    </div>
   </div>
-
-  <div class="flex justify-center gap-6 mb-6">
-    {socialLinks.map((social) => (
-      <a
-        href={social.url}
-        target="_blank"
-        rel="noopener noreferrer"
-        class="w-10 h-10 bg-zinc-100 rounded-full flex items-center justify-center text-zinc-600 hover:bg-black hover:text-white transition-all hover:scale-110"
-        aria-label={social.name}
-      >
-        <Icon name={social.icon} class="w-5 h-5" />
-      </a>
-    ))}
+  <div class="vobels-footer__bottom">
+    <p>Copyright © {currentYear} Vobels Limited. All rights reserved.</p>
+    <div class="vobels-footer__socials">
+      {socialLinks.map((social) => (
+        <a href={social.url} target="_blank" rel="noopener noreferrer" aria-label={social.name}>
+          <Icon name={social.icon} class="w-4 h-4" />
+        </a>
+      ))}
+    </div>
   </div>
-
-  <p class="text-center text-sm text-zinc-500">
-    Copyright © {currentYear} Vobels Limited. All rights reserved.
-  </p>
 </footer>
+
+<style>
+  .vobels-footer { margin-top:clamp(60px,8vw,100px); padding:48px max(24px,calc((100vw - 1180px)/2)) 24px; margin-left:calc((100vw - min(100vw,1280px))/-2); margin-right:calc((100vw - min(100vw,1280px))/-2); background:#21191f; color:#f4f0e9; }
+  .vobels-footer__top { display:grid; grid-template-columns:1fr 1fr; gap:50px; padding-bottom:48px; }
+  .vobels-footer__wordmark { display:inline-flex; align-items:baseline; gap:9px; color:#fff; font:800 26px/1 var(--font-display); letter-spacing:-.08em; text-decoration:none; }
+  .vobels-footer__wordmark span { color:rgba(244,240,233,.48); font:600 9px/1 var(--font-sans); letter-spacing:.18em; }
+  .vobels-footer__top > div:first-child p { margin:18px 0 0; color:rgba(244,240,233,.58); font-size:12px; }
+  .vobels-footer__links { display:grid; grid-template-columns:1fr 1fr; gap:28px; }
+  .vobels-footer__links > div { display:flex; flex-direction:column; align-items:flex-start; gap:12px; }
+  .vobels-footer__label { margin-bottom:5px; color:#c5a7dc; font:700 9px/1.4 var(--font-sans); letter-spacing:.17em; text-transform:uppercase; }
+  .vobels-footer__links a { color:rgba(244,240,233,.76); font-size:12px; text-decoration:none; }
+  .vobels-footer__links a:hover { color:#d8c8e5; }
+  .vobels-footer__links small { color:#c5a7dc; font-size:9px; }
+  .vobels-footer__bottom { display:flex; justify-content:space-between; align-items:center; gap:20px; padding-top:20px; border-top:1px solid rgba(244,240,233,.18); }
+  .vobels-footer__bottom p { margin:0; color:rgba(244,240,233,.45); font-size:10px; }
+  .vobels-footer__socials { display:flex; gap:8px; }
+  .vobels-footer__socials a { display:flex; width:34px; height:34px; align-items:center; justify-content:center; border:1px solid rgba(244,240,233,.22); color:rgba(244,240,233,.72); }
+  .vobels-footer__socials a:hover { border-color:#c5a7dc; color:#d8c8e5; }
+  @media(max-width:640px) { .vobels-footer { margin-left:-20px; margin-right:-20px; padding-left:20px; padding-right:20px; } .vobels-footer__top { grid-template-columns:1fr; gap:36px; } .vobels-footer__bottom { align-items:flex-start; flex-direction:column; } }
+</style>
