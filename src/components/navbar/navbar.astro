@@ -13,7 +13,7 @@ const menuitems = [
     title: "Services",
     path: "#",
     children: [
-      { title: "Products", path: "/pricing" },
+      { title: "Products", path: "/products" },
       { title: "Academy", path: "/academy" },
       {
         title: "Pricing",
@@ -21,6 +21,11 @@ const menuitems = [
       },
       { title: "Calculator", path: "/ai-assistant", badge: true },
     ],
+  },
+  {
+    title: "HostSuite",
+    path: "https://hostsuite.vobels.com",
+    accent: true,
   },
   {
     title: "About",
@@ -62,8 +67,14 @@ const menuitems = [
                   <li>
                     <a
                       href={item.path}
-                      class="flex lg:px-3 py-2 items-center text-gray-600 hover:text-gray-900">
-                      <span> {item.title}</span>
+                      class:list={[
+                        "flex lg:px-3 py-2 items-center hover:text-gray-900",
+                        item.accent
+                          ? "font-semibold text-violet-700"
+                          : "text-gray-600",
+                      ]}
+                      aria-label={item.accent ? "HostSuite, a Vobels product" : undefined}>
+                      <span>{item.title}</span>
                       {item.badge && (
                         <span class="ml-1 px-2 py-0.5 text-[10px] animate-pulse font-semibold uppercase text-white bg-indigo-600 rounded-full">
                           New
