@@ -5,7 +5,7 @@
 
 Official website for Vobels Limited - a full-service development and growth firm building businesses from idea to maturity.
 
-## 🚀 Overview
+## Overview
 
 Vobels provides end-to-end business enablement services including:
 
