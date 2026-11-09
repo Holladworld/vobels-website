@@ -4,24 +4,35 @@
 
 <div class="vobels-calculator" id="calculator-container">
   <div class="vobels-calculator__heading">
-    <div><span class="vobels-calculator__step">YOUR ESTIMATE / 01</span><h2>What would you like to calculate?</h2><p>Start by choosing a service. We will show only the options relevant to that service.</p></div>
+    <div><span class="vobels-calculator__step">YOUR ESTIMATE / 01</span><h2>What would you like to calculate?</h2><p>Choose every service you need. Your combined estimate updates as you configure each selection.</p></div>
     <span class="vobels-calculator__estimate-mark">₦ / $</span>
   </div>
 
   <div class="space-y-5">
     <!-- Service Category Selection -->
     <div>
-      <label class="vobels-calculator__field-label">01 — Choose a service category</label>
+      <label class="vobels-calculator__field-label">01 — Choose all the service categories you need</label>
       <div class="grid grid-cols-2 md:grid-cols-4 gap-2">
-        <button type="button" data-category="registration" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all bg-black text-white border-black text-sm">Registration</button>
-        <button type="button" data-category="trademark" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Trademark</button>
-        <button type="button" data-category="copyright" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Copyright</button>
-        <button type="button" data-category="patent" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Patent</button>
-        <button type="button" data-category="nafdac" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">NAFDAC</button>
-        <button type="button" data-category="global" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Global Access</button>
-        <button type="button" data-category="foreign" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Foreign Reg</button>
+        <button type="button" data-category="registration" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all bg-black text-white border-black text-sm">Registration <span class="cat-btn__state">Selected</span></button>
+        <button type="button" data-category="trademark" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Trademark <span class="cat-btn__state">Add</span></button>
+        <button type="button" data-category="copyright" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Copyright <span class="cat-btn__state">Add</span></button>
+        <button type="button" data-category="patent" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Patent <span class="cat-btn__state">Add</span></button>
+        <button type="button" data-category="nafdac" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">NAFDAC <span class="cat-btn__state">Add</span></button>
+        <button type="button" data-category="global" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Global Access <span class="cat-btn__state">Add</span></button>
+        <button type="button" data-category="foreign" class="cat-btn py-2 px-3 rounded-xl border-2 font-medium transition-all border-zinc-200 hover:border-black text-sm">Foreign Reg <span class="cat-btn__state">Add</span></button>
       </div>
-      <p id="category-description" class="vobels-calculator__hint">Estimate the cost of registering a new business in Nigeria. Choose a business structure to get started.</p>
+      <p id="category-description" class="vobels-calculator__hint">Select multiple categories to build one combined estimate.</p>
+    </div>
+
+    <div id="results" class="vobels-calculator__results">
+      <div class="vobels-calculator__results-head"><span>LIVE ESTIMATE</span><h3>Your selected services</h3><p id="price-note">Choose one or more categories to build a combined estimate.</p></div>
+      <div id="estimate-items" class="vobels-calculator__estimate-items"><p class="vobels-calculator__empty">Your selected services and prices will appear here.</p></div>
+      <div id="estimate-totals" class="vobels-calculator__estimate-totals"></div>
+      <div id="lead-capture" class="mt-5 pt-4 border-t border-zinc-200">
+        <p class="text-sm font-medium text-black mb-2">Want help with this estimate?</p><p class="text-xs text-zinc-500 mb-3">Leave your email and our team can follow up with the selected services and next steps.</p>
+        <div class="flex gap-2"><input type="email" id="lead-email" placeholder="Your email address" class="flex-1 px-3 py-2 border border-zinc-200 rounded-lg text-sm"><button id="submit-lead" class="px-4 py-2 bg-black text-white rounded-lg text-sm font-medium hover:bg-zinc-800">Send</button></div>
+        <p class="text-[10px] text-zinc-400 mt-2">No spam. Unsubscribe anytime.</p>
+      </div>
     </div>
 
     <!-- REGISTRATION SECTION -->
@@ -221,339 +232,49 @@
       </div>
     </div>
 
-    <!-- Results Section -->
-    <div id="results" class="vobels-calculator__results hidden">
-      <div class="vobels-calculator__results-head"><span>YOUR ESTIMATE</span><h3>Estimated service breakdown</h3><p id="price-note">Includes official fees and Vobels service fees.</p></div>
-      <div class="space-y-2 text-sm">
-        <div class="flex justify-between">
-          <span class="text-zinc-600">Government/Official Fee:</span>
-          <span class="font-medium" id="gov-fee">₦0</span>
-        </div>
-        <div class="flex justify-between">
-          <span class="text-zinc-600">Vobels Service Fee:</span>
-          <span class="font-medium text-green-700" id="vobels-fee">₦0</span>
-        </div>
-        <div class="flex justify-between pt-2 border-t-2 border-black">
-          <span class="font-bold text-black text-base">Total (All Inclusive):</span>
-          <span class="font-bold text-black text-lg" id="total">₦0</span>
-        </div>
 
-      </div>
-      
-      <!-- Lead Capture -->
-      <div id="lead-capture" class="mt-5 pt-4 border-t border-zinc-200">
-        <p class="text-sm font-medium text-black mb-2">Want help with this estimate?</p><p class="text-xs text-zinc-500 mb-3">Leave your email and our team can follow up with the details and next steps.</p>
-        <div class="flex gap-2">
-          <input type="email" id="lead-email" placeholder="Your email address" class="flex-1 px-3 py-2 border border-zinc-200 rounded-lg text-sm">
-          <button id="submit-lead" class="px-4 py-2 bg-black text-white rounded-lg text-sm font-medium hover:bg-zinc-800">Send</button>
-        </div>
-        <p class="text-[10px] text-zinc-400 mt-2">No spam. Unsubscribe anytime.</p>
-      </div>
-    </div>
   </div>
 </div>
 
 <script is:inline>
   (function() {
-    let currentCategory = 'registration';
-    let currentType = 'ltd';
-    let currentShareCapital = 1000000;
-    let includeTaxPromax = false;
-    
-    // Pricing data
-    const registrationPrices = {
-      'business-name': { base: 35000, taxpromax: 60000, govFee: 30000, vobelsFee: 5000 },
-      'ltd': { base: 45000, taxpromax: 70000, perMillion: 25000, govBase: 35000, govPerMillion: 25000, vobelsFee: 10000 },
-      'plc': { base: 105000, perMillion: 40000, govBase: 68000, govPerMillion: 25000, vobelsFee: 37000, noTaxpromax: true },
-      'ngo': { base: 150000, taxpromax: 200000, govFee: 135000, vobelsFee: 15000 }
-    };
-    
-    const trademarkPrices = {
-      basic: { total: 70000, govFee: 45000, vobelsFee: 25000 },
-      premium: { total: 150000, govFee: 45000, vobelsFee: 105000 }
-    };
-    
-    const copyrightPrices = {
-      basic: { total: 50000, govFee: 35000, vobelsFee: 15000 },
-      premium: { total: 150000, govFee: 35000, vobelsFee: 115000 }
-    };
-    
-    const patentPrices = {
-      local: { total: 250000, govFee: 200000, vobelsFee: 50000, currency: 'NGN' },
-      international: { total: 2000, govFee: 1500, vobelsFee: 500, currency: 'USD' }
-    };
-    
-    const nafdacPrices = {
-      micro: { total: 95000, govFee: 75000, vobelsFee: 20000 },
-      small: { total: 150000, govFee: 120000, vobelsFee: 30000 },
-      large: { total: 250000, govFee: 200000, vobelsFee: 50000 },
-      drugs: { total: 300000, govFee: 250000, vobelsFee: 50000 },
-      'cosmetics-small': { total: 120000, govFee: 95000, vobelsFee: 25000 },
-      'cosmetics-large': { total: 200000, govFee: 160000, vobelsFee: 40000 }
-    };
-    
-    const globalPrices = {
-      duns: { total: 50, govFee: 35, vobelsFee: 15, currency: 'USD' },
-      'us-wyoming': { total: 720, govFee: 120, vobelsFee: 600, currency: 'USD' },
-      'us-delaware': { total: 750, govFee: 110, vobelsFee: 640, currency: 'USD' },
-      'us-newmexico': { total: 650, govFee: 50, vobelsFee: 600, currency: 'USD' },
-      uk: { total: 500, govFee: 130, vobelsFee: 370, currency: 'USD' }
-    };
-    
-    const foreignPrices = {
-      standard: { total: 350, govFee: 100, vobelsFee: 250, currency: 'USD' },
-      expat: { total: 550, govFee: 150, vobelsFee: 400, currency: 'USD' },
-      'rep-office': { total: 250, govFee: 80, vobelsFee: 170, currency: 'USD' },
-      'permit-only': { total: 150, govFee: 50, vobelsFee: 100, currency: 'USD' }
-    };
-    
-    function formatNaira(amount) {
-      return '₦' + amount.toLocaleString();
-    }
-    
-    function formatUSD(amount) {
-      return '$' + amount.toLocaleString();
-    }
-    
-    function updateUI() {
-      let govFee = 0;
-      let vobelsFee = 0;
-      let total = 0;
-      let currency = 'NGN';
-      let priceNote = "";
-      
-      if (currentCategory === 'registration') {
-        if (currentType === 'ltd') {
-          const additionalMillions = Math.max(0, Math.floor((currentShareCapital - 1000000) / 1000000));
-          const additionalCost = additionalMillions * registrationPrices.ltd.perMillion;
-          if (includeTaxPromax) {
-            total = registrationPrices.ltd.taxpromax + additionalCost;
-          } else {
-            total = registrationPrices.ltd.base + additionalCost;
-          }
-          govFee = registrationPrices.ltd.govBase + (additionalMillions * registrationPrices.ltd.govPerMillion);
-          vobelsFee = total - govFee;
-          priceNote = "Includes MEMART, Status Report, Certificate";
-        } 
-        else if (currentType === 'plc') {
-          const additionalMillions = Math.max(0, Math.floor((currentShareCapital - 1000000) / 1000000));
-          const additionalCost = additionalMillions * registrationPrices.plc.perMillion;
-          total = registrationPrices.plc.base + additionalCost;
-          govFee = registrationPrices.plc.govBase + (additionalMillions * registrationPrices.plc.govPerMillion);
-          vobelsFee = total - govFee;
-          priceNote = "Includes MEMART, Status Report, Certificate";
-        }
-        else if (currentType === 'business-name') {
-          total = includeTaxPromax ? registrationPrices['business-name'].taxpromax : registrationPrices['business-name'].base;
-          govFee = registrationPrices['business-name'].govFee;
-          vobelsFee = registrationPrices['business-name'].vobelsFee;
-          priceNote = "Includes Certificate of Incorporation, Status Report";
-        }
-        else if (currentType === 'ngo') {
-          total = includeTaxPromax ? registrationPrices.ngo.taxpromax : registrationPrices.ngo.base;
-          govFee = registrationPrices.ngo.govFee;
-          vobelsFee = registrationPrices.ngo.vobelsFee;
-          priceNote = "Includes Constitution, Status Report, Newspaper Publication";
-        }
-      }
-      else if (currentCategory === 'trademark') {
-        const option = document.querySelector('input[name="trademark-option"]:checked')?.value || 'basic';
-        total = trademarkPrices[option].total;
-        govFee = trademarkPrices[option].govFee;
-        vobelsFee = trademarkPrices[option].vobelsFee;
-        priceNote = option === 'basic' ? "Search Report, Application, Acceptance Letter" : "Includes Certificate of Trademark";
-      }
-      else if (currentCategory === 'copyright') {
-        const option = document.querySelector('input[name="copyright-option"]:checked')?.value || 'basic';
-        total = copyrightPrices[option].total;
-        govFee = copyrightPrices[option].govFee;
-        vobelsFee = copyrightPrices[option].vobelsFee;
-        priceNote = option === 'basic' ? "One paper base, Search Report, Grant Notification" : "Includes Certified True Copy of Certificate";
-      }
-      else if (currentCategory === 'patent') {
-        const option = document.querySelector('input[name="patent-option"]:checked')?.value || 'local';
-        total = patentPrices[option].total;
-        govFee = patentPrices[option].govFee;
-        vobelsFee = patentPrices[option].vobelsFee;
-        currency = patentPrices[option].currency;
-        priceNote = option === 'local' ? "Nigeria only, one invention/claim" : "International PCT filing protection";
-      }
-      else if (currentCategory === 'nafdac') {
-        const category = document.getElementById('nafdac-category')?.value || 'micro';
-        total = nafdacPrices[category].total;
-        govFee = nafdacPrices[category].govFee;
-        vobelsFee = nafdacPrices[category].vobelsFee;
-        priceNote = "NAFDAC registration fee varies by product category";
-      }
-      else if (currentCategory === 'global') {
-        const option = document.querySelector('input[name="global-option"]:checked')?.value || 'duns';
-        total = globalPrices[option].total;
-        govFee = globalPrices[option].govFee;
-        vobelsFee = globalPrices[option].vobelsFee;
-        currency = globalPrices[option].currency;
-        const names = { duns: "DUNS", 'us-wyoming': "Wyoming LLC", 'us-delaware': "Delaware LLC", 'us-newmexico': "New Mexico LLC", uk: "UK Ltd" };
-        priceNote = `${names[option]} registration - ${currency === 'USD' ? 'USD' : 'NGN'} pricing`;
-      }
-      else if (currentCategory === 'foreign') {
-        const option = document.querySelector('input[name="foreign-option"]:checked')?.value || 'standard';
-        total = foreignPrices[option].total;
-        govFee = foreignPrices[option].govFee;
-        vobelsFee = foreignPrices[option].vobelsFee;
-        currency = foreignPrices[option].currency;
-        const names = { standard: "Standard Registration", expat: "Expat Support", 'rep-office': "Rep Office", 'permit-only': "Permit Only" };
-        priceNote = `${names[option]} - Complete foreign company registration in Nigeria`;
-      }
-      
-      // Display results with proper currency formatting
-      document.getElementById('gov-fee').innerHTML = currency === 'USD' ? formatUSD(govFee) : formatNaira(govFee);
-      document.getElementById('vobels-fee').innerHTML = currency === 'USD' ? formatUSD(vobelsFee) : formatNaira(vobelsFee);
-      document.getElementById('total').innerHTML = currency === 'USD' ? formatUSD(total) : formatNaira(total);
-      document.getElementById('price-note').innerText = priceNote;
-      document.getElementById('results').classList.remove('hidden');
-    }
-    
-    const categoryDescriptions = {
-      registration: "Estimate the cost of registering a new business in Nigeria. Choose a business structure to get started.",
-      trademark: "Compare trademark filing options to protect your business name, logo or brand identity.",
-      copyright: "Estimate copyright protection costs for eligible creative and original work.",
-      patent: "Review local and international patent filing estimates for an invention.",
-      nafdac: "Choose your product category to estimate NAFDAC registration and service costs.",
-      global: "Explore estimates for international business identity and company registration services.",
-      foreign: "Estimate support costs for foreign company registration and related permits in Nigeria."
-    };
-
-    // Category switching
-    const catBtns = document.querySelectorAll('.cat-btn');
-    const sections = {
-      registration: document.getElementById('registration-section'),
-      trademark: document.getElementById('trademark-section'),
-      copyright: document.getElementById('copyright-section'),
-      patent: document.getElementById('patent-section'),
-      nafdac: document.getElementById('nafdac-section'),
-      global: document.getElementById('global-section'),
-      foreign: document.getElementById('foreign-section')
-    };
-    
-    catBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        catBtns.forEach(b => {
-          b.classList.remove('bg-black', 'text-white', 'border-black');
-          b.classList.add('border-zinc-200');
-        });
-        btn.classList.add('bg-black', 'text-white', 'border-black');
-        
-        currentCategory = btn.getAttribute('data-category');
-        document.getElementById('category-description').innerText = categoryDescriptions[currentCategory] || '';
-        
-        Object.values(sections).forEach(section => {
-          if (section) section.classList.add('hidden');
-        });
-        
-        if (sections[currentCategory]) {
-          sections[currentCategory].classList.remove('hidden');
-        }
-        
-        updateUI();
-      });
-    });
-    
-    // Registration type buttons
-    const typeBtns = document.querySelectorAll('.type-btn');
-    typeBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        typeBtns.forEach(b => {
-          b.classList.remove('bg-black', 'text-white', 'border-black');
-          b.classList.add('border-zinc-200');
-        });
-        btn.classList.add('bg-black', 'text-white', 'border-black');
-        currentType = btn.getAttribute('data-type');
-        
-        const shareCapitalGroup = document.getElementById('share-capital-group');
-        const taxpromaxGroup = document.getElementById('taxpromax-group');
-        
-        if (currentType === 'ltd' || currentType === 'plc') {
-          shareCapitalGroup.classList.remove('hidden');
-        } else {
-          shareCapitalGroup.classList.add('hidden');
-        }
-        
-        if (currentType !== 'plc') {
-          taxpromaxGroup.classList.remove('hidden');
-        } else {
-          taxpromaxGroup.classList.add('hidden');
-          includeTaxPromax = false;
-          document.getElementById('include-taxpromax').checked = false;
-        }
-        
-        updateUI();
-      });
-    });
-    
-    // Share capital calculation
-    const calculateBtn = document.getElementById('calculate-btn');
-    const shareCapitalInput = document.getElementById('share-capital');
-    if (calculateBtn) {
-      calculateBtn.addEventListener('click', () => {
-        let value = parseInt(shareCapitalInput.value);
-        if (isNaN(value)) value = 1000000;
-        if (value < 1000000) value = 1000000;
-        currentShareCapital = value;
-        shareCapitalInput.value = value;
-        updateUI();
-      });
-    }
-    
-    // TaxPromax checkbox
-    const taxpromaxCheckbox = document.getElementById('include-taxpromax');
-    if (taxpromaxCheckbox) {
-      taxpromaxCheckbox.addEventListener('change', () => {
-        includeTaxPromax = taxpromaxCheckbox.checked;
-        updateUI();
-      });
-    }
-    
-    // NAFDAC dropdown
-    const nafdacSelect = document.getElementById('nafdac-category');
-    if (nafdacSelect) {
-      nafdacSelect.addEventListener('change', () => updateUI());
-    }
-    
-    // Radio button groups
-    const trademarkRadios = document.querySelectorAll('input[name="trademark-option"]');
-    trademarkRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
-    
-    const copyrightRadios = document.querySelectorAll('input[name="copyright-option"]');
-    copyrightRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
-    
-    const patentRadios = document.querySelectorAll('input[name="patent-option"]');
-    patentRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
-    
-    const globalRadios = document.querySelectorAll('input[name="global-option"]');
-    globalRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
-    
-    const foreignRadios = document.querySelectorAll('input[name="foreign-option"]');
-    foreignRadios.forEach(radio => radio.addEventListener('change', () => updateUI()));
-    
-    // Lead capture
-    const submitLead = document.getElementById('submit-lead');
-    if (submitLead) {
-      submitLead.addEventListener('click', () => {
-        const email = document.getElementById('lead-email').value;
-        if (email && email.includes('@')) {
-          fetch('/api/capture-lead', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: email, service: currentCategory, source: 'calculator' })
-          });
-          alert('Thank you! We\'ll send you the breakdown shortly.');
-          document.getElementById('lead-email').value = '';
-        } else {
-          alert('Please enter a valid email address');
-        }
-      });
-    }
-    
-    updateUI();
+    const selectedCategories = new Set(['registration']);
+    let currentType='ltd', currentShareCapital=1000000, includeTaxPromax=false;
+    const registrationPrices={'business-name':{base:35000,taxpromax:60000,govFee:30000,vobelsFee:5000},ltd:{base:45000,taxpromax:70000,perMillion:25000,govBase:35000,govPerMillion:25000},plc:{base:105000,perMillion:40000,govBase:68000,govPerMillion:25000},ngo:{base:150000,taxpromax:200000,govFee:135000}};
+    const trademarkPrices={basic:{total:70000,govFee:45000,vobelsFee:25000},premium:{total:150000,govFee:45000,vobelsFee:105000}};
+    const copyrightPrices={basic:{total:50000,govFee:35000,vobelsFee:15000},premium:{total:150000,govFee:35000,vobelsFee:115000}};
+    const patentPrices={local:{total:250000,govFee:200000,vobelsFee:50000,currency:'NGN'},international:{total:2000,govFee:1500,vobelsFee:500,currency:'USD'}};
+    const nafdacPrices={micro:{total:95000,govFee:75000,vobelsFee:20000},small:{total:150000,govFee:120000,vobelsFee:30000},large:{total:250000,govFee:200000,vobelsFee:50000},drugs:{total:300000,govFee:250000,vobelsFee:50000},'cosmetics-small':{total:120000,govFee:95000,vobelsFee:25000},'cosmetics-large':{total:200000,govFee:160000,vobelsFee:40000}};
+    const globalPrices={duns:{total:50,govFee:35,vobelsFee:15,currency:'USD'},'us-wyoming':{total:720,govFee:120,vobelsFee:600,currency:'USD'},'us-delaware':{total:750,govFee:110,vobelsFee:640,currency:'USD'},'us-newmexico':{total:650,govFee:50,vobelsFee:600,currency:'USD'},uk:{total:500,govFee:130,vobelsFee:370,currency:'USD'}};
+    const foreignPrices={standard:{total:350,govFee:100,vobelsFee:250,currency:'USD'},expat:{total:550,govFee:150,vobelsFee:400,currency:'USD'},'rep-office':{total:250,govFee:80,vobelsFee:170,currency:'USD'},'permit-only':{total:150,govFee:50,vobelsFee:100,currency:'USD'}};
+    const names={registration:'Business registration',trademark:'Trademark',copyright:'Copyright',patent:'Patent',nafdac:'NAFDAC',global:'Global access',foreign:'Foreign company registration'};
+    const sectionIds={registration:'registration-section',trademark:'trademark-section',copyright:'copyright-section',patent:'patent-section',nafdac:'nafdac-section',global:'global-section',foreign:'foreign-section'};
+    const money=(n,c)=>(c==='USD'?'$':'₦')+Number(n||0).toLocaleString();
+    function estimate(category){let total=0,govFee=0,vobelsFee=0,currency='NGN',label='';
+      if(category==='registration'){const p=registrationPrices[currentType];if(currentType==='ltd'||currentType==='plc'){const extra=Math.max(0,Math.floor((currentShareCapital-1000000)/1000000));total=(currentType==='ltd'&&includeTaxPromax?p.taxpromax:p.base)+extra*p.perMillion;govFee=p.govBase+extra*p.govPerMillion;}else{total=includeTaxPromax?p.taxpromax:p.base;govFee=p.govFee;}vobelsFee=total-govFee;label=({'ltd':'Private Limited (LTD)','business-name':'Business Name',ngo:'NGO / Foundation',plc:'Public Limited (PLC)'})[currentType];}
+      if(category==='trademark'){const o=document.querySelector('input[name="trademark-option"]:checked')?.value||'basic',p=trademarkPrices[o];total=p.total;govFee=p.govFee;vobelsFee=p.vobelsFee;label=o==='basic'?'Trademark Registration':'Trademark Registration + Certificate';}
+      if(category==='copyright'){const o=document.querySelector('input[name="copyright-option"]:checked')?.value||'basic',p=copyrightPrices[o];total=p.total;govFee=p.govFee;vobelsFee=p.vobelsFee;label=o==='basic'?'Copyright Protection':'Copyright Protection (Premium)';}
+      if(category==='patent'){const o=document.querySelector('input[name="patent-option"]:checked')?.value||'local',p=patentPrices[o];total=p.total;govFee=p.govFee;vobelsFee=p.vobelsFee;currency=p.currency;label=o==='local'?'Local Patent Registration':'International Patent (PCT)';}
+      if(category==='nafdac'){const o=document.getElementById('nafdac-category')?.value||'micro',p=nafdacPrices[o];total=p.total;govFee=p.govFee;vobelsFee=p.vobelsFee;label=({'micro':'Micro-scale food',small:'Small-scale food',large:'Large-scale food',drugs:'Drugs & pharmaceuticals','cosmetics-small':'Cosmetics small scale','cosmetics-large':'Cosmetics large scale'})[o];}
+      if(category==='global'){const o=document.querySelector('input[name="global-option"]:checked')?.value||'duns',p=globalPrices[o];total=p.total;govFee=p.govFee;vobelsFee=p.vobelsFee;currency=p.currency;label=({duns:'DUNS number registration','us-wyoming':'US LLC — Wyoming','us-delaware':'US LLC — Delaware','us-newmexico':'US LLC — New Mexico',uk:'UK company registration'})[o];}
+      if(category==='foreign'){const o=document.querySelector('input[name="foreign-option"]:checked')?.value||'standard',p=foreignPrices[o];total=p.total;govFee=p.govFee;vobelsFee=p.vobelsFee;currency=p.currency;label=({standard:'Standard package',expat:'Expatriate support package','rep-office':'Representative office','permit-only':'Business permit only'})[o];}
+      return {category,name:names[category],label,total,govFee,vobelsFee,currency};}
+    function render(){const chosen=Array.from(selectedCategories).map(estimate),items=document.getElementById('estimate-items'),totals=document.getElementById('estimate-totals');
+      if(!chosen.length){items.innerHTML='<p class="vobels-calculator__empty">Select one or more categories above to see your estimate.</p>';totals.innerHTML='';document.getElementById('price-note').textContent='Your estimate will update as you add services.';return;}
+      items.innerHTML=chosen.map(x=>'<div class="vobels-calculator__estimate-item"><div><small>'+x.name+'</small><strong>'+x.label+'</strong><span>Official: '+money(x.govFee,x.currency)+' · Vobels: '+money(x.vobelsFee,x.currency)+'</span></div><b>'+money(x.total,x.currency)+'</b></div>').join('');
+      totals.innerHTML=['NGN','USD'].filter(c=>chosen.some(x=>x.currency===c)).map(c=>{const group=chosen.filter(x=>x.currency===c),sum=k=>group.reduce((n,x)=>n+x[k],0);return '<div class="vobels-calculator__currency-total"><span>'+(c==='USD'?'US DOLLAR TOTAL':'NAIRA TOTAL')+'</span><div><small>Official fees</small><b>'+money(sum('govFee'),c)+'</b></div><div><small>Vobels fees</small><b>'+money(sum('vobelsFee'),c)+'</b></div><div class="vobels-calculator__grand-total"><strong>Combined estimate</strong><strong>'+money(sum('total'),c)+'</strong></div></div>';}).join('');
+      document.getElementById('price-note').textContent=chosen.length+' service categor'+(chosen.length===1?'y':'ies')+' selected. Currency totals are grouped separately.';}
+    function update(){document.querySelectorAll('.cat-btn').forEach(btn=>{const on=selectedCategories.has(btn.dataset.category);btn.classList.toggle('bg-black',on);btn.classList.toggle('text-white',on);btn.classList.toggle('border-black',on);btn.classList.toggle('border-zinc-200',!on);btn.setAttribute('aria-pressed',String(on));const state=btn.querySelector('.cat-btn__state');if(state)state.textContent=on?'Selected':'Add';});
+      Object.keys(sectionIds).forEach(k=>document.getElementById(sectionIds[k])?.classList.toggle('hidden',!selectedCategories.has(k)));
+      const labels=Array.from(selectedCategories).map(k=>names[k]);document.getElementById('category-description').textContent=labels.length?'Selected: '+labels.join(' · ')+'. Configure each selected service below.':'No categories selected. Add the services you need above.';render();}
+    document.querySelectorAll('.cat-btn').forEach(btn=>btn.addEventListener('click',()=>{const c=btn.dataset.category;if(selectedCategories.has(c))selectedCategories.delete(c);else selectedCategories.add(c);update();}));
+    document.querySelectorAll('.type-btn').forEach(btn=>btn.addEventListener('click',()=>{document.querySelectorAll('.type-btn').forEach(b=>{b.classList.remove('bg-black','text-white','border-black');b.classList.add('border-zinc-200');});btn.classList.add('bg-black','text-white','border-black');currentType=btn.dataset.type;document.getElementById('share-capital-group').classList.toggle('hidden',!['ltd','plc'].includes(currentType));document.getElementById('taxpromax-group').classList.toggle('hidden',currentType==='plc');if(currentType==='plc'){includeTaxPromax=false;document.getElementById('include-taxpromax').checked=false;}update();}));
+    document.getElementById('calculate-btn')?.addEventListener('click',()=>{let n=parseInt(document.getElementById('share-capital').value,10);if(!Number.isFinite(n)||n<1000000)n=1000000;currentShareCapital=n;document.getElementById('share-capital').value=n;update();});
+    document.getElementById('include-taxpromax')?.addEventListener('change',e=>{includeTaxPromax=e.target.checked;update();});
+    document.getElementById('nafdac-category')?.addEventListener('change',update);
+    ['trademark-option','copyright-option','patent-option','global-option','foreign-option'].forEach(n=>document.querySelectorAll('input[name="'+n+'"]').forEach(el=>el.addEventListener('change',update)));
+    document.getElementById('submit-lead')?.addEventListener('click',()=>{const email=document.getElementById('lead-email').value.trim();if(!email||!email.includes('@')){alert('Please enter a valid email address');return;}const selected=Array.from(selectedCategories).map(estimate);fetch('/api/capture-lead',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({email,service:selected.map(x=>x.name),estimate:selected,source:'calculator'})});alert('Thank you! We will send you the breakdown shortly.');document.getElementById('lead-email').value='';});
+    update();
   })();
 </script>
 <style>
@@ -587,4 +308,22 @@
   .vobels-calculator #total { color:#5D2A86; font-size:1.4rem; }
   .vobels-calculator #lead-capture { border-color:#e2d8eb; }
   @media(max-width:640px) { .vobels-calculator { padding:18px; } .vobels-calculator__heading { align-items:flex-start; } .vobels-calculator__estimate-mark { min-width:48px; height:48px; font-size:11px; } .vobels-calculator .cat-btn { padding:10px 8px; font-size:10px; } .vobels-calculator__results .flex { gap:12px; } }
+
+  .vobels-calculator__results { margin-top:0; padding:22px; border:1px solid #e2d8eb; background:#fff; }
+  .vobels-calculator__results-head { margin-bottom:14px; }
+  .vobels-calculator__estimate-items { display:grid; gap:0; border-top:1px solid #e6deed; }
+  .vobels-calculator__estimate-item { display:flex; justify-content:space-between; gap:16px; align-items:center; padding:13px 0; border-bottom:1px solid #e6deed; }
+  .vobels-calculator__estimate-item>div { display:grid; gap:3px; }
+  .vobels-calculator__estimate-item small,.vobels-calculator__currency-total>span { color:#5D2A86; font:700 9px/1.4 var(--font-sans); letter-spacing:.12em; text-transform:uppercase; }
+  .vobels-calculator__estimate-item strong { color:#211b27; font:600 14px/1.3 var(--font-display); }
+  .vobels-calculator__estimate-item span { color:#716a79; font-size:10px; }
+  .vobels-calculator__estimate-item>b { flex:none; color:#211b27; font:700 13px/1.3 var(--font-sans); }
+  .vobels-calculator__currency-total { display:grid; gap:9px; margin-top:16px; padding:15px; background:#f7f3fb; }
+  .vobels-calculator__currency-total>div { display:flex; justify-content:space-between; gap:12px; color:#716a79; font-size:11px; }
+  .vobels-calculator__currency-total>div b { color:#211b27; }
+  .vobels-calculator__currency-total .vobels-calculator__grand-total { padding-top:10px; border-top:1px solid #ded2e8; color:#211b27; font-size:13px; }
+  .vobels-calculator__grand-total strong:last-child { color:#5D2A86; font-size:17px; }
+  .vobels-calculator__empty { margin:0; padding:15px 0; color:#716a79; font-size:12px; }
+  .vobels-calculator .cat-btn__state { display:block; margin-top:4px; font-size:8px; font-weight:600; letter-spacing:.08em; text-transform:uppercase; opacity:.75; }
+
 </style>
