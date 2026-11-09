@@ -13,9 +13,14 @@ const allPosts = posts
   .sort((a, b) => new Date(b.publishDate).getTime() - new Date(a.publishDate).getTime());
 ---
 
-<Layout title="Journal | Vobels">
+<Layout title="Journal | Vobels" description="Ideas, practical guidance and perspectives on business, technology and growth.">
+  <div class="vobels-journal">
   <Container>
-    <div class="mt-16 text-center">
+    <header class="vobels-journal__hero">
+      <p class="vobels-eyebrow"><span></span> The Vobels Journal</p>
+      <h1>Ideas for building<br /><em>what comes next.</em></h1>
+      <p class="vobels-journal__intro">Perspectives on business, technology, systems and the decisions that help organisations move forward.</p>
+    </header>
       <Sectionhead>
         <Fragment slot="title">
           <span class="text-black">Vobels Journal</span>
@@ -27,34 +32,34 @@ const allPosts = posts
       </Sectionhead>
     </div>
 
-    <main class="mt-20">
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-10">
+    <main class="vobels-journal__main">
+      <div class="vobels-journal__grid">
         {allPosts.length === 0 ? (
-          <p class="text-center col-span-3">No blog posts yet.</p>
+          <p class="vobels-journal__empty">New articles are on the way. Please check back soon.</p>
         ) : (
           allPosts.map((post) => (
-            <article class="group">
+            <article class="vobels-journal__card">
 
               <a href={`/blog/${post.slug}`}>
                 <img 
                   src={post.coverImage} 
                   alt={post.title}
-                  class="rounded-2xl mb-4 w-full h-[200px] object-cover"
+                  class="vobels-journal__image"
                   loading="lazy"
                 />
               </a>
 
-              <h2 class="text-xl font-bold">
+              <h2>
                 <a href={`/blog/${post.slug}`}>
                   {post.title}
                 </a>
               </h2>
 
-              <p class="text-sm text-zinc-500 mt-1">
+              <p class="vobels-journal__meta">
                 {post.author} • {new Date(post.publishDate).toDateString()}
               </p>
               
-              <p class="text-zinc-600 mt-2 line-clamp-2">
+              <p class="vobels-journal__excerpt">
                 {post.snippet}
               </p>
 
@@ -64,4 +69,26 @@ const allPosts = posts
       </div>
     </main>
   </Container>
+  </div>
 </Layout>
+<style>
+  .vobels-journal { padding:clamp(42px,7vw,86px) 0 100px; }
+  .vobels-journal__hero { max-width:850px; padding:0 0 clamp(42px,6vw,70px); }
+  .vobels-journal__hero h1 { margin:24px 0 0; color:#211b27; font:600 clamp(2.9rem,6.5vw,5.8rem)/.98 var(--font-display); letter-spacing:-.08em; }
+  .vobels-journal__hero h1 em { color:#5D2A86; font-style:normal; }
+  .vobels-journal__intro { max-width:620px; margin:24px 0 0; color:#716a79; font-size:clamp(15px,1.5vw,18px); line-height:1.8; }
+  .vobels-journal__main { border-top:1px solid #e6deed; padding-top:32px; }
+  .vobels-journal__grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:42px 28px; }
+  .vobels-journal__card { min-width:0; }
+  .vobels-journal__card>a { display:block; overflow:hidden; background:#f4eff8; }
+  .vobels-journal__image { display:block; width:100%; height:230px; object-fit:cover; transition:transform .5s ease; }
+  .vobels-journal__card:hover .vobels-journal__image { transform:scale(1.035); }
+  .vobels-journal__card h2 { margin:17px 0 0; color:#211b27; font:600 clamp(1.25rem,2vw,1.65rem)/1.17 var(--font-display); letter-spacing:-.045em; }
+  .vobels-journal__card h2 a { color:inherit; text-decoration:none; }
+  .vobels-journal__card h2 a:hover { color:#5D2A86; }
+  .vobels-journal__meta { margin:10px 0 0; color:#8a8291; font:600 10px/1.5 var(--font-sans); letter-spacing:.06em; }
+  .vobels-journal__excerpt { display:-webkit-box; overflow:hidden; -webkit-line-clamp:3; -webkit-box-orient:vertical; margin:11px 0 0; color:#716a79; font-size:13px; line-height:1.75; }
+  .vobels-journal__empty { grid-column:1/-1; padding:38px; background:#f7f3fb; color:#716a79; text-align:center; }
+  @media(max-width:900px) { .vobels-journal__grid { grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media(max-width:600px) { .vobels-journal { padding-top:42px; } .vobels-journal__grid { grid-template-columns:1fr; gap:32px; } .vobels-journal__image { height:auto; aspect-ratio:16/10; } }
+</style>
